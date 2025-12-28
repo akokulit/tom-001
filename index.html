@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mini Geometry Dash</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    }
+    canvas {
+      background: linear-gradient(#1a1a1a, #0d0d0d);
+      border: 2px solid #333;
+    }
+    .hint {
+      position: absolute;
+      bottom: 20px;
+      opacity: 0.7;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="game" width="800" height="300"></canvas>
+  <div class="hint">Press SPACE or click to jump / hold in Ship</div>
+
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.jsdelivr.net/gh/your-username/stereo-madness.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    'use strict';
+
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    const bgMusic = document.getElementById('bgMusic');
+
+    bgMusic.volume = 0.3;
+    bgMusic.play();
+
+    const groundY = 240;
+    const ceilingY = 0;
+
+    const player = {
+      x: 100,
+      y: groundY,
+      size: 30,
+      vy: 0,
+      gravity: 0.9,
+      jumpPower: -20,
+      onGround: true,
+      mode: 'cube'
+    };
+
+    let obstacles = [];
+    // Ship portal moved much farther away
+    let portals = [{ x: 2500, y: 100, width: 30, height: 60, type: 'ship' }];
+
+    let frame = 0;
+    let speed = 5;
+    let score = 0;
+    let gameOver = false;
+
+    let shipThrusting = false;
+
+    function jump() {
+      if (gameOver) {
+        reset();
+        return;
+      }
+      if (player.mode === 'cube') {
+        if (player.onGround) {
+          player.vy = player.jumpPower;
+          player.onGround = false;
+        }
+      } else {
+        shipThrusting = true;
+      }
+    }
+
+    document.addEventListener('keydown', e => { if (e.code === 'Space') jump(); });
+    document.addEventListener('keyup', e => { if (e.code === 'Space') shipThrusting = false; });
+    canvas.addEventListener('mousedown', jump);
+    canvas.addEventListener('mouseup', () => shipThrusting = false);
+
+    function spawnObstacle() {
+      const type = Math.random();
+      const blockOffset = 20;
+      if (type < 0.3) {
+        obstacles.push({ x: canvas.width, y: groundY - 40 + blockOffset, width: 30, height: 40, safe: true });
+      } else if (type < 0.6) {
+        obstacles.push({ x: canvas.width, y: groundY - 90 + blockOffset, width: 30, height: 90, safe: true });
+      } else if (type < 0.8) {
+        obstacles.push({ x: canvas.width, y: groundY - 30 + blockOffset, width: 30, height: 30, safe: true });
+      } else {
+        obstacles.push({ x: canvas.width, y: groundY - 20 + blockOffset, width: 30, height: 20, safe: false, spike: true });
+      }
+    }
+
+    function reset() {
+      obstacles = [];
+      portals = [{ x: 2500, y: 100, width: 30, height: 60, type: 'ship' }];
+      frame = 0;
+      speed = 5;
+      score = 0;
+      gameOver = false;
+      player.y = groundY;
+      player.vy = 0;
+      player.onGround = true;
+      player.mode = 'cube';
+      shipThrusting = false;
+      bgMusic.currentTime = 0;
+      bgMusic.play();
+    }
+
+    function update() {
+      if (gameOver) return;
+
+      frame++;
+      score++;
+
+      if (frame % 90 === 0) spawnObstacle();
+      if (frame % 600 === 0) speed += 0.5;
+
+      if (player.mode === 'cube') {
+        player.vy += player.gravity;
+      } else {
+        if (shipThrusting) player.vy -= 0.8;
+        player.vy += 0.35;
+        player.vy = Math.max(Math.min(player.vy, 8), -8);
+      }
+
+      player.y += player.vy;
+
+      if (player.y < ceilingY) {
+        player.y = ceilingY;
+        player.vy = 0;
+      }
+
+      if (player.y >= groundY) {
+        player.y = groundY;
+        player.vy = 0;
+        if (player.mode === 'cube') player.onGround = true;
+      }
+
+      obstacles.forEach(o => {
+        if (player.x + player.size > o.x && player.x < o.x + o.width) {
+          const playerBottom = player.y + player.size;
+          const obstacleTop = o.y;
+          const obstacleBottom = o.y + o.height;
+
+          if (o.safe) {
+            if (playerBottom >= obstacleTop && playerBottom <= obstacleTop + player.vy + 1) {
+              player.y = obstacleTop - player.size;
+              player.vy = 0;
+              player.onGround = true;
+            } else if (player.y < obstacleBottom && playerBottom > obstacleTop + 5) {
+              gameOver = true;
+              bgMusic.pause();
+            }
+          } else if (o.spike) {
+            if (playerBottom >= obstacleTop) {
+              gameOver = true;
+              bgMusic.pause();
+            }
+          }
+        }
+      });
+
+      obstacles.forEach(o => o.x -= speed);
+      obstacles = obstacles.filter(o => o.x + o.width > 0);
+
+      portals.forEach(p => p.x -= speed);
+      portals = portals.filter(p => p.x + p.width > 0);
+
+      portals.forEach(p => {
+        if (player.x < p.x + p.width && player.x + player.size > p.x && player.y < p.y + p.height && player.y + player.size > p.y) {
+          player.mode = p.type;
+        }
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const blockSize = 30;
+      for (let x = 0; x < canvas.width; x += blockSize) {
+        ctx.fillStyle = (Math.floor(x / blockSize) % 2 === 0) ? '#2a2a2a' : '#1f1f1f';
+        ctx.fillRect(x, groundY + player.size, blockSize, blockSize);
+      }
+
+      portals.forEach(p => {
+        ctx.strokeStyle = '#ffea00';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(p.x, p.y, p.width, p.height);
+      });
+
+      ctx.save();
+      ctx.translate(player.x + player.size / 2, player.y + player.size / 2);
+      if (player.mode === 'cube') {
+        ctx.rotate(player.onGround ? 0 : frame * 0.1);
+        ctx.fillStyle = '#00e5ff';
+        ctx.fillRect(-15, -15, 30, 30);
+      } else {
+        ctx.fillStyle = '#00ff9c';
+        ctx.beginPath();
+        ctx.moveTo(-15, 10);
+        ctx.lineTo(15, 0);
+        ctx.lineTo(-15, -10);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.restore();
+
+      obstacles.forEach(o => {
+        if (o.spike) {
+          ctx.fillStyle = '#ff0000';
+          ctx.beginPath();
+          ctx.moveTo(o.x, o.y + o.height);
+          ctx.lineTo(o.x + o.width / 2, o.y);
+          ctx.lineTo(o.x + o.width, o.y + o.height);
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          ctx.fillStyle = '#ff1744';
+          ctx.fillRect(o.x, o.y, o.width, o.height);
+        }
+      });
+
+      ctx.fillStyle = '#fff';
+      ctx.font = '16px Arial';
+      ctx.fillText('Score: ' + score, 20, 30);
+
+      if (gameOver) {
+        ctx.fillStyle = 'rgba(0,0,0,0.6)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#fff';
+        ctx.font = '28px Arial';
+        ctx.fillText('Game Over', 320, 140);
+        ctx.font = '16px Arial';
+        ctx.fillText('Press SPACE or click to restart', 270, 170);
+      }
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    console.assert(canvas && ctx, 'Canvas initialized');
+    console.assert(typeof jump === 'function', 'jump() exists');
+    console.assert(['cube', 'ship'].includes(player.mode), 'valid mode');
+    console.assert(groundY < canvas.height, 'ground inside canvas');
+
+    loop();
+  </script>
+</body>
+</html>
