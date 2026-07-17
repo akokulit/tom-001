@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swiss Table — Tournament Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --felt: #1F4B3F;
+    --felt-dark: #143229;
+    --felt-line: #3E6B58;
+    --paper: #F3ECD9;
+    --paper-dim: #E8DFC6;
+    --ink: #221D14;
+    --ink-soft: #5B5642;
+    --brass: #B08D57;
+    --brass-light: #D9BF8C;
+    --gold: #C9A227;
+    --silver: #9AA3AC;
+    --bronze: #B0703C;
+    --danger: #9B3B34;
+    --radius: 10px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: radial-gradient(ellipse at top, var(--felt) 0%, var(--felt-dark) 70%);
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family:'Work Sans', sans-serif;
+    min-height:100vh;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* ---- Header ---- */
+  .masthead{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:22px;}
+  .masthead h1{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:clamp(28px,4vw,42px);
+    color: var(--paper);
+    margin:0;
+    letter-spacing:0.2px;
+  }
+  .masthead h1 span{color:var(--brass-light);font-style:italic;font-weight:600;}
+  .masthead .sub{
+    font-family:'IBM Plex Mono', monospace;
+    color: var(--felt-line);
+    background:rgba(0,0,0,0.18);
+    color:#BFE0CE;
+    padding:5px 10px;
+    border-radius:6px;
+    font-size:12.5px;
+    letter-spacing:0.4px;
+  }
+
+  /* ---- Card ---- */
+  .card{
+    background: var(--paper);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+    border: 1px solid rgba(0,0,0,0.06);
+    margin-bottom:20px;
+  }
+  .card h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:22px;
+    margin:0 0 4px;
+    color:var(--ink);
+  }
+  .card .hint{color:var(--ink-soft);font-size:13.5px;margin:0 0 18px;line-height:1.5;}
+
+  label{display:block;font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--ink-soft);margin-bottom:6px;}
+  input[type=text], input[type=number], textarea, select{
+    width:100%;
+    font-family:'Work Sans', sans-serif;
+    font-size:15px;
+    padding:10px 12px;
+    border-radius:7px;
+    border:1.5px solid #D8CFAF;
+    background:#fff;
+    color:var(--ink);
+    outline:none;
+  }
+  input[type=text]:focus, input[type=number]:focus, textarea:focus, select:focus{
+    border-color:var(--brass);
+    box-shadow:0 0 0 3px rgba(176,141,87,0.2);
+  }
+  textarea{min-height:150px;font-family:'IBM Plex Mono', monospace;font-size:13.5px;resize:vertical;}
+  .field{margin-bottom:16px;}
+  .row2{display:grid;grid-template-columns:1fr 180px;gap:16px;}
+  @media (max-width:560px){.row2{grid-template-columns:1fr;}}
+
+  button{
+    font-family:'Work Sans', sans-serif;
+    font-weight:600;
+    font-size:14.5px;
+    padding:11px 20px;
+    border-radius:7px;
+    border:none;
+    cursor:pointer;
+    transition:transform .08s ease, box-shadow .08s ease;
+  }
+  button:active{transform:translateY(1px);}
+  .btn-primary{background:var(--felt);color:var(--paper);}
+  .btn-primary:hover{background:var(--felt-dark);}
+  .btn-brass{background:var(--brass);color:#241C0E;}
+  .btn-brass:hover{background:var(--brass-light);}
+  .btn-ghost{background:transparent;color:var(--ink-soft);border:1.5px solid #D8CFAF;}
+  .btn-ghost:hover{border-color:var(--brass);color:var(--ink);}
+  .btn-danger{background:transparent;color:var(--danger);border:1.5px solid rgba(155,59,52,0.4);}
+  .btn-danger:hover{background:rgba(155,59,52,0.08);}
+  button:disabled{opacity:0.4;cursor:not-allowed;}
+  .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;}
+
+  /* ---- Tabs ---- */
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;}
+  .tab{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    padding:9px 14px;
+    border-radius:8px 8px 0 0;
+    background:rgba(243,236,217,0.55);
+    color:var(--paper-dim);
+    cursor:pointer;
+    border:1px solid rgba(243,236,217,0.25);
+    border-bottom:none;
+  }
+  .tab.active{background:var(--paper);color:var(--ink);font-weight:600;}
+  .tab.locked{opacity:0.35;cursor:not-allowed;}
+  .tab .dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:6px;background:var(--brass);}
+  .tab.done .dot{background:#4F7A5F;}
+
+  /* ---- Table tent cards (pairing) ---- */
+  .table-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;}
+  .tent{
+    background:#fff;
+    border:1.5px solid #E1D6B4;
+    border-radius:9px;
+    overflow:hidden;
+  }
+  .tent-head{
+    background: linear-gradient(135deg, var(--brass) 0%, #9A7943 100%);
+    color:#fff;
+    padding:10px 14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .tent-head .tid{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:0.4px;
+  }
+  .tent-head .tcount{font-size:11.5px;opacity:0.85;}
+  .tent-body{padding:6px 14px 14px;}
+  .prow{
+    display:grid;
+    grid-template-columns:1fr 100px 46px;
+    align-items:center;
+    gap:8px;
+    padding:9px 0;
+    border-bottom:1px dashed #E7DFC6;
+  }
+  .prow:last-child{border-bottom:none;}
+  .prow .pname{font-size:14.5px;font-weight:500;}
+  .prow input{padding:7px 8px;font-family:'IBM Plex Mono', monospace;text-align:right;}
+  .prow .rankbadge{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    text-align:center;
+    color:var(--ink-soft);
+  }
+  .prow.r1 .pname{font-weight:700;}
+  .prow.r1{box-shadow:inset 3px 0 0 var(--gold);}
+  .prow.r2{box-shadow:inset 3px 0 0 var(--silver);}
+  .prow.r3{box-shadow:inset 3px 0 0 var(--bronze);}
+
+  /* ---- Standings table ---- */
+  .table-scroll{overflow-x:auto;}
+  table.standings{border-collapse:collapse;width:100%;font-size:13.5px;min-width:720px;}
+  table.standings th, table.standings td{
+    padding:8px 10px;
+    text-align:right;
+    white-space:nowrap;
+    border-bottom:1px solid #EAE1C6;
+  }
+  table.standings th{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:0.4px;
+    color:var(--ink-soft);
+    background:var(--paper-dim);
+    position:sticky;top:0;
+  }
+  table.standings td:first-child, table.standings th:first-child{text-align:left;position:sticky;left:0;background:var(--paper);}
+  table.standings th:first-child{background:var(--paper-dim);}
+  table.standings tbody tr:hover td{background:#FBF7EA;}
+  table.standings td.placement{font-weight:700;font-family:'IBM Plex Mono', monospace;}
+  .group-sep td{border-right:2px solid #D8CFAF;}
+  td.medal-1{color:#7A6100;font-weight:700;}
+  td.medal-2{color:#5A6169;font-weight:700;}
+  td.medal-3{color:#79451F;font-weight:700;}
+
+  /* ---- Headline standings: placement + the two tiebreakers get the emphasis ---- */
+  table.standings.headline{min-width:0;font-size:14.5px;}
+  table.standings.headline th{font-size:11px;white-space:normal;}
+  table.standings.headline th small{
+    display:block;text-transform:none;font-weight:400;letter-spacing:0;color:var(--ink-soft);opacity:0.75;font-size:9.5px;margin-top:2px;
+  }
+  table.standings.headline th, table.standings.headline td{padding:11px 14px;}
+  .place-col{width:64px;}
+  td.place-cell{text-align:center;}
+  .place-badge{
+    font-family:'IBM Plex Mono', monospace;font-weight:600;font-size:13px;
+    display:inline-block;min-width:34px;padding:4px 6px;border-radius:20px;
+    background:var(--paper-dim);color:var(--ink-soft);
+  }
+  td.place-cell.medal-1 .place-badge{background:var(--gold);color:#fff;}
+  td.place-cell.medal-2 .place-badge{background:var(--silver);color:#fff;}
+  td.place-cell.medal-3 .place-badge{background:var(--bronze);color:#fff;}
+  td.name-cell{text-align:left;font-weight:600;font-size:15px;}
+  td.stat-cell{font-family:'IBM Plex Mono', monospace;}
+  td.stat-pts{color:var(--ink-soft);font-size:13.5px;}
+  td.stat-diff{
+    font-weight:700;font-size:18px;
+    padding-left:16px;padding-right:16px;
+  }
+  td.stat-diff.pos{color:#2E6B45;}
+  td.stat-diff.neg{color:var(--danger);}
+  td.stat-raw{color:var(--ink-soft);font-size:14px;font-weight:500;}
+
+  table.standings.headline td.journey-cell{text-align:left;font-family:'IBM Plex Mono', monospace;white-space:normal;}
+  .journey-overall{font-size:13px;color:var(--ink-soft);letter-spacing:0.2px;}
+  .journey-overall b{color:var(--ink);font-size:14px;}
+  .journey-overall .arrow{color:#C9BB93;margin:0 3px;}
+  .journey-overall .trend{margin-left:6px;font-size:11px;}
+  .journey-overall .trend.up{color:#2E6B45;}
+  .journey-overall .trend.down{color:var(--danger);}
+  .journey-overall .trend.flat{color:var(--ink-soft);}
+  .journey-table{font-size:10.5px;color:var(--ink-soft);opacity:0.75;margin-top:3px;text-transform:uppercase;letter-spacing:0.3px;}
+
+  /* ---- Round-by-round detail: intentionally quiet ---- */
+  .detail-card{padding-top:18px;padding-bottom:18px;background:var(--paper-dim);box-shadow:none;border:1px dashed #D8CFAF;}
+  .detail-heading{font-size:16px;color:var(--ink-soft);}
+  .round-detail{
+    background:#fff;border:1px solid #E7DFC6;border-radius:7px;margin-top:8px;overflow:hidden;
+  }
+  .round-detail summary{
+    cursor:pointer;padding:9px 14px;font-family:'IBM Plex Mono', monospace;font-size:12.5px;
+    color:var(--ink-soft);list-style:none;display:flex;align-items:center;gap:8px;
+  }
+  .round-detail summary::-webkit-details-marker{display:none;}
+  .round-detail summary::before{content:'▸';font-size:10px;color:var(--brass);}
+  .round-detail[open] summary::before{content:'▾';}
+  .round-detail[open] summary{border-bottom:1px solid #EFE8D2;}
+  table.detail-table{border-collapse:collapse;width:100%;font-size:12px;min-width:520px;}
+  table.detail-table th, table.detail-table td{padding:6px 12px;text-align:right;color:var(--ink-soft);border-bottom:1px solid #F1EBD8;}
+  table.detail-table th{font-family:'IBM Plex Mono', monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:0.3px;background:#FAF6E9;}
+  table.detail-table td:first-child, table.detail-table th:first-child,
+  table.detail-table td:nth-child(2), table.detail-table th:nth-child(2){text-align:left;}
+  table.detail-table td:nth-child(2){color:var(--ink);font-weight:500;}
+
+  .empty{
+    color:var(--paper-dim);
+    text-align:center;
+    padding:60px 20px;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:18px;
+  }
+  .banner{
+    background:rgba(201,162,39,0.14);
+    border:1px solid rgba(201,162,39,0.4);
+    color:#5B4A10;
+    padding:10px 14px;
+    border-radius:7px;
+    font-size:13.5px;
+    margin-bottom:16px;
+  }
+  .footer-note{color:var(--paper-dim);opacity:0.65;font-size:12px;text-align:center;margin-top:30px;font-family:'IBM Plex Mono', monospace;}
+  .banner.edit-banner{background:rgba(31,75,63,0.08);border-color:rgba(31,75,63,0.3);color:var(--felt-dark);}
+  .pill{
+    display:inline-block;font-family:'IBM Plex Mono', monospace;font-size:11.5px;
+    background:var(--felt);color:var(--paper);padding:3px 9px;border-radius:20px;margin-left:8px;
+  }
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:var(--ink-soft);}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:10px;height:10px;border-radius:2px;display:inline-block;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <h1>Swiss <span>Table</span></h1>
+    <div class="sub" id="roundBadge">Setup</div>
+  </div>
+
+  <!-- SETUP -->
+  <div class="card" id="setupCard">
+    <h2>New tournament</h2>
+    <p class="hint">Four rounds. Players are grouped into tables each round; a player's placement at their table earns Swiss points, and cumulative Swiss points — not raw game scores — decide the overall standings and the next round's pairings.</p>
+
+    <div class="field">
+      <label for="tname">Tournament name</label>
+      <input type="text" id="tname" placeholder="e.g. Autumn Catan Open" value="Tournament">
+    </div>
+
+    <div class="row2">
+      <div class="field">
+        <label for="players">Players (one name per line)</label>
+        <textarea id="players" placeholder="Alice&#10;Bob&#10;Carla&#10;Dan&#10;Erin&#10;Femi&#10;..."></textarea>
+      </div>
+      <div class="field">
+        <label for="tsize">Players per table</label>
+        <input type="number" id="tsize" min="2" max="8" value="4">
+        <p class="hint" style="margin-top:8px;">If the player count doesn't divide evenly, tables in a round will differ by at most one seat.</p>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="startTournament()">Start Round 1</button>
+      <button class="btn-ghost" onclick="loadSample()">Fill sample data</button>
+    </div>
+    <div id="setupError" class="banner" style="display:none;background:rgba(155,59,52,0.1);border-color:rgba(155,59,52,0.4);color:var(--danger);"></div>
+  </div>
+
+  <!-- TOURNAMENT -->
+  <div id="tournamentArea" style="display:none;">
+    <div class="tabs" id="tabs"></div>
+    <div id="tabContent"></div>
+    <div class="btn-row" style="margin-top:6px;">
+      <button class="btn-ghost" onclick="resetTournament()">Reset tournament</button>
+      <button class="btn-ghost" onclick="exportCSV()">Export standings CSV</button>
+    </div>
+  </div>
+
+  <div class="footer-note">Swiss Pts per table = 1st: 4 · 2nd: 2 · 3rd: 1 · 4th: 0 · ties share the higher placement · Diff = score − table's top score</div>
+</div>
+
+<script>
+/* ---------------------------------------------------------------
+   STATE
+   Each player: { name, rounds: [ {tableId, points, rank, diff,
+                  swissPts, cumPts, cumDiff, placement}, ... up to 4 ] }
+------------------------------------------------------------------*/
+const TOTAL_ROUNDS = 4;
+// Swiss points awarded by table rank: 1st, 2nd, 3rd, 4th... any rank beyond
+// the list (larger tables) scores 0.
+const SWISS_POINTS_BY_RANK = [4, 2, 1, 0];
+function swissPointsForRank(rank){
+  return SWISS_POINTS_BY_RANK[rank-1] ?? 0;
+}
+let state = null;
+let activeTab = 'r1';
+
+function freshState(){
+  return {
+    name: 'Tournament',
+    tableSize: 4,
+    players: [],          // {name, rounds:[]}
+    pairing: [],           // current round pairing awaiting scores: [{tableId, idx:[playerIdx,...]}]
+    round: 1,              // round currently open for pairing/input
+    completed: 0,          // number of fully-submitted rounds
+    finished: false,
+    pendingScores: {}      // playerIdx -> score, used to prefill inputs when editing a past round
+  };
+}
+
+function loadSample(){
+  document.getElementById('tname').value = 'Autumn Catan Open';
+  document.getElementById('players').value =
+    ['Alice','Bob','Carla','Dan','Erin','Femi','Grace','Hassan','Ines','Jon','Kira','Leo'].join('\n');
+  document.getElementById('tsize').value = 4;
+}
+
+function saveLocal(){
+  try{ localStorage.setItem('swissTableState', JSON.stringify(state)); }catch(e){}
+}
+function loadLocal(){
+  try{
+    const raw = localStorage.getItem('swissTableState');
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return null;
+}
+
+/* ---------------------------------------------------------------
+   SETUP
+------------------------------------------------------------------*/
+function startTournament(){
+  const errEl = document.getElementById('setupError');
+  errEl.style.display='none';
+  const name = document.getElementById('tname').value.trim() || 'Tournament';
+  const raw = document.getElementById('players').value;
+  const names = raw.split('\n').map(s=>s.trim()).filter(Boolean);
+  const tsize = parseInt(document.getElementById('tsize').value, 10);
+
+  if(names.length < 4){
+    errEl.textContent = 'Enter at least 4 players (one per line).';
+    errEl.style.display='block';
+    return;
+  }
+  const dupes = names.filter((n,i)=>names.indexOf(n)!==i);
+  if(dupes.length){
+    errEl.textContent = 'Player names must be unique. Duplicate: "'+dupes[0]+'"';
+    errEl.style.display='block';
+    return;
+  }
+  if(!tsize || tsize < 2 || tsize > 8){
+    errEl.textContent = 'Players per table must be between 2 and 8.';
+    errEl.style.display='block';
+    return;
+  }
+  if(names.length < tsize){
+    errEl.textContent = 'You need at least as many players as seats at a table.';
+    errEl.style.display='block';
+    return;
+  }
+
+  state = freshState();
+  state.name = name;
+  state.tableSize = tsize;
+  state.players = names.map(n=>({name:n, rounds:[]}));
+  state.round = 1;
+  pairRound(1, shuffledIndices(names.length));
+  saveLocal();
+  activeTab = 'r1';
+  render();
+}
+
+function shuffledIndices(n){
+  const arr = Array.from({length:n}, (_,i)=>i);
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+
+/* ---------------------------------------------------------------
+   PAIRING
+   order: array of player indices, already sorted in the order
+   they should be grouped into tables (random for R1, standings
+   order for R2+).
+------------------------------------------------------------------*/
+function pairRound(roundNum, order){
+  const n = order.length;
+  const size = state.tableSize;
+  const tables = Math.ceil(n / size);
+  const base = Math.floor(n / tables);
+  const remainder = n % tables;
+  const pairing = [];
+  let cursor = 0;
+  for(let t=0; t<tables; t++){
+    // extra seat(s) go to the bottom table(s), not the top
+    const seats = base + (t >= tables - remainder ? 1 : 0);
+    const group = order.slice(cursor, cursor+seats);
+    cursor += seats;
+    pairing.push({ tableId: 'G'+roundNum+' T'+(t+1), idx: group });
+  }
+  state.pairing = pairing;
+  state.round = roundNum;
+  state.pendingScores = {};
+}
+
+/* ---------------------------------------------------------------
+   STANDINGS (cumulative, after `throughRound` rounds submitted)
+------------------------------------------------------------------*/
+function standingsOrder(throughRound){
+  return state.players.map((p,i)=>{
+    const r = p.rounds[throughRound-1];
+    return {
+      idx:i,
+      cumPts: r ? r.cumPts : 0,
+      cumDiff: r ? r.cumDiff : 0,
+      cumRaw: r ? r.cumRaw : 0
+    };
+  }).sort((a,b)=>
+    b.cumPts - a.cumPts ||
+    b.cumDiff - a.cumDiff ||
+    b.cumRaw - a.cumRaw ||
+    state.players[a.idx].name.localeCompare(state.players[b.idx].name)
+  );
+}
+
+function computePlacements(throughRound){
+  const ordered = standingsOrder(throughRound);
+  let lastKey = null, lastPlace = 0;
+  ordered.forEach((row, i)=>{
+    const key = row.cumPts+'|'+row.cumDiff+'|'+row.cumRaw;
+    if(key !== lastKey){ lastPlace = i+1; lastKey = key; }
+    row.placement = lastPlace;
+  });
+  return ordered;
+}
+
+/* ---------------------------------------------------------------
+   SUBMIT A ROUND'S SCORES
+------------------------------------------------------------------*/
+function submitRound(){
+  const roundNum = state.round;
+  // gather + validate scores
+  const scores = {}; // playerIdx -> number
+  let ok = true;
+  state.pairing.forEach(table=>{
+    table.idx.forEach(pIdx=>{
+      const el = document.getElementById('score_'+pIdx);
+      const v = el ? parseFloat(el.value) : NaN;
+      if(isNaN(v)){ ok = false; el.style.borderColor='var(--danger)'; }
+      else { scores[pIdx] = v; el.style.borderColor=''; }
+    });
+  });
+  if(!ok){
+    alert('Enter a numeric score for every player before submitting the round.');
+    return;
+  }
+
+  const size = state.tableSize;
+  state.pairing.forEach(table=>{
+    const seats = table.idx.length;
+    const withScores = table.idx.map(pIdx=>({pIdx, score:scores[pIdx]}));
+    const sorted = [...withScores].sort((a,b)=> b.score - a.score);
+    // standard competition ranking (1224)
+    const ranks = {};
+    let lastScore = null, lastRank = 0;
+    sorted.forEach((row, i)=>{
+      if(row.score !== lastScore){ lastRank = i+1; lastScore = row.score; }
+      ranks[row.pIdx] = lastRank;
+    });
+    const topScore = Math.max(...withScores.map(w=>w.score));
+    withScores.forEach(({pIdx, score})=>{
+      const diff = Math.round((score - topScore)*100)/100;
+      const rank = ranks[pIdx];
+      const swissPts = swissPointsForRank(rank);
+      const prev = state.players[pIdx].rounds[roundNum-2]; // previous round entry (0-indexed array)
+      const prevCum = prev ? prev.cumPts : 0;
+      const prevDiff = prev ? prev.cumDiff : 0;
+      const prevRaw = prev ? prev.cumRaw : 0;
+      state.players[pIdx].rounds[roundNum-1] = {
+        tableId: table.tableId,
+        points: score,
+        rank: rank,
+        diff: diff,
+        swissPts: swissPts,
+        cumPts: prevCum + swissPts,
+        cumDiff: Math.round((prevDiff + diff)*100)/100,
+        cumRaw: Math.round((prevRaw + score)*100)/100,
+        placement: null // filled below
+      };
+    });
+  });
+
+  // placements after this round
+  const ordered = computePlacements(roundNum);
+  ordered.forEach(row=>{
+    state.players[row.idx].rounds[roundNum-1].placement = row.placement;
+  });
+
+  state.completed = roundNum;
+
+  if(roundNum < TOTAL_ROUNDS){
+    const nextOrder = ordered.map(r=>r.idx);
+    pairRound(roundNum+1, nextOrder);
+    activeTab = 'r'+(roundNum+1);
+  } else {
+    state.finished = true;
+    state.pendingScores = {};
+    activeTab = 'standings';
+  }
+  saveLocal();
+  render();
+}
+
+function editRound(r){
+  if(!state || r > state.completed) return;
+  const laterRounds = state.completed - r;
+  const msg = laterRounds > 0
+    ? `Editing Round ${r} will clear the recorded results for Round${laterRounds>1?'s':''} ${r+1}${state.completed>r+1?'–'+state.completed:''}, since those tables were paired from Round ${r}'s standings. You'll need to re-submit them. Continue?`
+    : `Edit Round ${r}'s scores?`;
+  if(!confirm(msg)) return;
+
+  // Reconstruct the round's original table groupings and scores so the edit form is prefilled.
+  const groups = {};
+  state.players.forEach((p,pIdx)=>{
+    const rd = p.rounds[r-1];
+    if(!groups[rd.tableId]) groups[rd.tableId] = [];
+    groups[rd.tableId].push(pIdx);
+  });
+  const tableIds = Object.keys(groups).sort((a,b)=>{
+    const na = parseInt(a.split('T')[1],10), nb = parseInt(b.split('T')[1],10);
+    return na-nb;
+  });
+  const pendingScores = {};
+  state.players.forEach((p,pIdx)=>{
+    pendingScores[pIdx] = p.rounds[r-1].points;
+  });
+
+  state.pairing = tableIds.map(tid=>({ tableId: tid, idx: groups[tid] }));
+  state.pendingScores = pendingScores;
+
+  // Truncate this round and everything after it — they'll be regenerated on resubmit.
+  state.players.forEach(p=>{ p.rounds.length = r-1; });
+  state.completed = r-1;
+  state.finished = false;
+  state.round = r;
+
+  activeTab = 'r'+r;
+  saveLocal();
+  render();
+}
+
+function resetTournament(){
+  if(!confirm('Reset the tournament? All rounds and scores will be lost.')) return;
+  state = null;
+  try{ localStorage.removeItem('swissTableState'); }catch(e){}
+  activeTab = 'r1';
+  render();
+}
+
+/* ---------------------------------------------------------------
+   RENDER
+------------------------------------------------------------------*/
+function render(){
+  const setupCard = document.getElementById('setupCard');
+  const area = document.getElementById('tournamentArea');
+  const badge = document.getElementById('roundBadge');
+
+  if(!state){
+    setupCard.style.display='block';
+    area.style.display='none';
+    badge.textContent='Setup';
+    return;
+  }
+  setupCard.style.display='none';
+  area.style.display='block';
+  badge.textContent = state.finished ? 'Final standings' : ('Round '+state.round+' of '+TOTAL_ROUNDS);
+
+  renderTabs();
+  renderTabContent();
+}
+
+function renderTabs(){
+  const tabsEl = document.getElementById('tabs');
+  let html = '';
+  for(let r=1; r<=TOTAL_ROUNDS; r++){
+    const done = r <= state.completed;
+    const locked = r > state.completed + 1;
+    const cls = ['tab'];
+    if(activeTab === 'r'+r) cls.push('active');
+    if(done) cls.push('done');
+    if(locked) cls.push('locked');
+    html += `<div class="${cls.join(' ')}" onclick="${locked?'':'switchTab(\'r'+r+'\')'}"><span class="dot"></span>Round ${r}</div>`;
+  }
+  const stCls = ['tab'];
+  if(activeTab==='standings') stCls.push('active');
+  html += `<div class="${stCls.join(' ')}" onclick="switchTab('standings')"><span class="dot" style="background:${state.completed>0?'#4F7A5F':'#B08D57'}"></span>Standings</div>`;
+  tabsEl.innerHTML = html;
+}
+
+function switchTab(tab){
+  activeTab = tab;
+  render();
+}
+
+function renderTabContent(){
+  const el = document.getElementById('tabContent');
+  if(activeTab === 'standings'){
+    el.innerHTML = renderStandings();
+    return;
+  }
+  const r = parseInt(activeTab.slice(1),10);
+  if(r <= state.completed){
+    el.innerHTML = renderPastRound(r);
+  } else if(r === state.round){
+    el.innerHTML = renderCurrentRound(r);
+  } else {
+    el.innerHTML = '<div class="card"><p class="empty">Round '+r+' isn\'t open yet.</p></div>';
+  }
+}
+
+function medalClass(rank){
+  if(rank===1) return 'r1';
+  if(rank===2) return 'r2';
+  if(rank===3) return 'r3';
+  return '';
+}
+
+function renderCurrentRound(r){
+  const size = state.tableSize;
+  const isEdit = state.pendingScores && Object.keys(state.pendingScores).length > 0;
+  let cards = state.pairing.map(table=>{
+    const rows = table.idx.map(pIdx=>{
+      const p = state.players[pIdx];
+      const prefill = isEdit && state.pendingScores[pIdx] !== undefined ? state.pendingScores[pIdx] : '';
+      return `<div class="prow">
+        <div class="pname">${escapeHtml(p.name)}</div>
+        <input id="score_${pIdx}" type="number" step="any" placeholder="score" value="${prefill}">
+        <div class="rankbadge">pts</div>
+      </div>`;
+    }).join('');
+    return `<div class="tent">
+      <div class="tent-head"><span class="tid">${table.tableId}</span><span class="tcount">${table.idx.length} players</span></div>
+      <div class="tent-body">${rows}</div>
+    </div>`;
+  }).join('');
+
+  const editBanner = isEdit ? `<div class="banner edit-banner">Editing Round ${r}. Scores are prefilled from what was submitted before — fix what's wrong and resubmit. Any later rounds already paired from this one will be regenerated once you resubmit.</div>` : '';
+
+  return `<div class="card">
+    <h2>Round ${r} — ${isEdit?'edit':'enter'} raw scores <span class="pill">${state.pairing.length} tables</span></h2>
+    <p class="hint">Type each player's raw in-game score. Scores only decide table rank &amp; differential — Swiss points (4 / 2 / 1 / 0 by rank) are what carry forward.</p>
+    ${editBanner}
+    <div class="table-grid">${cards}</div>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="submitRound()">${isEdit ? 'Save corrected scores' : 'Submit Round '+r+' &amp; '+(r<TOTAL_ROUNDS?'pair Round '+(r+1):'finish tournament')}</button>
+    </div>
+  </div>`;
+}
+
+function renderPastRound(r){
+  const groups = {};
+  state.players.forEach((p,pIdx)=>{
+    const rd = p.rounds[r-1];
+    if(!rd) return;
+    if(!groups[rd.tableId]) groups[rd.tableId] = [];
+    groups[rd.tableId].push({pIdx, ...rd});
+  });
+  const tableIds = Object.keys(groups).sort((a,b)=>{
+    const na = parseInt(a.split('T')[1],10), nb = parseInt(b.split('T')[1],10);
+    return na-nb;
+  });
+  const cards = tableIds.map(tid=>{
+    const rows = groups[tid].sort((a,b)=>a.rank-b.rank).map(row=>{
+      const p = state.players[row.pIdx];
+      return `<div class="prow ${medalClass(row.rank)}">
+        <div class="pname">${escapeHtml(p.name)}</div>
+        <div style="text-align:right;font-family:'IBM Plex Mono',monospace;">${row.points} pts</div>
+        <div class="rankbadge">#${row.rank}</div>
+      </div>`;
+    }).join('');
+    return `<div class="tent">
+      <div class="tent-head"><span class="tid">${tid}</span><span class="tcount">${groups[tid].length} players</span></div>
+      <div class="tent-body">${rows}</div>
+    </div>`;
+  }).join('');
+
+  const laterRounds = state.completed - r;
+  const cascadeNote = laterRounds > 0
+    ? `Editing will clear the recorded results for Round${laterRounds>1?'s':''} ${r+1}${state.completed>r+1?'–'+state.completed:''}, since they were paired using Round ${r}'s standings.`
+    : `No later rounds are recorded yet, so editing is safe.`;
+
+  return `<div class="card">
+    <h2>Round ${r} results <span class="pill">closed</span></h2>
+    <p class="hint">Table rank and score for round ${r}. Swiss points and running totals are on the Standings tab.</p>
+    <div class="table-grid">${cards}</div>
+    <div class="btn-row">
+      <button class="btn-ghost" onclick="editRound(${r})">Edit Round ${r} scores</button>
+    </div>
+    <p class="hint" style="margin:10px 0 0;">${cascadeNote}</p>
+  </div>`;
+}
+
+function renderStandings(){
+  if(state.completed === 0){
+    return `<div class="card"><p class="empty">Standings appear once Round 1 is submitted.</p></div>`;
+  }
+  const through = state.completed;
+  const ordered = computePlacements(through);
+
+  const finishNote = state.finished
+    ? `<div class="banner">🏆 Tournament complete. Final Rank is Swiss Pts first; ties are broken by cumulative Diff vs table leader, then cumulative raw points.</div>`
+    : `<div class="banner">Standings after Round ${through}. Ranked by Swiss Pts; ties broken by cumulative Diff vs table leader, then cumulative raw points. This order sets Round ${through+1}'s table groupings.</div>`;
+
+  const headlineRows = ordered.map(row=>{
+    const p = state.players[row.idx];
+    const rd = p.rounds[through-1];
+    const medal = row.placement===1?'medal-1':row.placement===2?'medal-2':row.placement===3?'medal-3':'';
+
+    const placementTrail = [];
+    const rankTrail = [];
+    for(let r=1; r<=through; r++){
+      const rr = p.rounds[r-1];
+      placementTrail.push(rr.placement);
+      rankTrail.push(rr.rank);
+    }
+    const first = placementTrail[0], last = placementTrail[placementTrail.length-1];
+    const trendArrow = through<2 ? '' : (last<first ? '<span class="trend up">▲</span>' : last>first ? '<span class="trend down">▼</span>' : '<span class="trend flat">—</span>');
+    const overallLine = placementTrail.map((v,i)=> i===placementTrail.length-1 ? `<b>${v}</b>` : v).join('<span class="arrow">→</span>');
+    const tableLine = rankTrail.map(v=>ordinal(v)).join(' · ');
+
+    return `<tr>
+      <td class="place-cell ${medal}"><span class="place-badge">${ordinal(row.placement)}</span></td>
+      <td class="name-cell">${escapeHtml(p.name)}</td>
+      <td class="stat-cell stat-pts">${rd.cumPts}</td>
+      <td class="stat-cell stat-diff ${rd.cumDiff>0?'pos':rd.cumDiff<0?'neg':''}">${rd.cumDiff>0?'+':''}${rd.cumDiff}</td>
+      <td class="stat-cell stat-raw">${rd.cumRaw}</td>
+      <td class="journey-cell">
+        <div class="journey-overall">${overallLine}${trendArrow}</div>
+        <div class="journey-table">table: ${tableLine}</div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  // Round-by-round detail, grouped by round then by table
+  const roundBlocks = [];
+  for(let r=1; r<=through; r++){
+    const groups = {};
+    state.players.forEach((p,pIdx)=>{
+      const rd = p.rounds[r-1];
+      if(!groups[rd.tableId]) groups[rd.tableId] = [];
+      groups[rd.tableId].push({pIdx, ...rd});
+    });
+    const tableIds = Object.keys(groups).sort((a,b)=>{
+      const na = parseInt(a.split('T')[1],10), nb = parseInt(b.split('T')[1],10);
+      return na-nb;
+    });
+    const rowsHtml = tableIds.map(tid=>{
+      const rows = groups[tid].sort((a,b)=>a.rank-b.rank).map(row=>{
+        const p = state.players[row.pIdx];
+        return `<tr>
+          <td>${tid}</td>
+          <td>${escapeHtml(p.name)}</td>
+          <td>${row.points}</td>
+          <td>#${row.rank}</td>
+          <td>${row.diff>0?'+':''}${row.diff}</td>
+          <td>${row.swissPts}</td>
+        </tr>`;
+      }).join('');
+      return rows;
+    }).join('');
+    roundBlocks.push(`<details class="round-detail">
+      <summary>Round ${r} — table-by-table detail</summary>
+      <div class="table-scroll">
+        <table class="detail-table">
+          <thead><tr><th>Table</th><th>Player</th><th>G${r} Pts</th><th>G${r} Rank</th><th>G${r} Diff</th><th>G${r} Swiss</th></tr></thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+      </div>
+    </details>`);
+  }
+
+  return `<div class="card">
+    <h2>Standings ${state.finished?'— Final':''}</h2>
+    ${finishNote}
+    <div class="table-scroll">
+      <table class="standings headline">
+        <thead><tr>
+          <th class="place-col">Place</th>
+          <th>Player</th>
+          <th>Swiss Pts</th>
+          <th>Diff <small>tiebreak 1 · vs table leader</small></th>
+          <th>Raw Total <small>tiebreak 2</small></th>
+          <th>Journey <small>overall place · table rank</small></th>
+        </tr></thead>
+        <tbody>${headlineRows}</tbody>
+      </table>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--gold)"></i>1st place</span>
+      <span><i style="background:var(--silver)"></i>2nd place</span>
+      <span><i style="background:var(--bronze)"></i>3rd place</span>
+    </div>
+  </div>
+  <div class="card detail-card">
+    <h2 class="detail-heading">Round-by-round detail</h2>
+    <p class="hint">Table assignments, raw scores and per-round Swiss points. Expand a round to see it.</p>
+    ${roundBlocks.join('')}
+  </div>`;
+}
+
+function ordinal(n){
+  const s = ['th','st','nd','rd'];
+  const v = n % 100;
+  return n + (s[(v-20)%10] || s[v] || s[0]);
+}
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ---------------------------------------------------------------
+   CSV EXPORT
+------------------------------------------------------------------*/
+function exportCSV(){
+  if(!state || state.completed===0){ alert('Submit at least one round first.'); return; }
+  const through = state.completed;
+  const ordered = computePlacements(through);
+  const header = ['Placement','Player','Swiss Pts','Cum Diff (tiebreak 1)','Cum Raw Total (tiebreak 2)'];
+  for(let r=1;r<=through;r++){
+    header.push(`G${r} T-ID`,`G${r} Points`,`G${r} Rank`,`G${r} Diff`,`G${r} Swiss Pts`,`Pts After R${r}`,`Diff After R${r}`,`Raw After R${r}`,`R${r} Placement`);
+  }
+  if(state.finished) header.push('Final Rank');
+  const lines = [header.join(',')];
+  ordered.forEach(row=>{
+    const p = state.players[row.idx];
+    const latest = p.rounds[through-1];
+    const cells = [row.placement, csvSafe(p.name), latest.cumPts, latest.cumDiff, latest.cumRaw];
+    for(let r=1;r<=through;r++){
+      const rd = p.rounds[r-1];
+      cells.push(rd.tableId, rd.points, rd.rank, rd.diff, rd.swissPts, rd.cumPts, rd.cumDiff, rd.cumRaw, rd.placement);
+    }
+    if(state.finished) cells.push(row.placement);
+    lines.push(cells.join(','));
+  });
+  const blob = new Blob([lines.join('\n')], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = (state.name || 'tournament').replace(/[^a-z0-9]+/gi,'_') + '_standings.csv';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+function csvSafe(v){
+  const s = String(v);
+  return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s;
+}
+
+/* ---------------------------------------------------------------
+   INIT
+------------------------------------------------------------------*/
+(function init(){
+  const saved = loadLocal();
+  if(saved && saved.players && saved.players.length){
+    state = saved;
+    activeTab = state.finished ? 'standings' : ('r'+state.round);
+  }
+  render();
+})();
+</script>
+</body>
+</html>
