@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmonies Tournament Mechanics</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,500&family=Nunito:wght@400;600;700&display=swap');
+
+        :root {
+            /* Harmonies-inspired color palette */
+            --bg-color: #f4f1ea;        /* Soft cardboard/parchment */
+            --card-bg: #ffffff;         /* White tile background */
+            --text-main: #2d3b36;       /* Dark forest/pine text */
+            --text-muted: #5a6661;      /* Softer text */
+            --accent-green: #598b68;    /* Tree canopy green */
+            --accent-blue: #6cb5c7;     /* River/water blue */
+            --accent-orange: #d37a50;   /* Clay/mountain orange */
+            --accent-yellow: #e4a853;   /* Wheat/field yellow */
+            --border-color: #e5e0d3;    /* Light separator */
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            /* Subtle dot pattern reminiscent of board game texture */
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
+            color: white;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(89, 139, 104, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative background circles for the header */
+        header::before, header::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        header::before {
+            width: 200px; height: 200px;
+            top: -50px; left: -50px;
+        }
+        header::after {
+            width: 300px; height: 300px;
+            bottom: -100px; right: -50px;
+        }
+
+        header h1 {
+            font-family: 'Lora', serif;
+            font-size: 3rem;
+            margin: 0;
+            text-shadow: 1px 2px 4px rgba(0,0,0,0.15);
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.05);
+            border-top: 8px solid var(--accent-green);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .section-card:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Thematic alternating borders representing different terrain types */
+        .section-card:nth-child(even) { border-top-color: var(--accent-blue); }
+        .section-card:nth-child(3n) { border-top-color: var(--accent-orange); }
+        .section-card:nth-child(4n) { border-top-color: var(--accent-yellow); }
+
+        h2 {
+            font-family: 'Lora', serif;
+            color: var(--text-main);
+            font-size: 1.8rem;
+            margin-top: 0;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Number tokens to mimic wooden game pieces */
+        .section-number {
+            background-color: var(--text-main);
+            color: white;
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.2);
+        }
+
+        .section-card:nth-child(even) .section-number { background-color: var(--accent-blue); }
+        .section-card:nth-child(3n) .section-number { background-color: var(--accent-orange); }
+        .section-card:nth-child(4n) .section-number { background-color: var(--accent-yellow); }
+        .section-card:nth-child(5n) .section-number { background-color: var(--accent-green); }
+
+        h3 {
+            font-family: 'Lora', serif;
+            color: var(--accent-green);
+            font-size: 1.3rem;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        p { 
+            margin-bottom: 15px; 
+            color: var(--text-muted);
+        }
+
+        ul, ol {
+            margin-bottom: 20px;
+            padding-left: 25px;
+            color: var(--text-muted);
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        ul li::marker {
+            color: var(--accent-orange);
+            font-size: 1.2rem;
+        }
+
+        ol li::marker {
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        /* Table Styling matching Hex/Nature theme */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 25px 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 0 0 1px var(--border-color);
+        }
+
+        th, td {
+            padding: 14px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #faf9f6;
+            font-family: 'Lora', serif;
+            font-weight: 700;
+            color: var(--text-main);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        
+        tr:hover td {
+            background-color: rgba(108, 181, 199, 0.04);
+        }
+
+        .highlight {
+            font-weight: 700;
+            color: var(--accent-orange);
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 2.2rem; }
+            .section-card { padding: 25px; }
+            h2 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Harmonies Tournament</h1>
+        <p style="font-family: 'Lora', serif; font-size: 1.3rem; margin-top: 10px;">Official Mechanics</p>
+    </header>
+
+    <div class="section-card">
+        <h2><span class="section-number">1</span> Overview</h2>
+        
+        <h3>Tournament Format</h3>
+        <p>This tournament uses a Swiss-style multiplayer format, where all participants play every round. Players are not eliminated throughout the tournament. Instead, after each round, players are regrouped based on their cumulative performance, allowing competitors with similar records to face one another as the event progresses.</p>
+        <p>Unlike single-elimination tournaments, every participant is guaranteed the same number of games.</p>
+
+        <h3>Number of Rounds</h3>
+        <p>The tournament consists of a predetermined number of rounds, announced by the organizer before the event begins. Each participant plays in every round unless they voluntarily withdraw or are otherwise removed from the tournament.</p>
+
+        <h3>Table Sizes</h3>
+        <p>Each table consists of 2 to 4 players. The tournament organizer will distribute players as evenly as possible across all tables, prioritizing balanced table sizes while ensuring that no table exceeds four players.</p>
+
+        <h3>Objective</h3>
+        <p>Players earn Tournament Points each round based on their finishing placement at their table. These points accumulate over the course of the tournament.</p>
+        <p>At the end of the final round, players are ranked according to:</p>
+        <ul>
+            <li>Total Tournament Points earned across all rounds.</li>
+            <li>Tie-breakers, if necessary, as defined in the Standings section.</li>
+        </ul>
+        <p>The player with the highest overall standing at the conclusion of the tournament is declared the tournament champion.</p>
+    </div>
+
+    <div class="section-card">
+        <h2><span class="section-number">2</span> Registration & Seating</h2>
+        <ul>
+            <li>Tournament registration costs <span class="highlight">₱100 per player</span>, separate from the event entrance fee.</li>
+            <li>Players must register before the tournament begins.</li>
+            <li>Round 1 pairings are assigned randomly.</li>
+            <li>Tables will have 2 to 4 players, distributed as evenly as possible.</li>
+            <li>Tables are identified by unique identifiers.</li>
+        </ul>
+    </div>
+
+    <div class="section-card">
+        <h2><span class="section-number">3</span> Round Structure</h2>
+        <ul>
+            <li>The number of rounds will be announced before the tournament starts.</li>
+            <li>Each player participates in every round.</li>
+            <li>At the end of each game, players report their final placements to the organizer.</li>
+            <li>The organizer verifies results, updates standings, and announces the next round's pairings.</li>
+        </ul>
+
+        <h3>Round Format</h3>
+        <p>Each round will use the following game setup:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Round</th>
+                    <th>Setup</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Side A — No Spirit Animal</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Side B — No Spirit Animal</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Side A — With Spirit Animal</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Side B — With Spirit Animal</td>
+                </tr>
+            </tbody>
+        </table>
+        <p><em>The organizer will announce the appropriate setup before the start of each round.</em></p>
+    </div>
+
+    <div class="section-card">
+        <h2><span class="section-number">4</span> Scoring</h2>
+        <p>Players earn Tournament Points based on their placement at each table:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Placement</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1st</td>
+                    <td><span class="highlight">4</span></td>
+                </tr>
+                <tr>
+                    <td>2nd</td>
+                    <td><span class="highlight">2</span></td>
+                </tr>
+                <tr>
+                    <td>3rd</td>
+                    <td><span class="highlight">1</span></td>
+                </tr>
+                <tr>
+                    <td>4th</td>
+                    <td><span class="highlight">0</span></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>For tables with fewer than four players, points are awarded according to the available placements (e.g., a 3-player table awards 4, 2, and 1 points).</p>
+        <p>All results are recorded at the end of each round and added to each player's cumulative tournament score.</p>
+    </div>
+
+    <div class="section-card">
+        <h2><span class="section-number">5</span> Standings</h2>
+        <p>Standings are updated after each round using the following order:</p>
+        <ol>
+            <li>Total Tournament Points (highest first)</li>
+            <li>Total Point Differential (lowest first)</li>
+            <li>Total Points</li>
+            <li>Round 1 Placement</li>
+            <li>Round 2 Placement</li>
+            <li>Round 3 Placement</li>
+            <li>Round 4 Placement</li>
+            <li>Additional round placements, if necessary</li>
+        </ol>
+        <p>If players remain tied after all tie-breakers, the organizer will determine the final ranking.</p>
+    </div>
+
+    <div class="section-card">
+        <h2><span class="section-number">6</span> Swiss Pairing System</h2>
+        <h3>Round 1</h3>
+        <p>Players are seated randomly.</p>
+        
+        <h3>Subsequent Rounds</h3>
+        <ul>
+            <li>Players are sorted according to the current standings.</li>
+            <li>Players with similar records are grouped together.</li>
+            <li>Groups are divided into tables of 2 to 4 players.</li>
+            <li>Tables are filled as evenly as possible, starting from the top table of the round.</li>
+            <li>If extra players remain, they are assigned to the highest tables first.</li>
+            <li>New table assignments are announced before each round.</li>
+        </ul>
+    </div>
+
+    <div class="section-card">
+        <h2><span class="section-number">7</span> Table Assignments</h2>
+        <ul>
+            <li>Each table is identified by a unique identifier.</li>
+            <li>Players must proceed to their assigned table before each round begins.</li>
+            <li>The organizer will announce pairings and table assignments before every round.</li>
+        </ul>
+    </div>
+
+    <div class="section-card">
+        <h2><span class="section-number">8</span> Repeat Opponents</h2>
+        <p>The tournament does not guarantee that players will avoid facing the same opponents more than once. Pairings are generated based on the Swiss system, and repeat opponents may occur if necessary.</p>
+    </div>
+
+    <div class="section-card">
+        <h2><span class="section-number">9</span> Reporting Results</h2>
+        <ul>
+            <li>At the end of each round, players report their finishing placements to the organizer.</li>
+            <li>Results should be confirmed by all players at the table before submission.</li>
+            <li>Once the next round has begun, previously submitted results may only be changed at the organizer's discretion.</li>
+        </ul>
+    </div>
+
+    <div class="section-card">
+        <h2><span class="section-number">10</span> Final Standings</h2>
+        <p>After the final round, players are ranked according to the Standings rules.</p>
+        <p>The player with the highest overall standing is declared the tournament winner. Any prizes or awards will be presented after the final standings have been announced.</p>
+        
+        <h3>Prizes</h3>
+        <p>The tournament winner will receive one (1) prize, chosen from the following options, subject to availability:</p>
+        <ul>
+            <li>Board Game Arena (BGA) Premium Subscription</li>
+            <li>Discord Nitro</li>
+            <li>Blood on the Clocktower (BOTC) Subscription</li>
+        </ul>
+        <p>The prize value will not exceed <span class="highlight">₱300</span>. The organizer reserves the right to provide an equivalent prize of equal or lesser value if necessary.</p>
+    </div>
+
+    <div class="section-card">
+        <h2><span class="section-number">11</span> Disputes</h2>
+        <ul>
+            <li>The organizer has the final authority on all tournament rulings.</li>
+            <li>Rules questions and scoring issues should be raised immediately.</li>
+            <li>Appeals made after the start of the next round may not be considered.</li>
+        </ul>
+    </div>
+
+    <div class="section-card">
+        <h2><span class="section-number">12</span> Sportsmanship & Disqualification</h2>
+        <p>Players are expected to conduct themselves with respect toward fellow participants, spectators, and tournament staff.</p>
+        <p>The following may result in penalties or disqualification at the organizer's discretion:</p>
+        <ul>
+            <li>Cheating or intentionally breaking game rules.</li>
+            <li>Unsportsmanlike conduct, including harassment, abusive language, or disruptive behavior.</li>
+            <li>Collusion, match-fixing, or intentionally influencing results outside normal gameplay.</li>
+            <li>Providing false match results.</li>
+            <li>Repeated failure to follow organizer instructions.</li>
+        </ul>
+        <p><em>The organizer reserves the right to issue warnings, game penalties, or disqualify a player depending on the severity of the offense. All organizer decisions are final.</em></p>
+    </div>
+
+</div>
+
+</body>
+</html>
