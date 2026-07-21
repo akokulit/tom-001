@@ -293,6 +293,37 @@
   .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:var(--ink-soft);}
   .legend span{display:inline-flex;align-items:center;gap:6px;}
   .legend i{width:10px;height:10px;border-radius:2px;display:inline-block;}
+
+  .row3{display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:16px;}
+  @media (max-width:720px){.row3{grid-template-columns:1fr;}}
+
+  /* ---- Sync bar ---- */
+  .sync-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:rgba(0,0,0,0.18);padding:9px 14px;border-radius:8px;margin-bottom:18px;}
+  .sync-dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0;}
+  .sync-dot.off{background:#8a8474;}
+  .sync-dot.on{background:#4F7A5F;box-shadow:0 0 0 3px rgba(79,122,95,0.25);}
+  .sync-dot.err{background:#C0554C;}
+  .sync-label{font-family:'IBM Plex Mono', monospace;font-size:11.5px;color:#BFE0CE;white-space:nowrap;}
+  .sync-bar input{max-width:300px;font-size:12px;padding:6px 9px;font-family:'IBM Plex Mono', monospace;background:rgba(255,255,255,0.9);}
+  .sync-bar button{padding:7px 12px;font-size:12px;}
+
+  /* ---- Schedule tab ---- */
+  .sched-round{margin-bottom:20px;}
+  .sched-round-title{font-family:'Fraunces', serif;font-weight:600;font-size:17px;margin:0 0 10px;display:flex;align-items:center;gap:8px;color:var(--ink);}
+  .sched-row{background:#fff;border:1px solid #E7DFC6;border-radius:8px;padding:12px 14px;margin-bottom:9px;}
+  .sched-main{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:7px;flex-wrap:wrap;}
+  .sched-main .tid{font-family:'IBM Plex Mono', monospace;font-weight:600;font-size:14px;color:var(--ink);}
+  .sched-status{font-family:'IBM Plex Mono', monospace;font-size:10.5px;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:0.3px;}
+  .status-waiting{background:rgba(176,141,87,0.16);color:#8a6a2f;}
+  .status-progress{background:rgba(46,107,69,0.14);color:#2E6B45;}
+  .status-complete{background:rgba(90,97,105,0.16);color:#5A6169;}
+  .sched-players{font-size:13.5px;color:var(--ink-soft);margin-bottom:9px;}
+  .sched-room-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .room-input{max-width:220px;padding:7px 10px;font-size:13.5px;}
+  .room-value{font-family:'IBM Plex Mono', monospace;font-size:12.5px;color:var(--ink-soft);}
+  .sched-toggle{padding:6px 12px;font-size:12px;}
+  .sched-placeholder{opacity:0.65;}
+  .sched-placeholder .sched-round-title{color:var(--ink-soft);}
 </style>
 </head>
 <body>
@@ -301,6 +332,13 @@
   <div class="masthead">
     <h1>Swiss <span>Table</span></h1>
     <div class="sub" id="roundBadge">Setup</div>
+  </div>
+
+  <div class="sync-bar" id="syncBar" style="display:none;">
+    <span class="sync-dot off" id="syncDot"></span>
+    <span class="sync-label" id="syncLabel">Local only</span>
+    <input type="text" id="shareLinkInput" readonly value="" placeholder="Live viewer link appears here">
+    <button class="btn-ghost" onclick="copyShareLink()">Copy live link</button>
   </div>
 
   <!-- SETUP -->
@@ -313,15 +351,28 @@
       <input type="text" id="tname" placeholder="e.g. Autumn Catan Open" value="Tournament">
     </div>
 
-    <div class="row2">
+    <div class="field">
+      <label for="players">Players (one name per line)</label>
+      <textarea id="players" placeholder="Alice&#10;Bob&#10;Carla&#10;Dan&#10;Erin&#10;Femi&#10;..."></textarea>
+    </div>
+
+    <div class="row3">
       <div class="field">
-        <label for="players">Players (one name per line)</label>
-        <textarea id="players" placeholder="Alice&#10;Bob&#10;Carla&#10;Dan&#10;Erin&#10;Femi&#10;..."></textarea>
+        <label for="minPerTable">Min players per table</label>
+        <input type="number" id="minPerTable" min="2" max="10" value="3">
       </div>
       <div class="field">
-        <label for="tsize">Players per table</label>
-        <input type="number" id="tsize" min="2" max="8" value="4">
-        <p class="hint" style="margin-top:8px;">If the player count doesn't divide evenly, tables in a round will differ by at most one seat.</p>
+        <label for="maxPerTable">Max players per table</label>
+        <input type="number" id="maxPerTable" min="2" max="12" value="4">
+        <p class="hint" style="margin-top:8px;">Most games in a round will sit at max; a table only drops toward min if the player count doesn't divide evenly, and the leftover seats fill the bottom tables first.</p>
+      </div>
+      <div class="field">
+        <label for="tcode">Tournament code <span style="font-weight:400;text-transform:none;letter-spacing:0;">— used for the live viewer link</span></label>
+        <div style="display:flex;gap:8px;">
+          <input type="text" id="tcode" placeholder="e.g. AUTUMN26">
+          <button type="button" class="btn-ghost" onclick="document.getElementById('tcode').value=randomCode()">Generate</button>
+        </div>
+        <p class="hint" style="margin-top:8px;" id="setupSyncNote">Checking live-sync setup…</p>
       </div>
     </div>
 
@@ -336,7 +387,7 @@
   <div id="tournamentArea" style="display:none;">
     <div class="tabs" id="tabs"></div>
     <div id="tabContent"></div>
-    <div class="btn-row" style="margin-top:6px;">
+    <div class="btn-row" id="adminButtons" style="margin-top:6px;">
       <button class="btn-ghost" onclick="resetTournament()">Reset tournament</button>
       <button class="btn-ghost" onclick="exportCSV()">Export standings CSV</button>
     </div>
@@ -345,11 +396,20 @@
   <div class="footer-note">Swiss Pts per table = 1st: 4 · 2nd: 2 · 3rd: 1 · 4th: 0 · ties share the higher placement · Diff = score − table's top score</div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
+/* =================================================================
+   LIVE SYNC CONFIG — replace these two values with your own Supabase
+   project's URL and public "anon" key (Project Settings → API).
+   Leave them as-is to run fully offline (localStorage only).
+================================================================== */
+const SUPABASE_URL = 'https://vaqjqwldsmyszghkvtou.supabase.co/rest/v1/';
+const SUPABASE_ANON_KEY = 'sb_publishable_qocS8DiuJcIa_4He4LSKtg_brd0v74Z';
+
 /* ---------------------------------------------------------------
    STATE
    Each player: { name, rounds: [ {tableId, points, rank, diff,
-                  swissPts, cumPts, cumDiff, placement}, ... up to 4 ] }
+                  swissPts, cumPts, cumDiff, cumRaw, room, placement}, ... up to 4 ] }
 ------------------------------------------------------------------*/
 const TOTAL_ROUNDS = 4;
 // Swiss points awarded by table rank: 1st, 2nd, 3rd, 4th... any rank beyond
@@ -360,13 +420,19 @@ function swissPointsForRank(rank){
 }
 let state = null;
 let activeTab = 'r1';
+let VIEW_ONLY = false;
+let sb = null;
+let syncState = 'idle'; // idle | synced | error
 
 function freshState(){
   return {
     name: 'Tournament',
-    tableSize: 4,
+    code: '',
+    minPerTable: 3,
+    maxPerTable: 4,
     players: [],          // {name, rounds:[]}
-    pairing: [],           // current round pairing awaiting scores: [{tableId, idx:[playerIdx,...]}]
+    pairing: [],           // current round pairing awaiting scores: [{tableId, idx:[playerIdx,...], room, status}]
+    pairingWarning: false, // true if this round's table sizes fall outside min/max due to player count
     round: 1,              // round currently open for pairing/input
     completed: 0,          // number of fully-submitted rounds
     finished: false,
@@ -374,15 +440,100 @@ function freshState(){
   };
 }
 
+function randomCode(){
+  return Math.random().toString(36).slice(2,8).toUpperCase();
+}
+
 function loadSample(){
   document.getElementById('tname').value = 'Autumn Catan Open';
   document.getElementById('players').value =
     ['Alice','Bob','Carla','Dan','Erin','Femi','Grace','Hassan','Ines','Jon','Kira','Leo'].join('\n');
-  document.getElementById('tsize').value = 4;
+  document.getElementById('minPerTable').value = 3;
+  document.getElementById('maxPerTable').value = 4;
+  if(!document.getElementById('tcode').value) document.getElementById('tcode').value = randomCode();
+}
+
+/* ---------------------------------------------------------------
+   LIVE SYNC (Supabase) — optional. Everything above/below this
+   still works with plain localStorage if these aren't configured.
+------------------------------------------------------------------*/
+function isSupabaseConfigured(){
+  return !SUPABASE_URL.includes('YOUR-PROJECT') && !SUPABASE_ANON_KEY.includes('YOUR-ANON');
+}
+function initSupabase(){
+  try{
+    if(window.supabase && typeof window.supabase.createClient === 'function' && isSupabaseConfigured()){
+      sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+  }catch(e){ console.error('Supabase init failed', e); sb = null; }
+}
+async function publishNow(){
+  if(!sb || !state || !state.code || VIEW_ONLY) return;
+  try{
+    await sb.from('tournaments').upsert({ id: state.code, state: state, updated_at: new Date().toISOString() });
+    setSyncStatus('synced');
+  }catch(e){
+    console.error('Publish failed', e);
+    setSyncStatus('error');
+  }
+}
+async function fetchRemote(code){
+  if(!sb) return null;
+  try{
+    const { data, error } = await sb.from('tournaments').select('state, updated_at').eq('id', code).maybeSingle();
+    if(error){ console.error(error); return null; }
+    return data ? data.state : null;
+  }catch(e){ console.error(e); return null; }
+}
+function setSyncStatus(s){
+  syncState = s;
+  const bar = document.getElementById('syncBar');
+  if(bar && bar.style.display !== 'none') updateSyncBar();
+}
+function updateSyncBar(){
+  const dot = document.getElementById('syncDot');
+  const label = document.getElementById('syncLabel');
+  const linkInput = document.getElementById('shareLinkInput');
+  if(!dot) return;
+  if(!sb){
+    dot.className = 'sync-dot off';
+    label.textContent = 'Local only — add your Supabase keys near the top of the file to enable live sync';
+    linkInput.value = '';
+    return;
+  }
+  dot.className = 'sync-dot ' + (syncState==='error' ? 'err' : 'on');
+  label.textContent = syncState==='error' ? 'Sync error — check the browser console' : ('Live · code ' + state.code);
+  linkInput.value = buildShareLink();
+}
+function buildShareLink(){
+  const url = new URL(location.href);
+  url.search = '';
+  url.searchParams.set('code', state.code);
+  url.searchParams.set('view', '1');
+  return url.toString();
+}
+function copyShareLink(){
+  const input = document.getElementById('shareLinkInput');
+  if(!input.value) return;
+  input.select();
+  try{ document.execCommand('copy'); }catch(e){}
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(input.value).catch(()=>{}); }
+  alert('Live viewer link copied to clipboard.');
+}
+async function startViewer(code){
+  await refreshViewer(code);
+  setInterval(()=>refreshViewer(code), 5000);
+}
+async function refreshViewer(code){
+  const remote = await fetchRemote(code);
+  if(remote){ state = remote; }
+  render();
 }
 
 function saveLocal(){
+  if(VIEW_ONLY) return;
   try{ localStorage.setItem('swissTableState', JSON.stringify(state)); }catch(e){}
+  publishNow();
 }
 function loadLocal(){
   try{
@@ -401,7 +552,9 @@ function startTournament(){
   const name = document.getElementById('tname').value.trim() || 'Tournament';
   const raw = document.getElementById('players').value;
   const names = raw.split('\n').map(s=>s.trim()).filter(Boolean);
-  const tsize = parseInt(document.getElementById('tsize').value, 10);
+  const minP = parseInt(document.getElementById('minPerTable').value, 10);
+  const maxP = parseInt(document.getElementById('maxPerTable').value, 10);
+  const code = (document.getElementById('tcode').value || '').trim().toUpperCase() || randomCode();
 
   if(names.length < 4){
     errEl.textContent = 'Enter at least 4 players (one per line).';
@@ -414,20 +567,27 @@ function startTournament(){
     errEl.style.display='block';
     return;
   }
-  if(!tsize || tsize < 2 || tsize > 8){
-    errEl.textContent = 'Players per table must be between 2 and 8.';
+  if(!minP || minP < 2 || minP > 10){
+    errEl.textContent = 'Min players per table must be between 2 and 10.';
     errEl.style.display='block';
     return;
   }
-  if(names.length < tsize){
-    errEl.textContent = 'You need at least as many players as seats at a table.';
+  if(!maxP || maxP < minP || maxP > 12){
+    errEl.textContent = 'Max players per table must be at least the min, and no more than 12.';
+    errEl.style.display='block';
+    return;
+  }
+  if(names.length < minP){
+    errEl.textContent = 'You need at least '+minP+' players to fill one table.';
     errEl.style.display='block';
     return;
   }
 
   state = freshState();
   state.name = name;
-  state.tableSize = tsize;
+  state.code = code;
+  state.minPerTable = minP;
+  state.maxPerTable = maxP;
   state.players = names.map(n=>({name:n, rounds:[]}));
   state.round = 1;
   pairRound(1, shuffledIndices(names.length));
@@ -451,22 +611,32 @@ function shuffledIndices(n){
    they should be grouped into tables (random for R1, standings
    order for R2+).
 ------------------------------------------------------------------*/
-function pairRound(roundNum, order){
-  const n = order.length;
-  const size = state.tableSize;
-  const tables = Math.ceil(n / size);
+function computeTableSizes(n, min, max){
+  let tables = Math.max(1, Math.ceil(n / max));
+  // Reduce the table count if that's the only way to keep every table at/above min.
+  while(tables > 1 && tables * min > n) tables--;
   const base = Math.floor(n / tables);
   const remainder = n % tables;
-  const pairing = [];
-  let cursor = 0;
+  const sizes = [];
   for(let t=0; t<tables; t++){
     // extra seat(s) go to the bottom table(s), not the top
-    const seats = base + (t >= tables - remainder ? 1 : 0);
+    sizes.push(base + (t >= tables - remainder ? 1 : 0));
+  }
+  return sizes;
+}
+
+function pairRound(roundNum, order){
+  const n = order.length;
+  const sizes = computeTableSizes(n, state.minPerTable, state.maxPerTable);
+  const pairing = [];
+  let cursor = 0;
+  sizes.forEach((seats, t)=>{
     const group = order.slice(cursor, cursor+seats);
     cursor += seats;
-    pairing.push({ tableId: 'G'+roundNum+' T'+(t+1), idx: group });
-  }
+    pairing.push({ tableId: 'G'+roundNum+' T'+(t+1), idx: group, room: '', status: 'waiting' });
+  });
   state.pairing = pairing;
+  state.pairingWarning = sizes.some(s => s < state.minPerTable || s > state.maxPerTable);
   state.round = roundNum;
   state.pendingScores = {};
 }
@@ -523,9 +693,7 @@ function submitRound(){
     return;
   }
 
-  const size = state.tableSize;
   state.pairing.forEach(table=>{
-    const seats = table.idx.length;
     const withScores = table.idx.map(pIdx=>({pIdx, score:scores[pIdx]}));
     const sorted = [...withScores].sort((a,b)=> b.score - a.score);
     // standard competition ranking (1224)
@@ -546,6 +714,7 @@ function submitRound(){
       const prevRaw = prev ? prev.cumRaw : 0;
       state.players[pIdx].rounds[roundNum-1] = {
         tableId: table.tableId,
+        room: table.room || '',
         points: score,
         rank: rank,
         diff: diff,
@@ -589,10 +758,12 @@ function editRound(r){
 
   // Reconstruct the round's original table groupings and scores so the edit form is prefilled.
   const groups = {};
+  const rooms = {};
   state.players.forEach((p,pIdx)=>{
     const rd = p.rounds[r-1];
     if(!groups[rd.tableId]) groups[rd.tableId] = [];
     groups[rd.tableId].push(pIdx);
+    rooms[rd.tableId] = rd.room || '';
   });
   const tableIds = Object.keys(groups).sort((a,b)=>{
     const na = parseInt(a.split('T')[1],10), nb = parseInt(b.split('T')[1],10);
@@ -603,7 +774,7 @@ function editRound(r){
     pendingScores[pIdx] = p.rounds[r-1].points;
   });
 
-  state.pairing = tableIds.map(tid=>({ tableId: tid, idx: groups[tid] }));
+  state.pairing = tableIds.map(tid=>({ tableId: tid, idx: groups[tid], room: rooms[tid], status: 'waiting' }));
   state.pendingScores = pendingScores;
 
   // Truncate this round and everything after it — they'll be regenerated on resubmit.
@@ -632,16 +803,50 @@ function render(){
   const setupCard = document.getElementById('setupCard');
   const area = document.getElementById('tournamentArea');
   const badge = document.getElementById('roundBadge');
+  const syncBar = document.getElementById('syncBar');
+  const adminButtons = document.getElementById('adminButtons');
+
+  if(VIEW_ONLY){
+    setupCard.style.display = 'none';
+    if(syncBar) syncBar.style.display = 'none';
+    area.style.display = 'block';
+    if(adminButtons) adminButtons.style.display = 'none';
+
+    if(!sb){
+      badge.textContent = 'Viewer — not configured';
+      document.getElementById('tabs').innerHTML = '';
+      document.getElementById('tabContent').innerHTML =
+        `<div class="card"><p class="empty">Live sync isn't set up on this page yet. The organizer needs to add their Supabase keys.</p></div>`;
+      return;
+    }
+    if(!state){
+      badge.textContent = 'Viewer — waiting';
+      document.getElementById('tabs').innerHTML = '';
+      document.getElementById('tabContent').innerHTML =
+        `<div class="card"><p class="empty">Waiting for the organizer to start the tournament…</p></div>`;
+      return;
+    }
+    badge.textContent = (state.finished ? 'Final standings' : ('Round '+state.round+' of '+TOTAL_ROUNDS)) + ' · live viewer';
+    renderTabs();
+    renderTabContent();
+    return;
+  }
 
   if(!state){
     setupCard.style.display='block';
     area.style.display='none';
     badge.textContent='Setup';
+    if(syncBar) syncBar.style.display='none';
     return;
   }
   setupCard.style.display='none';
   area.style.display='block';
+  if(adminButtons) adminButtons.style.display='flex';
   badge.textContent = state.finished ? 'Final standings' : ('Round '+state.round+' of '+TOTAL_ROUNDS);
+  if(syncBar){
+    syncBar.style.display = 'flex';
+    updateSyncBar();
+  }
 
   renderTabs();
   renderTabContent();
@@ -659,6 +864,9 @@ function renderTabs(){
     if(locked) cls.push('locked');
     html += `<div class="${cls.join(' ')}" onclick="${locked?'':'switchTab(\'r'+r+'\')'}"><span class="dot"></span>Round ${r}</div>`;
   }
+  const schedCls = ['tab'];
+  if(activeTab==='schedule') schedCls.push('active');
+  html += `<div class="${schedCls.join(' ')}" onclick="switchTab('schedule')"><span class="dot" style="background:#8a8474"></span>Schedule</div>`;
   const stCls = ['tab'];
   if(activeTab==='standings') stCls.push('active');
   html += `<div class="${stCls.join(' ')}" onclick="switchTab('standings')"><span class="dot" style="background:${state.completed>0?'#4F7A5F':'#B08D57'}"></span>Standings</div>`;
@@ -674,6 +882,10 @@ function renderTabContent(){
   const el = document.getElementById('tabContent');
   if(activeTab === 'standings'){
     el.innerHTML = renderStandings();
+    return;
+  }
+  if(activeTab === 'schedule'){
+    el.innerHTML = renderSchedule();
     return;
   }
   const r = parseInt(activeTab.slice(1),10);
@@ -694,7 +906,13 @@ function medalClass(rank){
 }
 
 function renderCurrentRound(r){
-  const size = state.tableSize;
+  if(VIEW_ONLY){
+    return `<div class="card">
+      <h2>Round ${r} <span class="pill">in progress</span></h2>
+      <p class="hint">Waiting on results. Rooms below are set live by the organizer.</p>
+      ${renderScheduleCurrent(r, true)}
+    </div>`;
+  }
   const isEdit = state.pendingScores && Object.keys(state.pendingScores).length > 0;
   let cards = state.pairing.map(table=>{
     const rows = table.idx.map(pIdx=>{
@@ -713,11 +931,13 @@ function renderCurrentRound(r){
   }).join('');
 
   const editBanner = isEdit ? `<div class="banner edit-banner">Editing Round ${r}. Scores are prefilled from what was submitted before — fix what's wrong and resubmit. Any later rounds already paired from this one will be regenerated once you resubmit.</div>` : '';
+  const warnBanner = state.pairingWarning ? `<div class="banner" style="background:rgba(155,59,52,0.08);border-color:rgba(155,59,52,0.3);color:var(--danger);">Some tables this round fall outside your configured ${state.minPerTable}–${state.maxPerTable} player range — there weren't enough players to keep every table in range.</div>` : '';
 
   return `<div class="card">
     <h2>Round ${r} — ${isEdit?'edit':'enter'} raw scores <span class="pill">${state.pairing.length} tables</span></h2>
-    <p class="hint">Type each player's raw in-game score. Scores only decide table rank &amp; differential — Swiss points (4 / 2 / 1 / 0 by rank) are what carry forward.</p>
+    <p class="hint">Type each player's raw in-game score. Scores only decide table rank &amp; differential — Swiss points (4 / 2 / 1 / 0 by rank) are what carry forward. Assign rooms on the Schedule tab.</p>
     ${editBanner}
+    ${warnBanner}
     <div class="table-grid">${cards}</div>
     <div class="btn-row">
       <button class="btn-primary" onclick="submitRound()">${isEdit ? 'Save corrected scores' : 'Submit Round '+r+' &amp; '+(r<TOTAL_ROUNDS?'pair Round '+(r+1):'finish tournament')}</button>
@@ -757,15 +977,112 @@ function renderPastRound(r){
     ? `Editing will clear the recorded results for Round${laterRounds>1?'s':''} ${r+1}${state.completed>r+1?'–'+state.completed:''}, since they were paired using Round ${r}'s standings.`
     : `No later rounds are recorded yet, so editing is safe.`;
 
+  const editControls = VIEW_ONLY ? '' : `<div class="btn-row">
+      <button class="btn-ghost" onclick="editRound(${r})">Edit Round ${r} scores</button>
+    </div>
+    <p class="hint" style="margin:10px 0 0;">${cascadeNote}</p>`;
+
   return `<div class="card">
     <h2>Round ${r} results <span class="pill">closed</span></h2>
     <p class="hint">Table rank and score for round ${r}. Swiss points and running totals are on the Standings tab.</p>
     <div class="table-grid">${cards}</div>
-    <div class="btn-row">
-      <button class="btn-ghost" onclick="editRound(${r})">Edit Round ${r} scores</button>
-    </div>
-    <p class="hint" style="margin:10px 0 0;">${cascadeNote}</p>
+    ${editControls}
   </div>`;
+}
+
+function renderSchedule(){
+  const blocks = [];
+  for(let r=1; r<=TOTAL_ROUNDS; r++){
+    if(r <= state.completed){
+      blocks.push(renderScheduleCompleted(r));
+    } else if(r === state.round && !state.finished){
+      blocks.push(renderScheduleCurrent(r, false));
+    } else {
+      blocks.push(renderSchedulePlaceholder(r));
+    }
+  }
+  return `<div class="card">
+    <h2>Schedule</h2>
+    <p class="hint">Table assignments and rooms for every round.${VIEW_ONLY ? '' : ' Assign a room to each table below — it saves and syncs automatically.'}</p>
+    ${blocks.join('')}
+  </div>`;
+}
+
+function renderScheduleCurrent(r, viewOnlyOverride){
+  const readOnly = VIEW_ONLY || !!viewOnlyOverride;
+  const warn = state.pairingWarning ? `<div class="banner" style="background:rgba(155,59,52,0.08);border-color:rgba(155,59,52,0.3);color:var(--danger);margin-bottom:10px;">Some tables fall outside your configured ${state.minPerTable}–${state.maxPerTable} player range this round.</div>` : '';
+  const rows = state.pairing.map((table,t)=>{
+    const names = table.idx.map(pIdx=>escapeHtml(state.players[pIdx].name)).join(', ');
+    const statusClass = table.status==='in_progress' ? 'status-progress' : 'status-waiting';
+    const statusLabel = table.status==='in_progress' ? 'In progress' : 'Waiting for players';
+    const roomField = readOnly
+      ? `<span class="room-value">${table.room ? escapeHtml(table.room) : '— room TBD —'}</span>`
+      : `<input type="text" class="room-input" value="${escapeHtml(table.room||'')}" placeholder="Room / table #" onchange="updateRoom(${t}, this.value)">`;
+    const statusBtn = readOnly ? '' : `<button class="btn-ghost sched-toggle" onclick="cycleStatus(${t})">Mark ${table.status==='in_progress'?'waiting':'in progress'}</button>`;
+    return `<div class="sched-row">
+      <div class="sched-main">
+        <span class="tid">${table.tableId}</span>
+        <span class="sched-status ${statusClass}">${statusLabel}</span>
+      </div>
+      <div class="sched-players">${names}</div>
+      <div class="sched-room-row">${roomField}${statusBtn}</div>
+    </div>`;
+  }).join('');
+  return `<div class="sched-round">
+    <h3 class="sched-round-title">Round ${r} <span class="pill">open</span></h3>
+    ${warn}
+    ${rows}
+  </div>`;
+}
+
+function renderScheduleCompleted(r){
+  const groups = {};
+  state.players.forEach(p=>{
+    const rd = p.rounds[r-1];
+    if(!rd) return;
+    if(!groups[rd.tableId]) groups[rd.tableId] = { room: rd.room, players: [] };
+    groups[rd.tableId].players.push(p.name);
+  });
+  const tableIds = Object.keys(groups).sort((a,b)=>{
+    const na = parseInt(a.split('T')[1],10), nb = parseInt(b.split('T')[1],10);
+    return na-nb;
+  });
+  const rows = tableIds.map(tid=>{
+    const g = groups[tid];
+    return `<div class="sched-row">
+      <div class="sched-main">
+        <span class="tid">${tid}</span>
+        <span class="sched-status status-complete">Complete</span>
+      </div>
+      <div class="sched-players">${g.players.map(n=>escapeHtml(n)).join(', ')}</div>
+      <div class="sched-room-row"><span class="room-value">${g.room ? escapeHtml(g.room) : '— no room recorded —'}</span></div>
+    </div>`;
+  }).join('');
+  return `<div class="sched-round">
+    <h3 class="sched-round-title">Round ${r} <span class="pill" style="background:#4F7A5F;">complete</span></h3>
+    ${rows}
+  </div>`;
+}
+
+function renderSchedulePlaceholder(r){
+  return `<div class="sched-round sched-placeholder">
+    <h3 class="sched-round-title">Round ${r} <span class="pill" style="background:#8a8474;">pending</span></h3>
+    <p class="hint" style="margin:0;">Waiting on Round ${r-1} to finish — tables will be paired automatically from those standings.</p>
+  </div>`;
+}
+
+function updateRoom(tableIdx, value){
+  if(VIEW_ONLY || !state) return;
+  state.pairing[tableIdx].room = value;
+  saveLocal();
+}
+
+function cycleStatus(tableIdx){
+  if(VIEW_ONLY || !state) return;
+  const t = state.pairing[tableIdx];
+  t.status = t.status === 'in_progress' ? 'waiting' : 'in_progress';
+  saveLocal();
+  render();
 }
 
 function renderStandings(){
@@ -894,7 +1211,7 @@ function exportCSV(){
   const ordered = computePlacements(through);
   const header = ['Placement','Player','Swiss Pts','Cum Diff (tiebreak 1)','Cum Raw Total (tiebreak 2)'];
   for(let r=1;r<=through;r++){
-    header.push(`G${r} T-ID`,`G${r} Points`,`G${r} Rank`,`G${r} Diff`,`G${r} Swiss Pts`,`Pts After R${r}`,`Diff After R${r}`,`Raw After R${r}`,`R${r} Placement`);
+    header.push(`G${r} T-ID`,`G${r} Room`,`G${r} Points`,`G${r} Rank`,`G${r} Diff`,`G${r} Swiss Pts`,`Pts After R${r}`,`Diff After R${r}`,`Raw After R${r}`,`R${r} Placement`);
   }
   if(state.finished) header.push('Final Rank');
   const lines = [header.join(',')];
@@ -904,7 +1221,7 @@ function exportCSV(){
     const cells = [row.placement, csvSafe(p.name), latest.cumPts, latest.cumDiff, latest.cumRaw];
     for(let r=1;r<=through;r++){
       const rd = p.rounds[r-1];
-      cells.push(rd.tableId, rd.points, rd.rank, rd.diff, rd.swissPts, rd.cumPts, rd.cumDiff, rd.cumRaw, rd.placement);
+      cells.push(rd.tableId, csvSafe(rd.room||''), rd.points, rd.rank, rd.diff, rd.swissPts, rd.cumPts, rd.cumDiff, rd.cumRaw, rd.placement);
     }
     if(state.finished) cells.push(row.placement);
     lines.push(cells.join(','));
@@ -928,12 +1245,37 @@ function csvSafe(v){
    INIT
 ------------------------------------------------------------------*/
 (function init(){
+  initSupabase();
+
+  const params = new URLSearchParams(location.search);
+  const urlCode = params.get('code');
+  const wantsView = params.get('view') === '1';
+
+  if(wantsView && urlCode){
+    VIEW_ONLY = true;
+    activeTab = 'schedule';
+    render(); // shows "not configured" or "waiting" immediately
+    if(sb) startViewer(urlCode.toUpperCase());
+    return;
+  }
+
   const saved = loadLocal();
   if(saved && saved.players && saved.players.length){
     state = saved;
+    if(!state.code) state.code = randomCode();
     activeTab = state.finished ? 'standings' : ('r'+state.round);
   }
   render();
+
+  // Setup-form niceties (safe even though the form starts hidden if a tournament is already loaded)
+  const tcodeEl = document.getElementById('tcode');
+  if(tcodeEl && !tcodeEl.value) tcodeEl.value = randomCode();
+  const syncNote = document.getElementById('setupSyncNote');
+  if(syncNote){
+    syncNote.textContent = sb
+      ? 'Live sync is configured — a shareable viewer link will appear once you start the tournament.'
+      : 'Live sync isn\'t configured on this page yet — it\'ll run locally only until Supabase keys are added.';
+  }
 })();
 </script>
 </body>
