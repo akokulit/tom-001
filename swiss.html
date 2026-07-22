@@ -324,9 +324,71 @@
   .sched-toggle{padding:6px 12px;font-size:12px;}
   .sched-placeholder{opacity:0.65;}
   .sched-placeholder .sched-round-title{color:var(--ink-soft);}
+
+  /* ---- TV Mode ---- */
+  .tv-mode-btn{
+    position:fixed;top:18px;right:18px;z-index:9998;
+    background:rgba(0,0,0,0.35);color:var(--paper);border:1px solid rgba(243,236,217,0.35);
+    padding:9px 16px;border-radius:22px;font-family:'IBM Plex Mono', monospace;font-size:12.5px;cursor:pointer;
+  }
+  .tv-mode-btn:hover{background:rgba(0,0,0,0.55);}
+  .tv-screen{
+    display:none;position:fixed;inset:0;z-index:9999;
+    background:radial-gradient(ellipse at top, #1F4B3F 0%, #0d251d 75%);
+    color:var(--paper);flex-direction:column;padding:3.2vh 4vw;font-family:'Work Sans', sans-serif;
+    box-sizing:border-box;
+  }
+  .tv-exit{
+    position:absolute;top:16px;right:20px;font-size:13px;color:rgba(243,236,217,0.32);
+    cursor:pointer;padding:7px 14px;border:1px solid rgba(243,236,217,0.2);border-radius:20px;
+    font-family:'IBM Plex Mono', monospace;
+  }
+  .tv-exit:hover{color:rgba(243,236,217,0.95);border-color:rgba(243,236,217,0.55);}
+  .tv-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2.4vh;flex-wrap:wrap;gap:1vh 2vw;}
+  .tv-title{font-family:'Fraunces', serif;font-weight:700;font-size:clamp(26px,3.2vw,50px);color:var(--brass-light);}
+  .tv-round{font-family:'IBM Plex Mono', monospace;font-size:clamp(15px,1.5vw,24px);color:#BFE0CE;}
+  .tv-clock{font-family:'IBM Plex Mono', monospace;font-size:clamp(15px,1.5vw,24px);color:#BFE0CE;opacity:0.65;}
+  .tv-body{flex:1;position:relative;overflow:hidden;}
+  .tv-panel{position:absolute;inset:0;}
+  .tv-panel.empty{display:flex;align-items:center;justify-content:center;opacity:0.6;font-family:'Fraunces',serif;font-style:italic;font-size:clamp(20px,2.2vw,32px);}
+
+  .tv-standings table{width:100%;border-collapse:collapse;}
+  .tv-standings th, .tv-standings td{padding:1.1vh 1vw;font-size:clamp(16px,1.9vw,30px);text-align:left;}
+  .tv-standings th{font-family:'IBM Plex Mono', monospace;text-transform:uppercase;font-size:clamp(10.5px,1vw,15px);letter-spacing:0.4px;color:rgba(243,236,217,0.55);border-bottom:2px solid rgba(243,236,217,0.22);}
+  .tv-standings td{border-bottom:1px solid rgba(243,236,217,0.12);}
+  .tv-place{font-family:'IBM Plex Mono', monospace;font-weight:700;}
+  .tv-place.gold{color:#F0C94A;} .tv-place.silver{color:#D7DEE4;} .tv-place.bronze{color:#E3A468;}
+  .tv-name{font-weight:600;}
+  .tv-diff.pos{color:#7FD79A;} .tv-diff.neg{color:#E58A82;}
+  .tv-more-note{opacity:0.55;font-size:clamp(13px,1.1vw,18px);margin-top:1.6vh;}
+
+  .tv-tables-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.6vh 1.6vw;align-content:start;height:100%;}
+  .tv-table-card{background:rgba(243,236,217,0.06);border:1px solid rgba(243,236,217,0.18);border-radius:14px;padding:2vh 1.6vw;}
+  .tv-table-card .tv-tid{font-family:'IBM Plex Mono', monospace;font-weight:700;font-size:clamp(18px,1.8vw,28px);color:var(--brass-light);}
+  .tv-table-card .tv-room{font-family:'IBM Plex Mono', monospace;font-size:clamp(13px,1.2vw,18px);color:#BFE0CE;opacity:0.85;margin:0.6vh 0 1.2vh;}
+  .tv-table-card .tv-players{font-size:clamp(15px,1.5vw,22px);line-height:1.5;}
+  .tv-status-chip{display:inline-block;font-family:'IBM Plex Mono', monospace;font-size:clamp(10px,0.9vw,14px);padding:0.35vh 1vw;border-radius:20px;margin-bottom:1.2vh;text-transform:uppercase;letter-spacing:0.3px;}
+  .tv-screen .status-waiting{background:rgba(201,162,39,0.28);color:#F0DE9E;}
+  .tv-screen .status-progress{background:rgba(79,122,95,0.35);color:#9FE8B9;}
+
+  .tv-ticker{margin-top:2.2vh;height:6.5vh;overflow:hidden;background:rgba(0,0,0,0.28);border-radius:10px;display:flex;align-items:center;flex-shrink:0;}
+  .tv-ticker-track{display:inline-flex;white-space:nowrap;animation:tv-scroll 30s linear infinite;}
+  .tv-ticker-track span{margin-right:5vw;font-family:'IBM Plex Mono', monospace;font-size:clamp(14px,1.6vw,24px);color:var(--paper);}
+  @keyframes tv-scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
 </style>
 </head>
 <body>
+<div class="tv-screen" id="tvScreen">
+  <div class="tv-exit" onclick="exitTVMode()">✕ exit tv mode</div>
+  <div class="tv-header">
+    <div class="tv-title" id="tvTitle"></div>
+    <div class="tv-round" id="tvRound"></div>
+    <div class="tv-clock" id="tvClock"></div>
+  </div>
+  <div class="tv-body" id="tvBody"></div>
+  <div class="tv-ticker"><div class="tv-ticker-track" id="tvTickerTrack"></div></div>
+</div>
+<button id="tvModeBtn" class="tv-mode-btn" style="display:none;" onclick="enterTVMode()">📺 TV Mode</button>
 <div class="wrap">
 
   <div class="masthead">
@@ -339,6 +401,7 @@
     <span class="sync-label" id="syncLabel">Local only</span>
     <input type="text" id="shareLinkInput" readonly value="" placeholder="Live viewer link appears here">
     <button class="btn-ghost" onclick="copyShareLink()">Copy live link</button>
+    <button class="btn-ghost" onclick="openTVDisplay()">Open TV display ↗</button>
   </div>
 
   <!-- SETUP -->
@@ -403,7 +466,7 @@
    project's URL and public "anon" key (Project Settings → API).
    Leave them as-is to run fully offline (localStorage only).
 ================================================================== */
-const SUPABASE_URL = 'https://vaqjqwldsmyszghkvtou.supabase.co';
+const SUPABASE_URL = 'https://vaqjqwldsmyszghkvtou.supabase.co/rest/v1/';
 const SUPABASE_ANON_KEY = 'sb_publishable_qocS8DiuJcIa_4He4LSKtg_brd0v74Z';
 
 /* ---------------------------------------------------------------
@@ -421,6 +484,9 @@ function swissPointsForRank(rank){
 let state = null;
 let activeTab = 'r1';
 let VIEW_ONLY = false;
+let TV_MODE = false;
+let tvPanelIndex = 0;
+let tvIntervalStarted = false;
 let sb = null;
 let syncState = 'idle'; // idle | synced | error
 
@@ -511,6 +577,10 @@ function buildShareLink(){
   url.searchParams.set('code', state.code);
   url.searchParams.set('view', '1');
   return url.toString();
+}
+function openTVDisplay(){
+  if(!state || !state.code) return;
+  window.open(buildShareLink() + '&tv=1', '_blank');
 }
 function copyShareLink(){
   const input = document.getElementById('shareLinkInput');
@@ -805,8 +875,23 @@ function render(){
   const badge = document.getElementById('roundBadge');
   const syncBar = document.getElementById('syncBar');
   const adminButtons = document.getElementById('adminButtons');
+  const tvScreen = document.getElementById('tvScreen');
+  const wrap = document.querySelector('.wrap');
+  const tvModeBtn = document.getElementById('tvModeBtn');
+
+  if(VIEW_ONLY && TV_MODE && state){
+    wrap.style.display = 'none';
+    tvScreen.style.display = 'flex';
+    if(tvModeBtn) tvModeBtn.style.display = 'none';
+    ensureTVIntervals();
+    renderTVMode();
+    return;
+  }
+  tvScreen.style.display = 'none';
+  wrap.style.display = '';
 
   if(VIEW_ONLY){
+    if(tvModeBtn) tvModeBtn.style.display = state ? 'block' : 'none';
     setupCard.style.display = 'none';
     if(syncBar) syncBar.style.display = 'none';
     area.style.display = 'block';
@@ -832,6 +917,7 @@ function render(){
     return;
   }
 
+  if(tvModeBtn) tvModeBtn.style.display = 'none';
   if(!state){
     setupCard.style.display='block';
     area.style.display='none';
@@ -1085,6 +1171,131 @@ function cycleStatus(tableIdx){
   render();
 }
 
+/* ---------------------------------------------------------------
+   TV MODE — big-screen, hands-off rotating display for viewers
+------------------------------------------------------------------*/
+function ensureTVIntervals(){
+  if(tvIntervalStarted) return;
+  tvIntervalStarted = true;
+  setInterval(()=>{ tvPanelIndex = (tvPanelIndex+1) % 2; if(TV_MODE) renderTVBody(); }, 12000);
+  setInterval(()=>{ if(TV_MODE) updateTVClock(); }, 1000);
+}
+function enterTVMode(){
+  TV_MODE = true;
+  tvPanelIndex = 0;
+  render();
+  ensureTVIntervals();
+  try{ document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); }catch(e){}
+}
+function exitTVMode(){
+  TV_MODE = false;
+  if(document.fullscreenElement){ try{ document.exitFullscreen(); }catch(e){} }
+  render();
+}
+function updateTVClock(){
+  const el = document.getElementById('tvClock');
+  if(!el) return;
+  el.textContent = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+}
+function renderTVMode(){
+  document.getElementById('tvTitle').textContent = state.name || 'Tournament';
+  document.getElementById('tvRound').textContent = state.finished ? 'Final Standings' : ('Round '+state.round+' of '+TOTAL_ROUNDS);
+  updateTVClock();
+  renderTVBody();
+  renderTVTicker();
+}
+function renderTVBody(){
+  const body = document.getElementById('tvBody');
+  if(!body) return;
+  body.innerHTML = (tvPanelIndex % 2 === 0) ? tvStandingsPanel() : tvPlayingPanel();
+}
+function tvStandingsPanel(){
+  if(state.completed === 0){
+    return `<div class="tv-panel empty">Standings will appear once Round 1 finishes.</div>`;
+  }
+  const through = state.completed;
+  const ordered = computePlacements(through);
+  const showN = Math.min(ordered.length, 12);
+  const rows = ordered.slice(0, showN).map(row=>{
+    const p = state.players[row.idx];
+    const rd = p.rounds[through-1];
+    const placeClass = row.placement===1?'gold':row.placement===2?'silver':row.placement===3?'bronze':'';
+    return `<tr>
+      <td class="tv-place ${placeClass}">${ordinal(row.placement)}</td>
+      <td class="tv-name">${escapeHtml(p.name)}</td>
+      <td>${rd.cumPts}</td>
+      <td class="tv-diff ${rd.cumDiff>0?'pos':rd.cumDiff<0?'neg':''}">${rd.cumDiff>0?'+':''}${rd.cumDiff}</td>
+      <td>${rd.cumRaw}</td>
+    </tr>`;
+  }).join('');
+  const more = ordered.length > showN ? `<div class="tv-more-note">+ ${ordered.length-showN} more players</div>` : '';
+  return `<div class="tv-panel tv-standings">
+    <table>
+      <thead><tr><th>Place</th><th>Player</th><th>Pts</th><th>Diff</th><th>Raw</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    ${more}
+  </div>`;
+}
+function tvPlayingPanel(){
+  if(state.finished){
+    const ordered = computePlacements(TOTAL_ROUNDS);
+    const top3 = ordered.slice(0,3).map((row,i)=>{
+      const p = state.players[row.idx];
+      const rd = p.rounds[TOTAL_ROUNDS-1];
+      const medal = ['gold','silver','bronze'][i];
+      return `<div class="tv-table-card" style="text-align:center;">
+        <div class="tv-place ${medal}" style="font-size:clamp(22px,2.4vw,36px);">${ordinal(row.placement)}</div>
+        <div class="tv-name" style="font-size:clamp(20px,2vw,30px);margin:0.6vh 0;">${escapeHtml(p.name)}</div>
+        <div style="opacity:0.7;font-family:'IBM Plex Mono',monospace;">${rd.cumPts} pts · ${rd.cumDiff>0?'+':''}${rd.cumDiff} diff</div>
+      </div>`;
+    }).join('');
+    return `<div class="tv-panel">
+      <p style="font-family:'Fraunces',serif;font-size:clamp(22px,2.4vw,34px);margin:0 0 2vh;">🏆 Tournament Complete</p>
+      <div class="tv-tables-grid" style="grid-template-columns:repeat(3,1fr);">${top3}</div>
+    </div>`;
+  }
+  if(!state.pairing || !state.pairing.length){
+    return `<div class="tv-panel empty">No round currently open.</div>`;
+  }
+  const cards = state.pairing.map(table=>{
+    const names = table.idx.map(pIdx=>escapeHtml(state.players[pIdx].name)).join(', ');
+    const statusClass = table.status==='in_progress' ? 'status-progress' : 'status-waiting';
+    const statusLabel = table.status==='in_progress' ? 'In progress' : 'Waiting';
+    return `<div class="tv-table-card">
+      <span class="tv-status-chip ${statusClass}">${statusLabel}</span>
+      <div class="tv-tid">${table.tableId}</div>
+      <div class="tv-room">${table.room ? escapeHtml(table.room) : 'Room TBD'}</div>
+      <div class="tv-players">${names}</div>
+    </div>`;
+  }).join('');
+  return `<div class="tv-panel"><div class="tv-tables-grid">${cards}</div></div>`;
+}
+function renderTVTicker(){
+  const track = document.getElementById('tvTickerTrack');
+  if(!track) return;
+  const items = [];
+  if(state.finished){
+    items.push(`🏆 ${state.name} — Final Results`);
+    computePlacements(TOTAL_ROUNDS).slice(0,5).forEach(row=>{
+      items.push(`${ordinal(row.placement)} ${state.players[row.idx].name}`);
+    });
+  } else {
+    items.push(`${state.name} — Round ${state.round} of ${TOTAL_ROUNDS}`);
+    (state.pairing||[]).forEach(table=>{
+      const names = table.idx.map(pIdx=>state.players[pIdx].name).join(', ');
+      const status = table.status==='in_progress' ? 'IN PROGRESS' : 'WAITING';
+      items.push(`${table.tableId}${table.room?' · '+table.room:''} — ${names} [${status}]`);
+    });
+    if(state.round < TOTAL_ROUNDS){
+      items.push(`Round ${state.round+1} pairs once this round finishes`);
+    }
+  }
+  const html = items.map(t=>`<span>${escapeHtml(t)}</span>`).join('');
+  track.innerHTML = html + html; // duplicated for a seamless loop
+  track.style.animationDuration = Math.max(20, items.length * 4) + 's';
+}
+
 function renderStandings(){
   if(state.completed === 0){
     return `<div class="card"><p class="empty">Standings appear once Round 1 is submitted.</p></div>`;
@@ -1250,9 +1461,11 @@ function csvSafe(v){
   const params = new URLSearchParams(location.search);
   const urlCode = params.get('code');
   const wantsView = params.get('view') === '1';
+  const wantsTV = params.get('tv') === '1';
 
   if(wantsView && urlCode){
     VIEW_ONLY = true;
+    TV_MODE = wantsTV; // renders normally until state arrives, then flips into TV layout
     activeTab = 'schedule';
     render(); // shows "not configured" or "waiting" immediately
     if(sb) startViewer(urlCode.toUpperCase());
