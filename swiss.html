@@ -5,31 +5,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Swiss Table — Tournament Manager</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --felt: #1F4B3F;
-    --felt-dark: #143229;
-    --felt-line: #3E6B58;
-    --paper: #F3ECD9;
-    --paper-dim: #E8DFC6;
-    --ink: #221D14;
-    --ink-soft: #5B5642;
-    --brass: #B08D57;
-    --brass-light: #D9BF8C;
-    --gold: #C9A227;
-    --silver: #9AA3AC;
-    --bronze: #B0703C;
-    --danger: #9B3B34;
-    --radius: 10px;
+    /* Harmonies-inspired palette — soft, pastel, nature-toned, after the
+       game's six landscape-token colors: forest, water, mountain, field,
+       meadow (bush), building. */
+    --felt: #4A7856;        /* forest — primary accent (was dark felt green) */
+    --felt-dark: #345940;   /* deep forest — hovers */
+    --felt-line: #8FB07A;   /* meadow/bush — soft secondary green */
+    --water: #6D9BB8;
+    --water-light: #A9C9DC;
+    --mountain: #9098A0;
+    --accent: #C97B5A;      /* building — warm terracotta emphasis */
+    --paper: #FBF7EC;       /* card background — warm cream */
+    --paper-dim: #F1E7CE;
+    --ink: #3A3226;         /* warm dark brown-black */
+    --ink-soft: #79694E;
+    --brass: #D9A536;       /* field — warm gold */
+    --brass-light: #EFCE7C;
+    --gold: #D9A536;
+    --silver: #A8ADB3;
+    --bronze: #B9784A;
+    --danger: #C0554C;
+    --radius: 18px;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
-    background: radial-gradient(ellipse at top, var(--felt) 0%, var(--felt-dark) 70%);
+    background:
+      radial-gradient(ellipse 700px 420px at 12% 8%, rgba(141,181,148,0.35) 0%, rgba(141,181,148,0) 70%),
+      radial-gradient(ellipse 600px 380px at 90% 15%, rgba(109,155,184,0.28) 0%, rgba(109,155,184,0) 70%),
+      radial-gradient(ellipse 650px 400px at 80% 95%, rgba(217,165,54,0.22) 0%, rgba(217,165,54,0) 70%),
+      linear-gradient(160deg, #F4F1E2 0%, #F3ECD9 45%, #EAD9BC 100%);
     background-attachment: fixed;
     color: var(--ink);
-    font-family:'Work Sans', sans-serif;
+    font-family:'Quicksand', sans-serif;
     min-height:100vh;
   }
   .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 80px;}
@@ -40,18 +51,17 @@
     font-family:'Fraunces', serif;
     font-weight:700;
     font-size:clamp(28px,4vw,42px);
-    color: var(--paper);
+    color: var(--felt);
     margin:0;
     letter-spacing:0.2px;
   }
-  .masthead h1 span{color:var(--brass-light);font-style:italic;font-weight:600;}
+  .masthead h1 span{color:var(--accent);font-style:italic;font-weight:600;}
   .masthead .sub{
     font-family:'IBM Plex Mono', monospace;
-    color: var(--felt-line);
-    background:rgba(0,0,0,0.18);
-    color:#BFE0CE;
+    background:rgba(74,120,86,0.12);
+    color:var(--felt-dark);
     padding:5px 10px;
-    border-radius:6px;
+    border-radius:20px;
     font-size:12.5px;
     letter-spacing:0.4px;
   }
@@ -61,8 +71,8 @@
     background: var(--paper);
     border-radius: var(--radius);
     padding: 22px 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.28);
-    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 10px 26px rgba(74,120,86,0.14), 0 2px 8px rgba(58,50,38,0.06);
+    border: 1px solid rgba(74,120,86,0.12);
     margin-bottom:20px;
   }
   .card h2{
@@ -77,18 +87,19 @@
   label{display:block;font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--ink-soft);margin-bottom:6px;}
   input[type=text], input[type=number], textarea, select{
     width:100%;
-    font-family:'Work Sans', sans-serif;
+    font-family:'Quicksand', sans-serif;
+    font-weight:500;
     font-size:15px;
     padding:10px 12px;
-    border-radius:7px;
-    border:1.5px solid #D8CFAF;
+    border-radius:11px;
+    border:1.5px solid #DED0A8;
     background:#fff;
     color:var(--ink);
     outline:none;
   }
   input[type=text]:focus, input[type=number]:focus, textarea:focus, select:focus{
-    border-color:var(--brass);
-    box-shadow:0 0 0 3px rgba(176,141,87,0.2);
+    border-color:var(--felt);
+    box-shadow:0 0 0 3px rgba(74,120,86,0.18);
   }
   textarea{min-height:150px;font-family:'IBM Plex Mono', monospace;font-size:13.5px;resize:vertical;}
   .field{margin-bottom:16px;}
@@ -96,11 +107,11 @@
   @media (max-width:560px){.row2{grid-template-columns:1fr;}}
 
   button{
-    font-family:'Work Sans', sans-serif;
+    font-family:'Quicksand', sans-serif;
     font-weight:600;
     font-size:14.5px;
     padding:11px 20px;
-    border-radius:7px;
+    border-radius:24px;
     border:none;
     cursor:pointer;
     transition:transform .08s ease, box-shadow .08s ease;
@@ -108,12 +119,12 @@
   button:active{transform:translateY(1px);}
   .btn-primary{background:var(--felt);color:var(--paper);}
   .btn-primary:hover{background:var(--felt-dark);}
-  .btn-brass{background:var(--brass);color:#241C0E;}
+  .btn-brass{background:var(--brass);color:#3A2A08;}
   .btn-brass:hover{background:var(--brass-light);}
-  .btn-ghost{background:transparent;color:var(--ink-soft);border:1.5px solid #D8CFAF;}
-  .btn-ghost:hover{border-color:var(--brass);color:var(--ink);}
-  .btn-danger{background:transparent;color:var(--danger);border:1.5px solid rgba(155,59,52,0.4);}
-  .btn-danger:hover{background:rgba(155,59,52,0.08);}
+  .btn-ghost{background:transparent;color:var(--ink-soft);border:1.5px solid #DED0A8;}
+  .btn-ghost:hover{border-color:var(--felt);color:var(--felt-dark);}
+  .btn-danger{background:transparent;color:var(--danger);border:1.5px solid rgba(192,85,76,0.4);}
+  .btn-danger:hover{background:rgba(192,85,76,0.08);}
   button:disabled{opacity:0.4;cursor:not-allowed;}
   .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;}
 
@@ -122,30 +133,38 @@
   .tab{
     font-family:'IBM Plex Mono', monospace;
     font-size:13px;
-    padding:9px 14px;
-    border-radius:8px 8px 0 0;
-    background:rgba(243,236,217,0.55);
-    color:var(--paper-dim);
+    padding:9px 16px;
+    border-radius:20px;
+    background:rgba(74,120,86,0.10);
+    color:var(--ink-soft);
     cursor:pointer;
-    border:1px solid rgba(243,236,217,0.25);
-    border-bottom:none;
+    border:1px solid rgba(74,120,86,0.16);
   }
-  .tab.active{background:var(--paper);color:var(--ink);font-weight:600;}
+  .tab.active{background:var(--paper);color:var(--ink);font-weight:600;border-color:rgba(74,120,86,0.3);box-shadow:0 2px 8px rgba(74,120,86,0.14);}
   .tab.locked{opacity:0.35;cursor:not-allowed;}
   .tab .dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:6px;background:var(--brass);}
-  .tab.done .dot{background:#4F7A5F;}
+  .tab.done .dot{background:var(--felt);}
+
+  /* ---- Landscape token colors (cycled across tables, Harmonies-style) ---- */
+  .lc-badge{display:inline-block;color:#fff;padding:4px 12px;border-radius:20px;font-weight:600;}
+  .lc-0{background:#4A7856;} /* forest */
+  .lc-1{background:#6D9BB8;} /* water */
+  .lc-2{background:#9098A0;} /* mountain */
+  .lc-3{background:#D9A536;color:#3A2A08;} /* field */
+  .lc-4{background:#8FB07A;} /* meadow */
+  .lc-5{background:#C97B5A;} /* building */
 
   /* ---- Table tent cards (pairing) ---- */
   .table-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;}
   .tent{
     background:#fff;
-    border:1.5px solid #E1D6B4;
-    border-radius:9px;
+    border:1.5px solid #EAE0BE;
+    border-radius:16px;
     overflow:hidden;
   }
   .tent-head{
-    background: linear-gradient(135deg, var(--brass) 0%, #9A7943 100%);
-    color:#fff;
+    background: var(--paper-dim);
+    color:var(--ink);
     padding:10px 14px;
     display:flex;
     align-items:center;
@@ -154,10 +173,10 @@
   .tent-head .tid{
     font-family:'IBM Plex Mono', monospace;
     font-weight:600;
-    font-size:15px;
-    letter-spacing:0.4px;
+    font-size:14px;
+    letter-spacing:0.3px;
   }
-  .tent-head .tcount{font-size:11.5px;opacity:0.85;}
+  .tent-head .tcount{font-size:11.5px;opacity:0.75;}
   .tent-body{padding:6px 14px 14px;}
   .prow{
     display:grid;
@@ -165,7 +184,7 @@
     align-items:center;
     gap:8px;
     padding:9px 0;
-    border-bottom:1px dashed #E7DFC6;
+    border-bottom:1px dashed #EFE8D2;
   }
   .prow:last-child{border-bottom:none;}
   .prow .pname{font-size:14.5px;font-weight:500;}
@@ -285,7 +304,7 @@
     margin-bottom:16px;
   }
   .footer-note{color:var(--paper-dim);opacity:0.65;font-size:12px;text-align:center;margin-top:30px;font-family:'IBM Plex Mono', monospace;}
-  .banner.edit-banner{background:rgba(31,75,63,0.08);border-color:rgba(31,75,63,0.3);color:var(--felt-dark);}
+  .banner.edit-banner{background:rgba(74,120,86,0.08);border-color:rgba(74,120,86,0.3);color:var(--felt-dark);}
   .pill{
     display:inline-block;font-family:'IBM Plex Mono', monospace;font-size:11.5px;
     background:var(--felt);color:var(--paper);padding:3px 9px;border-radius:20px;margin-left:8px;
@@ -298,25 +317,27 @@
   @media (max-width:720px){.row3{grid-template-columns:1fr;}}
 
   /* ---- Sync bar ---- */
-  .sync-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:rgba(0,0,0,0.18);padding:9px 14px;border-radius:8px;margin-bottom:18px;}
+  .sync-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--felt);padding:10px 16px;border-radius:20px;margin-bottom:18px;box-shadow:0 6px 18px rgba(74,120,86,0.25);}
   .sync-dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0;}
-  .sync-dot.off{background:#8a8474;}
-  .sync-dot.on{background:#4F7A5F;box-shadow:0 0 0 3px rgba(79,122,95,0.25);}
-  .sync-dot.err{background:#C0554C;}
-  .sync-label{font-family:'IBM Plex Mono', monospace;font-size:11.5px;color:#BFE0CE;white-space:nowrap;}
-  .sync-bar input{max-width:300px;font-size:12px;padding:6px 9px;font-family:'IBM Plex Mono', monospace;background:rgba(255,255,255,0.9);}
+  .sync-dot.off{background:#C7D9C2;}
+  .sync-dot.on{background:#EFCE7C;box-shadow:0 0 0 3px rgba(239,206,124,0.3);}
+  .sync-dot.err{background:#F0A99C;}
+  .sync-label{font-family:'IBM Plex Mono', monospace;font-size:11.5px;color:var(--paper);white-space:nowrap;}
+  .sync-bar input{max-width:300px;font-size:12px;padding:6px 9px;font-family:'IBM Plex Mono', monospace;background:rgba(255,255,255,0.92);}
   .sync-bar button{padding:7px 12px;font-size:12px;}
+  .sync-bar .btn-ghost{color:var(--paper);border-color:rgba(251,247,236,0.4);}
+  .sync-bar .btn-ghost:hover{border-color:var(--paper);color:#fff;}
 
   /* ---- Schedule tab ---- */
   .sched-round{margin-bottom:20px;}
   .sched-round-title{font-family:'Fraunces', serif;font-weight:600;font-size:17px;margin:0 0 10px;display:flex;align-items:center;gap:8px;color:var(--ink);}
-  .sched-row{background:#fff;border:1px solid #E7DFC6;border-radius:8px;padding:12px 14px;margin-bottom:9px;}
+  .sched-row{background:#fff;border:1px solid #EAE0BE;border-radius:14px;padding:12px 14px;margin-bottom:9px;}
   .sched-main{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:7px;flex-wrap:wrap;}
-  .sched-main .tid{font-family:'IBM Plex Mono', monospace;font-weight:600;font-size:14px;color:var(--ink);}
+  .sched-main .tid{font-family:'IBM Plex Mono', monospace;font-weight:600;font-size:14px;}
   .sched-status{font-family:'IBM Plex Mono', monospace;font-size:10.5px;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:0.3px;}
-  .status-waiting{background:rgba(176,141,87,0.16);color:#8a6a2f;}
-  .status-progress{background:rgba(46,107,69,0.14);color:#2E6B45;}
-  .status-complete{background:rgba(90,97,105,0.16);color:#5A6169;}
+  .status-waiting{background:rgba(217,165,54,0.18);color:#8a6a2f;}
+  .status-progress{background:rgba(109,155,184,0.18);color:#3E6A85;}
+  .status-complete{background:rgba(74,120,86,0.16);color:var(--felt-dark);}
   .sched-players{font-size:13.5px;color:var(--ink-soft);margin-bottom:9px;}
   .sched-room-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
   .room-input{max-width:220px;padding:7px 10px;font-size:13.5px;}
@@ -334,8 +355,8 @@
   .tv-mode-btn:hover{background:rgba(0,0,0,0.55);}
   .tv-screen{
     display:none;position:fixed;inset:0;z-index:9999;
-    background:radial-gradient(ellipse at top, #1F4B3F 0%, #0d251d 75%);
-    color:var(--paper);flex-direction:column;padding:3.2vh 4vw;font-family:'Work Sans', sans-serif;
+    background:radial-gradient(ellipse at top, #2E5240 0%, #12251C 75%);
+    color:var(--paper);flex-direction:column;padding:3.2vh 4vw;font-family:'Quicksand', sans-serif;
     box-sizing:border-box;
   }
   .tv-exit{
@@ -364,12 +385,13 @@
 
   .tv-tables-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.6vh 1.6vw;align-content:start;height:100%;}
   .tv-table-card{background:rgba(243,236,217,0.06);border:1px solid rgba(243,236,217,0.18);border-radius:14px;padding:2vh 1.6vw;}
-  .tv-table-card .tv-tid{font-family:'IBM Plex Mono', monospace;font-weight:700;font-size:clamp(18px,1.8vw,28px);color:var(--brass-light);}
+  .tv-table-card .tv-tid{font-family:'IBM Plex Mono', monospace;font-weight:700;font-size:clamp(15px,1.5vw,22px);padding:4px 12px;}
   .tv-table-card .tv-room{font-family:'IBM Plex Mono', monospace;font-size:clamp(13px,1.2vw,18px);color:#BFE0CE;opacity:0.85;margin:0.6vh 0 1.2vh;}
   .tv-table-card .tv-players{font-size:clamp(15px,1.5vw,22px);line-height:1.5;}
   .tv-status-chip{display:inline-block;font-family:'IBM Plex Mono', monospace;font-size:clamp(10px,0.9vw,14px);padding:0.35vh 1vw;border-radius:20px;margin-bottom:1.2vh;text-transform:uppercase;letter-spacing:0.3px;}
   .tv-screen .status-waiting{background:rgba(201,162,39,0.28);color:#F0DE9E;}
   .tv-screen .status-progress{background:rgba(79,122,95,0.35);color:#9FE8B9;}
+  .tv-screen .status-complete{background:rgba(90,97,105,0.32);color:#D6DADE;}
 
   .tv-ticker{margin-top:2.2vh;height:6.5vh;overflow:hidden;background:rgba(0,0,0,0.28);border-radius:10px;display:flex;align-items:center;flex-shrink:0;}
   .tv-ticker-track{display:inline-flex;white-space:nowrap;animation:tv-scroll 30s linear infinite;}
@@ -703,7 +725,7 @@ function pairRound(roundNum, order){
   sizes.forEach((seats, t)=>{
     const group = order.slice(cursor, cursor+seats);
     cursor += seats;
-    pairing.push({ tableId: 'G'+roundNum+' T'+(t+1), idx: group, room: '', status: 'waiting' });
+    pairing.push({ tableId: 'G'+roundNum+' T'+(t+1), idx: group, room: '', status: 'waiting', submitted: false, editing: false });
   });
   state.pairing = pairing;
   state.pairingWarning = sizes.some(s => s < state.minPerTable || s > state.maxPerTable);
@@ -743,66 +765,79 @@ function computePlacements(throughRound){
 }
 
 /* ---------------------------------------------------------------
-   SUBMIT A ROUND'S SCORES
+   SUBMIT ONE TABLE'S SCORES — the round finalizes (placements +
+   next pairing) automatically once every table has submitted.
 ------------------------------------------------------------------*/
-function submitRound(){
+function tableInputPrefill(pIdx){
+  if(state.pendingScores && state.pendingScores[pIdx] !== undefined) return state.pendingScores[pIdx];
+  const rd = state.players[pIdx].rounds[state.round-1];
+  return rd ? rd.points : '';
+}
+
+function submitTable(tableIdx){
+  const table = state.pairing[tableIdx];
   const roundNum = state.round;
-  // gather + validate scores
-  const scores = {}; // playerIdx -> number
+  const scores = {};
   let ok = true;
-  state.pairing.forEach(table=>{
-    table.idx.forEach(pIdx=>{
-      const el = document.getElementById('score_'+pIdx);
-      const v = el ? parseFloat(el.value) : NaN;
-      if(isNaN(v)){ ok = false; el.style.borderColor='var(--danger)'; }
-      else { scores[pIdx] = v; el.style.borderColor=''; }
-    });
+  table.idx.forEach(pIdx=>{
+    const el = document.getElementById('score_'+pIdx);
+    const v = el ? parseFloat(el.value) : NaN;
+    if(isNaN(v)){ ok = false; if(el) el.style.borderColor='var(--danger)'; }
+    else { scores[pIdx] = v; if(el) el.style.borderColor=''; }
   });
   if(!ok){
-    alert('Enter a numeric score for every player before submitting the round.');
+    alert('Enter a numeric score for every player at this table.');
     return;
   }
 
-  state.pairing.forEach(table=>{
-    const withScores = table.idx.map(pIdx=>({pIdx, score:scores[pIdx]}));
-    const sorted = [...withScores].sort((a,b)=> b.score - a.score);
-    // standard competition ranking (1224)
-    const ranks = {};
-    let lastScore = null, lastRank = 0;
-    sorted.forEach((row, i)=>{
-      if(row.score !== lastScore){ lastRank = i+1; lastScore = row.score; }
-      ranks[row.pIdx] = lastRank;
-    });
-    const topScore = Math.max(...withScores.map(w=>w.score));
-    withScores.forEach(({pIdx, score})=>{
-      const diff = Math.round((score - topScore)*100)/100;
-      const rank = ranks[pIdx];
-      const swissPts = swissPointsForRank(rank);
-      const prev = state.players[pIdx].rounds[roundNum-2]; // previous round entry (0-indexed array)
-      const prevCum = prev ? prev.cumPts : 0;
-      const prevDiff = prev ? prev.cumDiff : 0;
-      const prevRaw = prev ? prev.cumRaw : 0;
-      state.players[pIdx].rounds[roundNum-1] = {
-        tableId: table.tableId,
-        room: table.room || '',
-        points: score,
-        rank: rank,
-        diff: diff,
-        swissPts: swissPts,
-        cumPts: prevCum + swissPts,
-        cumDiff: Math.round((prevDiff + diff)*100)/100,
-        cumRaw: Math.round((prevRaw + score)*100)/100,
-        placement: null // filled below
-      };
-    });
+  const withScores = table.idx.map(pIdx=>({pIdx, score:scores[pIdx]}));
+  const sorted = [...withScores].sort((a,b)=> b.score - a.score);
+  const ranks = {};
+  let lastScore = null, lastRank = 0;
+  sorted.forEach((row, i)=>{
+    if(row.score !== lastScore){ lastRank = i+1; lastScore = row.score; }
+    ranks[row.pIdx] = lastRank;
+  });
+  const topScore = Math.max(...withScores.map(w=>w.score));
+  withScores.forEach(({pIdx, score})=>{
+    const diff = Math.round((score - topScore)*100)/100;
+    const rank = ranks[pIdx];
+    const swissPts = swissPointsForRank(rank);
+    const prev = state.players[pIdx].rounds[roundNum-2];
+    const prevCum = prev ? prev.cumPts : 0;
+    const prevDiff = prev ? prev.cumDiff : 0;
+    const prevRaw = prev ? prev.cumRaw : 0;
+    state.players[pIdx].rounds[roundNum-1] = {
+      tableId: table.tableId,
+      room: table.room || '',
+      points: score,
+      rank: rank,
+      diff: diff,
+      swissPts: swissPts,
+      cumPts: prevCum + swissPts,
+      cumDiff: Math.round((prevDiff + diff)*100)/100,
+      cumRaw: Math.round((prevRaw + score)*100)/100,
+      placement: null // filled once the whole round finalizes
+    };
   });
 
-  // placements after this round
+  table.submitted = true;
+  table.editing = false;
+  table.status = 'complete';
+  saveLocal();
+
+  if(state.pairing.every(t => t.submitted)){
+    finalizeRound(roundNum);
+  } else {
+    render();
+  }
+}
+
+function finalizeRound(roundNum){
   const ordered = computePlacements(roundNum);
   ordered.forEach(row=>{
     state.players[row.idx].rounds[roundNum-1].placement = row.placement;
   });
-
   state.completed = roundNum;
 
   if(roundNum < TOTAL_ROUNDS){
@@ -815,6 +850,17 @@ function submitRound(){
     activeTab = 'standings';
   }
   saveLocal();
+  render();
+}
+
+function startEditTable(tableIdx){
+  if(VIEW_ONLY) return;
+  state.pairing[tableIdx].editing = true;
+  render();
+}
+function cancelEditTable(tableIdx){
+  if(VIEW_ONLY) return;
+  state.pairing[tableIdx].editing = false;
   render();
 }
 
@@ -844,7 +890,7 @@ function editRound(r){
     pendingScores[pIdx] = p.rounds[r-1].points;
   });
 
-  state.pairing = tableIds.map(tid=>({ tableId: tid, idx: groups[tid], room: rooms[tid], status: 'waiting' }));
+  state.pairing = tableIds.map(tid=>({ tableId: tid, idx: groups[tid], room: rooms[tid], status: 'waiting', submitted: false, editing: false }));
   state.pendingScores = pendingScores;
 
   // Truncate this round and everything after it — they'll be regenerated on resubmit.
@@ -991,43 +1037,69 @@ function medalClass(rank){
   return '';
 }
 
+function lcClass(tableIndex){
+  return 'lc-' + (tableIndex % 6);
+}
+
 function renderCurrentRound(r){
   if(VIEW_ONLY){
     return `<div class="card">
       <h2>Round ${r} <span class="pill">in progress</span></h2>
-      <p class="hint">Waiting on results. Rooms below are set live by the organizer.</p>
+      <p class="hint">Tables report in as they finish. Rooms below are set live by the organizer.</p>
       ${renderScheduleCurrent(r, true)}
     </div>`;
   }
-  const isEdit = state.pendingScores && Object.keys(state.pendingScores).length > 0;
-  let cards = state.pairing.map(table=>{
+
+  const submittedCount = state.pairing.filter(t=>t.submitted).length;
+  const cards = state.pairing.map((table, t)=>{
+    if(table.submitted && !table.editing){
+      const rows = table.idx.map(pIdx=>{
+        const p = state.players[pIdx];
+        const rd = p.rounds[r-1];
+        const medal = medalClass(rd.rank);
+        return `<div class="prow ${medal}">
+          <div class="pname">${escapeHtml(p.name)}</div>
+          <div style="text-align:right;font-family:'IBM Plex Mono',monospace;">${rd.points} pts</div>
+          <div class="rankbadge">#${rd.rank}</div>
+        </div>`;
+      }).join('');
+      return `<div class="tent">
+        <div class="tent-head"><span class="tid lc-badge ${lcClass(t)}">${table.tableId}</span><span class="tcount status-complete" style="padding:2px 9px;border-radius:20px;font-family:'IBM Plex Mono',monospace;">Complete</span></div>
+        <div class="tent-body">${rows}</div>
+        <div class="btn-row" style="padding:0 14px 14px;">
+          <button class="btn-ghost" onclick="startEditTable(${t})">Edit this table</button>
+        </div>
+      </div>`;
+    }
+
+    const wasSubmitted = table.submitted; // editing an already-submitted table
     const rows = table.idx.map(pIdx=>{
       const p = state.players[pIdx];
-      const prefill = isEdit && state.pendingScores[pIdx] !== undefined ? state.pendingScores[pIdx] : '';
+      const prefill = tableInputPrefill(pIdx);
       return `<div class="prow">
         <div class="pname">${escapeHtml(p.name)}</div>
         <input id="score_${pIdx}" type="number" step="any" placeholder="score" value="${prefill}">
         <div class="rankbadge">pts</div>
       </div>`;
     }).join('');
+    const cancelBtn = wasSubmitted ? `<button class="btn-ghost" onclick="cancelEditTable(${t})">Cancel</button>` : '';
     return `<div class="tent">
-      <div class="tent-head"><span class="tid">${table.tableId}</span><span class="tcount">${table.idx.length} players</span></div>
+      <div class="tent-head"><span class="tid lc-badge ${lcClass(t)}">${table.tableId}</span><span class="tcount">${table.idx.length} players</span></div>
       <div class="tent-body">${rows}</div>
+      <div class="btn-row" style="padding:0 14px 14px;">
+        <button class="btn-primary" onclick="submitTable(${t})">${wasSubmitted?'Save':'Submit'} this table</button>
+        ${cancelBtn}
+      </div>
     </div>`;
   }).join('');
 
-  const editBanner = isEdit ? `<div class="banner edit-banner">Editing Round ${r}. Scores are prefilled from what was submitted before — fix what's wrong and resubmit. Any later rounds already paired from this one will be regenerated once you resubmit.</div>` : '';
   const warnBanner = state.pairingWarning ? `<div class="banner" style="background:rgba(155,59,52,0.08);border-color:rgba(155,59,52,0.3);color:var(--danger);">Some tables this round fall outside your configured ${state.minPerTable}–${state.maxPerTable} player range — there weren't enough players to keep every table in range.</div>` : '';
 
   return `<div class="card">
-    <h2>Round ${r} — ${isEdit?'edit':'enter'} raw scores <span class="pill">${state.pairing.length} tables</span></h2>
-    <p class="hint">Type each player's raw in-game score. Scores only decide table rank &amp; differential — Swiss points (4 / 2 / 1 / 0 by rank) are what carry forward. Assign rooms on the Schedule tab.</p>
-    ${editBanner}
+    <h2>Round ${r} <span class="pill">${submittedCount} of ${state.pairing.length} tables in</span></h2>
+    <p class="hint">Submit each table's score as soon as that game finishes — no need to wait for the others. Round ${r} finalizes automatically once every table is in. Assign rooms on the Schedule tab.</p>
     ${warnBanner}
     <div class="table-grid">${cards}</div>
-    <div class="btn-row">
-      <button class="btn-primary" onclick="submitRound()">${isEdit ? 'Save corrected scores' : 'Submit Round '+r+' &amp; '+(r<TOTAL_ROUNDS?'pair Round '+(r+1):'finish tournament')}</button>
-    </div>
   </div>`;
 }
 
@@ -1043,7 +1115,7 @@ function renderPastRound(r){
     const na = parseInt(a.split('T')[1],10), nb = parseInt(b.split('T')[1],10);
     return na-nb;
   });
-  const cards = tableIds.map(tid=>{
+  const cards = tableIds.map((tid,t)=>{
     const rows = groups[tid].sort((a,b)=>a.rank-b.rank).map(row=>{
       const p = state.players[row.pIdx];
       return `<div class="prow ${medalClass(row.rank)}">
@@ -1053,7 +1125,7 @@ function renderPastRound(r){
       </div>`;
     }).join('');
     return `<div class="tent">
-      <div class="tent-head"><span class="tid">${tid}</span><span class="tcount">${groups[tid].length} players</span></div>
+      <div class="tent-head"><span class="tid lc-badge ${lcClass(t)}">${tid}</span><span class="tcount">${groups[tid].length} players</span></div>
       <div class="tent-body">${rows}</div>
     </div>`;
   }).join('');
@@ -1099,15 +1171,15 @@ function renderScheduleCurrent(r, viewOnlyOverride){
   const warn = state.pairingWarning ? `<div class="banner" style="background:rgba(155,59,52,0.08);border-color:rgba(155,59,52,0.3);color:var(--danger);margin-bottom:10px;">Some tables fall outside your configured ${state.minPerTable}–${state.maxPerTable} player range this round.</div>` : '';
   const rows = state.pairing.map((table,t)=>{
     const names = table.idx.map(pIdx=>escapeHtml(state.players[pIdx].name)).join(', ');
-    const statusClass = table.status==='in_progress' ? 'status-progress' : 'status-waiting';
-    const statusLabel = table.status==='in_progress' ? 'In progress' : 'Waiting for players';
+    const statusClass = table.submitted ? 'status-complete' : (table.status==='in_progress' ? 'status-progress' : 'status-waiting');
+    const statusLabel = table.submitted ? 'Complete' : (table.status==='in_progress' ? 'In progress' : 'Waiting for players');
     const roomField = readOnly
       ? `<span class="room-value">${table.room ? escapeHtml(table.room) : '— room TBD —'}</span>`
       : `<input type="text" class="room-input" value="${escapeHtml(table.room||'')}" placeholder="Room / table #" onchange="updateRoom(${t}, this.value)">`;
-    const statusBtn = readOnly ? '' : `<button class="btn-ghost sched-toggle" onclick="cycleStatus(${t})">Mark ${table.status==='in_progress'?'waiting':'in progress'}</button>`;
+    const statusBtn = (readOnly || table.submitted) ? '' : `<button class="btn-ghost sched-toggle" onclick="cycleStatus(${t})">Mark ${table.status==='in_progress'?'waiting':'in progress'}</button>`;
     return `<div class="sched-row">
       <div class="sched-main">
-        <span class="tid">${table.tableId}</span>
+        <span class="tid lc-badge ${lcClass(t)}">${table.tableId}</span>
         <span class="sched-status ${statusClass}">${statusLabel}</span>
       </div>
       <div class="sched-players">${names}</div>
@@ -1133,11 +1205,11 @@ function renderScheduleCompleted(r){
     const na = parseInt(a.split('T')[1],10), nb = parseInt(b.split('T')[1],10);
     return na-nb;
   });
-  const rows = tableIds.map(tid=>{
+  const rows = tableIds.map((tid,t)=>{
     const g = groups[tid];
     return `<div class="sched-row">
       <div class="sched-main">
-        <span class="tid">${tid}</span>
+        <span class="tid lc-badge ${lcClass(t)}">${tid}</span>
         <span class="sched-status status-complete">Complete</span>
       </div>
       <div class="sched-players">${g.players.map(n=>escapeHtml(n)).join(', ')}</div>
@@ -1145,15 +1217,15 @@ function renderScheduleCompleted(r){
     </div>`;
   }).join('');
   return `<div class="sched-round">
-    <h3 class="sched-round-title">Round ${r} <span class="pill" style="background:#4F7A5F;">complete</span></h3>
+    <h3 class="sched-round-title">Round ${r} <span class="pill" style="background:var(--felt);">complete</span></h3>
     ${rows}
   </div>`;
 }
 
 function renderSchedulePlaceholder(r){
   return `<div class="sched-round sched-placeholder">
-    <h3 class="sched-round-title">Round ${r} <span class="pill" style="background:#8a8474;">pending</span></h3>
-    <p class="hint" style="margin:0;">Waiting on Round ${r-1} to finish — tables will be paired automatically from those standings.</p>
+    <h3 class="sched-round-title">Round ${r} <span class="pill" style="background:#8a8474;">TBA</span></h3>
+    <p class="hint" style="margin:0;">Tables and rooms are TBA until everyone finishes Round ${r-1} — pairing happens automatically.</p>
   </div>`;
 }
 
@@ -1258,13 +1330,13 @@ function tvPlayingPanel(){
   if(!state.pairing || !state.pairing.length){
     return `<div class="tv-panel empty">No round currently open.</div>`;
   }
-  const cards = state.pairing.map(table=>{
+  const cards = state.pairing.map((table,t)=>{
     const names = table.idx.map(pIdx=>escapeHtml(state.players[pIdx].name)).join(', ');
-    const statusClass = table.status==='in_progress' ? 'status-progress' : 'status-waiting';
-    const statusLabel = table.status==='in_progress' ? 'In progress' : 'Waiting';
+    const statusClass = table.submitted ? 'status-complete' : (table.status==='in_progress' ? 'status-progress' : 'status-waiting');
+    const statusLabel = table.submitted ? 'Complete' : (table.status==='in_progress' ? 'In progress' : 'Waiting');
     return `<div class="tv-table-card">
       <span class="tv-status-chip ${statusClass}">${statusLabel}</span>
-      <div class="tv-tid">${table.tableId}</div>
+      <div class="tv-tid lc-badge ${lcClass(t)}" style="display:inline-block;">${table.tableId}</div>
       <div class="tv-room">${table.room ? escapeHtml(table.room) : 'Room TBD'}</div>
       <div class="tv-players">${names}</div>
     </div>`;
@@ -1284,7 +1356,7 @@ function renderTVTicker(){
     items.push(`${state.name} — Round ${state.round} of ${TOTAL_ROUNDS}`);
     (state.pairing||[]).forEach(table=>{
       const names = table.idx.map(pIdx=>state.players[pIdx].name).join(', ');
-      const status = table.status==='in_progress' ? 'IN PROGRESS' : 'WAITING';
+      const status = table.submitted ? 'COMPLETE' : (table.status==='in_progress' ? 'IN PROGRESS' : 'WAITING');
       items.push(`${table.tableId}${table.room?' · '+table.room:''} — ${names} [${status}]`);
     });
     if(state.round < TOTAL_ROUNDS){
