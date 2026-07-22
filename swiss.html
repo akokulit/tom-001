@@ -199,6 +199,13 @@
   .prow.r1{box-shadow:inset 3px 0 0 var(--gold);}
   .prow.r2{box-shadow:inset 3px 0 0 var(--silver);}
   .prow.r3{box-shadow:inset 3px 0 0 var(--bronze);}
+  .prow.is-default{opacity:0.75;box-shadow:inset 3px 0 0 var(--danger);}
+  .default-check{
+    display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink-soft);
+    font-family:'IBM Plex Mono', monospace;cursor:pointer;justify-content:center;
+  }
+  .default-check input{width:14px;height:14px;margin:0;accent-color:var(--danger);cursor:pointer;}
+  input[type=number]:disabled{opacity:0.4;background:var(--paper-dim);}
 
   /* ---- Standings table ---- */
   .table-scroll{overflow-x:auto;}
@@ -254,6 +261,8 @@
   td.stat-diff.pos{color:#2E6B45;}
   td.stat-diff.neg{color:var(--danger);}
   td.stat-raw{color:var(--ink-soft);font-size:14px;font-weight:500;}
+  td.stat-defaults{color:var(--ink-soft);opacity:0.5;font-size:13px;}
+  td.stat-defaults.has-defaults{color:var(--danger);opacity:1;font-weight:700;}
 
   table.standings.headline td.journey-cell{text-align:left;font-family:'IBM Plex Mono', monospace;white-space:normal;}
   .journey-overall{font-size:13px;color:var(--ink-soft);letter-spacing:0.2px;}
@@ -524,7 +533,8 @@ function freshState(){
     round: 1,              // round currently open for pairing/input
     completed: 0,          // number of fully-submitted rounds
     finished: false,
-    pendingScores: {}      // playerIdx -> score, used to prefill inputs when editing a past round
+    pendingScores: {},     // playerIdx -> score, used to prefill inputs when editing a past round
+    pendingDefaults: {}    // playerIdx -> bool, used to prefill the Default checkbox when editing
   };
 }
 
@@ -731,6 +741,7 @@ function pairRound(roundNum, order){
   state.pairingWarning = sizes.some(s => s < state.minPerTable || s > state.maxPerTable);
   state.round = roundNum;
   state.pendingScores = {};
+  state.pendingDefaults = {};
 }
 
 /* ---------------------------------------------------------------
@@ -742,11 +753,13 @@ function standingsOrder(throughRound){
     return {
       idx:i,
       cumPts: r ? r.cumPts : 0,
+      cumDefaults: r ? (r.cumDefaults||0) : 0,
       cumDiff: r ? r.cumDiff : 0,
       cumRaw: r ? r.cumRaw : 0
     };
   }).sort((a,b)=>
     b.cumPts - a.cumPts ||
+    a.cumDefaults - b.cumDefaults || // fewer defaults ranks higher
     b.cumDiff - a.cumDiff ||
     b.cumRaw - a.cumRaw ||
     state.players[a.idx].name.localeCompare(state.players[b.idx].name)
@@ -757,7 +770,7 @@ function computePlacements(throughRound){
   const ordered = standingsOrder(throughRound);
   let lastKey = null, lastPlace = 0;
   ordered.forEach((row, i)=>{
-    const key = row.cumPts+'|'+row.cumDiff+'|'+row.cumRaw;
+    const key = row.cumPts+'|'+row.cumDefaults+'|'+row.cumDiff+'|'+row.cumRaw;
     if(key !== lastKey){ lastPlace = i+1; lastKey = key; }
     row.placement = lastPlace;
   });
@@ -774,19 +787,41 @@ function tableInputPrefill(pIdx){
   return rd ? rd.points : '';
 }
 
+function tableDefaultPrefill(pIdx){
+  if(state.pendingDefaults && state.pendingDefaults[pIdx] !== undefined) return state.pendingDefaults[pIdx];
+  const rd = state.players[pIdx].rounds[state.round-1];
+  return rd ? !!rd.isDefault : false;
+}
+
+function onDefaultToggle(pIdx){
+  const cb = document.getElementById('default_'+pIdx);
+  const el = document.getElementById('score_'+pIdx);
+  if(!el || !cb) return;
+  el.disabled = cb.checked;
+  if(cb.checked){ el.value = ''; el.style.borderColor = ''; }
+}
+
 function submitTable(tableIdx){
   const table = state.pairing[tableIdx];
   const roundNum = state.round;
   const scores = {};
+  const defaults = {};
   let ok = true;
   table.idx.forEach(pIdx=>{
+    const dEl = document.getElementById('default_'+pIdx);
+    const isDefault = !!(dEl && dEl.checked);
+    defaults[pIdx] = isDefault;
+    if(isDefault){
+      scores[pIdx] = 0; // defaulted players score 0 and don't need a numeric entry
+      return;
+    }
     const el = document.getElementById('score_'+pIdx);
     const v = el ? parseFloat(el.value) : NaN;
     if(isNaN(v)){ ok = false; if(el) el.style.borderColor='var(--danger)'; }
     else { scores[pIdx] = v; if(el) el.style.borderColor=''; }
   });
   if(!ok){
-    alert('Enter a numeric score for every player at this table.');
+    alert('Enter a numeric score for every player at this table (or mark them Default).');
     return;
   }
 
@@ -802,9 +837,11 @@ function submitTable(tableIdx){
   withScores.forEach(({pIdx, score})=>{
     const diff = Math.round((score - topScore)*100)/100;
     const rank = ranks[pIdx];
-    const swissPts = swissPointsForRank(rank);
+    const isDefault = defaults[pIdx];
+    const swissPts = isDefault ? 0 : swissPointsForRank(rank);
     const prev = state.players[pIdx].rounds[roundNum-2];
     const prevCum = prev ? prev.cumPts : 0;
+    const prevDefaults = prev ? (prev.cumDefaults||0) : 0;
     const prevDiff = prev ? prev.cumDiff : 0;
     const prevRaw = prev ? prev.cumRaw : 0;
     state.players[pIdx].rounds[roundNum-1] = {
@@ -812,9 +849,11 @@ function submitTable(tableIdx){
       room: table.room || '',
       points: score,
       rank: rank,
+      isDefault: isDefault,
       diff: diff,
       swissPts: swissPts,
       cumPts: prevCum + swissPts,
+      cumDefaults: prevDefaults + (isDefault ? 1 : 0),
       cumDiff: Math.round((prevDiff + diff)*100)/100,
       cumRaw: Math.round((prevRaw + score)*100)/100,
       placement: null // filled once the whole round finalizes
@@ -847,6 +886,7 @@ function finalizeRound(roundNum){
   } else {
     state.finished = true;
     state.pendingScores = {};
+    state.pendingDefaults = {};
     activeTab = 'standings';
   }
   saveLocal();
@@ -886,12 +926,15 @@ function editRound(r){
     return na-nb;
   });
   const pendingScores = {};
+  const pendingDefaults = {};
   state.players.forEach((p,pIdx)=>{
     pendingScores[pIdx] = p.rounds[r-1].points;
+    pendingDefaults[pIdx] = !!p.rounds[r-1].isDefault;
   });
 
   state.pairing = tableIds.map(tid=>({ tableId: tid, idx: groups[tid], room: rooms[tid], status: 'waiting', submitted: false, editing: false }));
   state.pendingScores = pendingScores;
+  state.pendingDefaults = pendingDefaults;
 
   // Truncate this round and everything after it — they'll be regenerated on resubmit.
   state.players.forEach(p=>{ p.rounds.length = r-1; });
@@ -1056,11 +1099,13 @@ function renderCurrentRound(r){
       const rows = table.idx.map(pIdx=>{
         const p = state.players[pIdx];
         const rd = p.rounds[r-1];
-        const medal = medalClass(rd.rank);
-        return `<div class="prow ${medal}">
+        const medal = rd.isDefault ? '' : medalClass(rd.rank);
+        const scoreLabel = rd.isDefault ? 'DEFAULT' : rd.points+' pts';
+        const rankLabel = rd.isDefault ? 'DEF' : '#'+rd.rank;
+        return `<div class="prow ${medal}${rd.isDefault?' is-default':''}">
           <div class="pname">${escapeHtml(p.name)}</div>
-          <div style="text-align:right;font-family:'IBM Plex Mono',monospace;">${rd.points} pts</div>
-          <div class="rankbadge">#${rd.rank}</div>
+          <div style="text-align:right;font-family:'IBM Plex Mono',monospace;${rd.isDefault?'color:var(--danger);':''}">${scoreLabel}</div>
+          <div class="rankbadge">${rankLabel}</div>
         </div>`;
       }).join('');
       return `<div class="tent">
@@ -1076,10 +1121,11 @@ function renderCurrentRound(r){
     const rows = table.idx.map(pIdx=>{
       const p = state.players[pIdx];
       const prefill = tableInputPrefill(pIdx);
+      const isDef = tableDefaultPrefill(pIdx);
       return `<div class="prow">
         <div class="pname">${escapeHtml(p.name)}</div>
-        <input id="score_${pIdx}" type="number" step="any" placeholder="score" value="${prefill}">
-        <div class="rankbadge">pts</div>
+        <input id="score_${pIdx}" type="number" step="any" placeholder="score" value="${prefill}" ${isDef?'disabled':''}>
+        <label class="default-check"><input type="checkbox" id="default_${pIdx}" ${isDef?'checked':''} onchange="onDefaultToggle(${pIdx})"> Default</label>
       </div>`;
     }).join('');
     const cancelBtn = wasSubmitted ? `<button class="btn-ghost" onclick="cancelEditTable(${t})">Cancel</button>` : '';
@@ -1097,7 +1143,7 @@ function renderCurrentRound(r){
 
   return `<div class="card">
     <h2>Round ${r} <span class="pill">${submittedCount} of ${state.pairing.length} tables in</span></h2>
-    <p class="hint">Submit each table's score as soon as that game finishes — no need to wait for the others. Round ${r} finalizes automatically once every table is in. Assign rooms on the Schedule tab.</p>
+    <p class="hint">Submit each table's score as soon as that game finishes — no need to wait for the others. Round ${r} finalizes automatically once every table is in. Check <b>Default</b> for a player who skipped the game — they score 0 Swiss points and it counts against them in tiebreaks. Assign rooms on the Schedule tab.</p>
     ${warnBanner}
     <div class="table-grid">${cards}</div>
   </div>`;
@@ -1118,10 +1164,13 @@ function renderPastRound(r){
   const cards = tableIds.map((tid,t)=>{
     const rows = groups[tid].sort((a,b)=>a.rank-b.rank).map(row=>{
       const p = state.players[row.pIdx];
-      return `<div class="prow ${medalClass(row.rank)}">
+      const medal = row.isDefault ? '' : medalClass(row.rank);
+      const scoreLabel = row.isDefault ? 'DEFAULT' : row.points+' pts';
+      const rankLabel = row.isDefault ? 'DEF' : '#'+row.rank;
+      return `<div class="prow ${medal}${row.isDefault?' is-default':''}">
         <div class="pname">${escapeHtml(p.name)}</div>
-        <div style="text-align:right;font-family:'IBM Plex Mono',monospace;">${row.points} pts</div>
-        <div class="rankbadge">#${row.rank}</div>
+        <div style="text-align:right;font-family:'IBM Plex Mono',monospace;${row.isDefault?'color:var(--danger);':''}">${scoreLabel}</div>
+        <div class="rankbadge">${rankLabel}</div>
       </div>`;
     }).join('');
     return `<div class="tent">
@@ -1376,8 +1425,8 @@ function renderStandings(){
   const ordered = computePlacements(through);
 
   const finishNote = state.finished
-    ? `<div class="banner">🏆 Tournament complete. Final Rank is Swiss Pts first; ties are broken by cumulative Diff vs table leader, then cumulative raw points.</div>`
-    : `<div class="banner">Standings after Round ${through}. Ranked by Swiss Pts; ties broken by cumulative Diff vs table leader, then cumulative raw points. This order sets Round ${through+1}'s table groupings.</div>`;
+    ? `<div class="banner">🏆 Tournament complete. Final Rank is Swiss Pts first; ties are broken by fewest Defaults, then cumulative Diff vs table leader, then cumulative raw points.</div>`
+    : `<div class="banner">Standings after Round ${through}. Ranked by Swiss Pts; ties broken by fewest Defaults, then cumulative Diff vs table leader, then cumulative raw points. This order sets Round ${through+1}'s table groupings.</div>`;
 
   const headlineRows = ordered.map(row=>{
     const p = state.players[row.idx];
@@ -1400,6 +1449,7 @@ function renderStandings(){
       <td class="place-cell ${medal}"><span class="place-badge">${ordinal(row.placement)}</span></td>
       <td class="name-cell">${escapeHtml(p.name)}</td>
       <td class="stat-cell stat-pts">${rd.cumPts}</td>
+      <td class="stat-cell stat-defaults ${rd.cumDefaults>0?'has-defaults':''}">${rd.cumDefaults||0}</td>
       <td class="stat-cell stat-diff ${rd.cumDiff>0?'pos':rd.cumDiff<0?'neg':''}">${rd.cumDiff>0?'+':''}${rd.cumDiff}</td>
       <td class="stat-cell stat-raw">${rd.cumRaw}</td>
       <td class="journey-cell">
@@ -1456,8 +1506,9 @@ function renderStandings(){
           <th class="place-col">Place</th>
           <th>Player</th>
           <th>Swiss Pts</th>
-          <th>Diff <small>tiebreak 1 · vs table leader</small></th>
-          <th>Raw Total <small>tiebreak 2</small></th>
+          <th>Defaults <small>tiebreak 1</small></th>
+          <th>Diff <small>tiebreak 2 · vs table leader</small></th>
+          <th>Raw Total <small>tiebreak 3</small></th>
           <th>Journey <small>overall place · table rank</small></th>
         </tr></thead>
         <tbody>${headlineRows}</tbody>
@@ -1492,19 +1543,19 @@ function exportCSV(){
   if(!state || state.completed===0){ alert('Submit at least one round first.'); return; }
   const through = state.completed;
   const ordered = computePlacements(through);
-  const header = ['Placement','Player','Swiss Pts','Cum Diff (tiebreak 1)','Cum Raw Total (tiebreak 2)'];
+  const header = ['Placement','Player','Swiss Pts','Cum Defaults (tiebreak 1)','Cum Diff (tiebreak 2)','Cum Raw Total (tiebreak 3)'];
   for(let r=1;r<=through;r++){
-    header.push(`G${r} T-ID`,`G${r} Room`,`G${r} Points`,`G${r} Rank`,`G${r} Diff`,`G${r} Swiss Pts`,`Pts After R${r}`,`Diff After R${r}`,`Raw After R${r}`,`R${r} Placement`);
+    header.push(`G${r} T-ID`,`G${r} Room`,`G${r} Points`,`G${r} Rank`,`G${r} Default`,`G${r} Diff`,`G${r} Swiss Pts`,`Pts After R${r}`,`Defaults After R${r}`,`Diff After R${r}`,`Raw After R${r}`,`R${r} Placement`);
   }
   if(state.finished) header.push('Final Rank');
   const lines = [header.join(',')];
   ordered.forEach(row=>{
     const p = state.players[row.idx];
     const latest = p.rounds[through-1];
-    const cells = [row.placement, csvSafe(p.name), latest.cumPts, latest.cumDiff, latest.cumRaw];
+    const cells = [row.placement, csvSafe(p.name), latest.cumPts, latest.cumDefaults||0, latest.cumDiff, latest.cumRaw];
     for(let r=1;r<=through;r++){
       const rd = p.rounds[r-1];
-      cells.push(rd.tableId, csvSafe(rd.room||''), rd.points, rd.rank, rd.diff, rd.swissPts, rd.cumPts, rd.cumDiff, rd.cumRaw, rd.placement);
+      cells.push(rd.tableId, csvSafe(rd.room||''), rd.points, rd.rank, rd.isDefault?'Y':'', rd.diff, rd.swissPts, rd.cumPts, rd.cumDefaults||0, rd.cumDiff, rd.cumRaw, rd.placement);
     }
     if(state.finished) cells.push(row.placement);
     lines.push(cells.join(','));
