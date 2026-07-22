@@ -273,6 +273,7 @@
   .journey-overall .trend.down{color:var(--danger);}
   .journey-overall .trend.flat{color:var(--ink-soft);}
   .journey-table{font-size:10.5px;color:var(--ink-soft);opacity:0.75;margin-top:3px;text-transform:uppercase;letter-spacing:0.3px;}
+  .journey-x{color:var(--danger);font-weight:700;opacity:1;}
 
   /* ---- Round-by-round detail: intentionally quiet ---- */
   .detail-card{padding-top:18px;padding-bottom:18px;background:var(--paper-dim);box-shadow:none;border:1px dashed #D8CFAF;}
@@ -324,6 +325,13 @@
 
   .row3{display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:16px;}
   @media (max-width:720px){.row3{grid-template-columns:1fr;}}
+
+  .seed-toggle{display:flex;gap:18px;flex-wrap:wrap;}
+  .seed-option{
+    display:flex;align-items:center;gap:7px;font-size:14px;font-weight:500;
+    text-transform:none;letter-spacing:0;color:var(--ink);cursor:pointer;
+  }
+  .seed-option input{width:15px;height:15px;accent-color:var(--felt);cursor:pointer;}
 
   /* ---- Sync bar ---- */
   .sync-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--felt);padding:10px 16px;border-radius:20px;margin-bottom:18px;box-shadow:0 6px 18px rgba(74,120,86,0.25);}
@@ -448,6 +456,18 @@
     <div class="field">
       <label for="players">Players (one name per line)</label>
       <textarea id="players" placeholder="Alice&#10;Bob&#10;Carla&#10;Dan&#10;Erin&#10;Femi&#10;..."></textarea>
+      <div class="btn-row" style="margin-top:8px;">
+        <button type="button" class="btn-ghost" onclick="shufflePlayerList()">🔀 Shuffle this list</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Round 1 seeding</label>
+      <div class="seed-toggle">
+        <label class="seed-option"><input type="radio" name="seedMode" value="shuffle" checked> Shuffle automatically at start</label>
+        <label class="seed-option"><input type="radio" name="seedMode" value="order"> Use the list order above, as typed</label>
+      </div>
+      <p class="hint" style="margin-top:8px;">Reorder the names above (drag lines around, or click Shuffle) if you want to control who's seeded where — then pick "use the list order above".</p>
     </div>
 
     <div class="row3">
@@ -549,6 +569,16 @@ function loadSample(){
   document.getElementById('minPerTable').value = 3;
   document.getElementById('maxPerTable').value = 4;
   if(!document.getElementById('tcode').value) document.getElementById('tcode').value = randomCode();
+}
+
+function shufflePlayerList(){
+  const ta = document.getElementById('players');
+  const names = ta.value.split('\n').map(s=>s.trim()).filter(Boolean);
+  for(let i=names.length-1; i>0; i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [names[i], names[j]] = [names[j], names[i]];
+  }
+  ta.value = names.join('\n');
 }
 
 /* ---------------------------------------------------------------
@@ -692,7 +722,12 @@ function startTournament(){
   state.maxPerTable = maxP;
   state.players = names.map(n=>({name:n, rounds:[]}));
   state.round = 1;
-  pairRound(1, shuffledIndices(names.length));
+  const seedModeEl = document.querySelector('input[name="seedMode"]:checked');
+  const seedMode = seedModeEl ? seedModeEl.value : 'shuffle';
+  const seedOrder = seedMode === 'order'
+    ? Array.from({length: names.length}, (_, i) => i)
+    : shuffledIndices(names.length);
+  pairRound(1, seedOrder);
   saveLocal();
   activeTab = 'r1';
   render();
@@ -1434,16 +1469,16 @@ function renderStandings(){
     const medal = row.placement===1?'medal-1':row.placement===2?'medal-2':row.placement===3?'medal-3':'';
 
     const placementTrail = [];
-    const rankTrail = [];
+    const tableTrail = [];
     for(let r=1; r<=through; r++){
       const rr = p.rounds[r-1];
       placementTrail.push(rr.placement);
-      rankTrail.push(rr.rank);
+      tableTrail.push(rr.isDefault ? '<span class="journey-x">X</span>' : ordinal(rr.rank));
     }
     const first = placementTrail[0], last = placementTrail[placementTrail.length-1];
     const trendArrow = through<2 ? '' : (last<first ? '<span class="trend up">▲</span>' : last>first ? '<span class="trend down">▼</span>' : '<span class="trend flat">—</span>');
     const overallLine = placementTrail.map((v,i)=> i===placementTrail.length-1 ? `<b>${v}</b>` : v).join('<span class="arrow">→</span>');
-    const tableLine = rankTrail.map(v=>ordinal(v)).join(' · ');
+    const tableLine = tableTrail.join(' · ');
 
     return `<tr>
       <td class="place-cell ${medal}"><span class="place-badge">${ordinal(row.placement)}</span></td>
