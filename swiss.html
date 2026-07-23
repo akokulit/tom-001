@@ -1135,8 +1135,8 @@ function renderCurrentRound(r){
         const p = state.players[pIdx];
         const rd = p.rounds[r-1];
         const medal = rd.isDefault ? '' : medalClass(rd.rank);
-        const scoreLabel = rd.isDefault ? 'DEFAULT' : rd.points+' pts';
-        const rankLabel = rd.isDefault ? 'DEF' : '#'+rd.rank;
+        const scoreLabel = rd.isDefault ? '🪑 sat out' : rd.points+' pts';
+        const rankLabel = rd.isDefault ? '🪑' : '#'+rd.rank;
         return `<div class="prow ${medal}${rd.isDefault?' is-default':''}">
           <div class="pname">${escapeHtml(p.name)}</div>
           <div style="text-align:right;font-family:'IBM Plex Mono',monospace;${rd.isDefault?'color:var(--danger);':''}">${scoreLabel}</div>
@@ -1160,7 +1160,7 @@ function renderCurrentRound(r){
       return `<div class="prow">
         <div class="pname">${escapeHtml(p.name)}</div>
         <input id="score_${pIdx}" type="number" step="any" placeholder="score" value="${prefill}" ${isDef?'disabled':''}>
-        <label class="default-check"><input type="checkbox" id="default_${pIdx}" ${isDef?'checked':''} onchange="onDefaultToggle(${pIdx})"> Default</label>
+        <label class="default-check" title="Mark as Default — player skipped this game (0 Swiss points)"><input type="checkbox" id="default_${pIdx}" ${isDef?'checked':''} onchange="onDefaultToggle(${pIdx})"> 🪑</label>
       </div>`;
     }).join('');
     const cancelBtn = wasSubmitted ? `<button class="btn-ghost" onclick="cancelEditTable(${t})">Cancel</button>` : '';
@@ -1178,7 +1178,7 @@ function renderCurrentRound(r){
 
   return `<div class="card">
     <h2>Round ${r} <span class="pill">${submittedCount} of ${state.pairing.length} tables in</span></h2>
-    <p class="hint">Submit each table's score as soon as that game finishes — no need to wait for the others. Round ${r} finalizes automatically once every table is in. Check <b>Default</b> for a player who skipped the game — they score 0 Swiss points and it counts against them in tiebreaks. Assign rooms on the Schedule tab.</p>
+    <p class="hint">Submit each table's score as soon as that game finishes — no need to wait for the others. Round ${r} finalizes automatically once every table is in. Check 🪑 for a player who skipped the game — they score 0 Swiss points and it counts against them in tiebreaks. Assign rooms on the Schedule tab.</p>
     ${warnBanner}
     <div class="table-grid">${cards}</div>
   </div>`;
@@ -1200,8 +1200,8 @@ function renderPastRound(r){
     const rows = groups[tid].sort((a,b)=>a.rank-b.rank).map(row=>{
       const p = state.players[row.pIdx];
       const medal = row.isDefault ? '' : medalClass(row.rank);
-      const scoreLabel = row.isDefault ? 'DEFAULT' : row.points+' pts';
-      const rankLabel = row.isDefault ? 'DEF' : '#'+row.rank;
+      const scoreLabel = row.isDefault ? '🪑 sat out' : row.points+' pts';
+      const rankLabel = row.isDefault ? '🪑' : '#'+row.rank;
       return `<div class="prow ${medal}${row.isDefault?' is-default':''}">
         <div class="pname">${escapeHtml(p.name)}</div>
         <div style="text-align:right;font-family:'IBM Plex Mono',monospace;${row.isDefault?'color:var(--danger);':''}">${scoreLabel}</div>
@@ -1541,7 +1541,7 @@ function renderStandings(){
           <th class="place-col">Place</th>
           <th>Player</th>
           <th>Swiss Pts</th>
-          <th>Defaults <small>tiebreak 1</small></th>
+          <th>🪑 Defaults <small>tiebreak 1</small></th>
           <th>Diff <small>tiebreak 2 · vs table leader</small></th>
           <th>Raw Total <small>tiebreak 3</small></th>
           <th>Journey <small>overall place · table rank</small></th>
