@@ -333,6 +333,33 @@
   }
   .seed-option input{width:15px;height:15px;accent-color:var(--felt);cursor:pointer;}
 
+  /* ---- Lobby roster list ---- */
+  .lobby-list{display:flex;flex-direction:column;gap:7px;margin:16px 0;}
+  .lobby-row{
+    display:flex;align-items:center;gap:10px;background:#fff;
+    border:1px solid #EAE0BE;border-radius:12px;padding:7px 10px 7px 7px;
+  }
+  .lobby-seat{
+    display:inline-flex;align-items:center;justify-content:center;
+    min-width:26px;height:26px;border-radius:50%;font-family:'IBM Plex Mono',monospace;
+    font-size:12px;font-weight:600;flex-shrink:0;
+  }
+  .lobby-name-input{flex:1;border:none;background:transparent;padding:6px 4px;font-size:14.5px;font-weight:500;}
+  .lobby-name-input:focus{outline:none;background:var(--paper-dim);border-radius:6px;}
+  .lobby-remove{
+    background:transparent;border:none;color:var(--ink-soft);cursor:pointer;
+    font-size:15px;padding:4px 8px;border-radius:50%;line-height:1;
+  }
+  .lobby-remove:hover{color:var(--danger);background:rgba(192,85,76,0.1);}
+
+  /* ---- Lobby viewer (hype) ---- */
+  .lobby-hype-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:16px;}
+  .lobby-hype-name{
+    display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #EAE0BE;
+    border-radius:12px;padding:10px 12px;font-weight:600;font-size:14.5px;
+  }
+  .lobby-hype-name .lc-badge{min-width:24px;height:24px;padding:0;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;}
+
   /* ---- Sync bar ---- */
   .sync-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--felt);padding:10px 16px;border-radius:20px;margin-bottom:18px;box-shadow:0 6px 18px rgba(74,120,86,0.25);}
   .sync-dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0;}
@@ -344,6 +371,14 @@
   .sync-bar button{padding:7px 12px;font-size:12px;}
   .sync-bar .btn-ghost{color:var(--paper);border-color:rgba(251,247,236,0.4);}
   .sync-bar .btn-ghost:hover{border-color:var(--paper);color:#fff;}
+  .sync-qr{width:44px;height:44px;border-radius:6px;background:#fff;padding:3px;flex-shrink:0;}
+
+  .tv-qr-box{
+    position:absolute;bottom:9.5vh;right:4vw;background:rgba(251,247,236,0.95);
+    border-radius:12px;padding:10px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,0.35);
+  }
+  .tv-qr-box canvas{width:min(11vh,110px);height:min(11vh,110px);display:block;}
+  .tv-qr-label{font-family:'IBM Plex Mono', monospace;font-size:10.5px;color:var(--ink);margin-top:5px;white-space:nowrap;}
 
   /* ---- Schedule tab ---- */
   .sched-round{margin-bottom:20px;}
@@ -426,6 +461,10 @@
   </div>
   <div class="tv-body" id="tvBody"></div>
   <div class="tv-ticker"><div class="tv-ticker-track" id="tvTickerTrack"></div></div>
+  <div class="tv-qr-box" id="tvQRBox" style="display:none;">
+    <canvas id="tvQR"></canvas>
+    <div class="tv-qr-label">📱 follow along</div>
+  </div>
 </div>
 <button id="tvModeBtn" class="tv-mode-btn" style="display:none;" onclick="enterTVMode()">📺 TV Mode</button>
 <div class="wrap">
@@ -436,6 +475,7 @@
   </div>
 
   <div class="sync-bar" id="syncBar" style="display:none;">
+    <canvas id="syncQR" class="sync-qr"></canvas>
     <span class="sync-dot off" id="syncDot"></span>
     <span class="sync-label" id="syncLabel">Local only</span>
     <input type="text" id="shareLinkInput" readonly value="" placeholder="Live viewer link appears here">
@@ -456,18 +496,7 @@
     <div class="field">
       <label for="players">Players (one name per line)</label>
       <textarea id="players" placeholder="Alice&#10;Bob&#10;Carla&#10;Dan&#10;Erin&#10;Femi&#10;..."></textarea>
-      <div class="btn-row" style="margin-top:8px;">
-        <button type="button" class="btn-ghost" onclick="shufflePlayerList()">🔀 Shuffle this list</button>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Round 1 seeding</label>
-      <div class="seed-toggle">
-        <label class="seed-option"><input type="radio" name="seedMode" value="shuffle" checked> Shuffle automatically at start</label>
-        <label class="seed-option"><input type="radio" name="seedMode" value="order"> Use the list order above, as typed</label>
-      </div>
-      <p class="hint" style="margin-top:8px;">Reorder the names above (drag lines around, or click Shuffle) if you want to control who's seeded where — then pick "use the list order above".</p>
+      <p class="hint" style="margin-top:8px;">You don't need everyone yet — add, remove, or fix names in the Lobby before Round 1 starts, and the live viewer can show the roster right away to build hype.</p>
     </div>
 
     <div class="row3">
@@ -491,10 +520,51 @@
     </div>
 
     <div class="btn-row">
-      <button class="btn-primary" onclick="startTournament()">Start Round 1</button>
+      <button class="btn-primary" onclick="createTournament()">Create tournament</button>
       <button class="btn-ghost" onclick="loadSample()">Fill sample data</button>
     </div>
     <div id="setupError" class="banner" style="display:none;background:rgba(155,59,52,0.1);border-color:rgba(155,59,52,0.4);color:var(--danger);"></div>
+  </div>
+
+  <!-- LOBBY (roster set, not yet paired) -->
+  <div class="card" id="lobbyCard" style="display:none;">
+    <h2>Lobby <span class="pill" id="lobbyCount">0 players</span></h2>
+    <p class="hint">Add, remove, or fix names below — the live viewer can already show this roster to build hype. Start Round 1 whenever everyone's in.</p>
+
+    <div class="field">
+      <label>Add a player</label>
+      <div style="display:flex;gap:8px;">
+        <input type="text" id="lobbyNewPlayer" placeholder="Player name" onkeydown="if(event.key==='Enter'){event.preventDefault();addLobbyPlayer();}">
+        <button type="button" class="btn-brass" onclick="addLobbyPlayer()">+ Add</button>
+        <button type="button" class="btn-ghost" onclick="shuffleLobbyOrder()">🔀 Shuffle order</button>
+      </div>
+    </div>
+
+    <div class="lobby-list" id="lobbyList"></div>
+
+    <div class="row3" style="margin-top:6px;">
+      <div class="field">
+        <label for="lobbyMin">Min players per table</label>
+        <input type="number" id="lobbyMin" min="2" max="10" onchange="updateLobbyConfig()">
+      </div>
+      <div class="field">
+        <label for="lobbyMax">Max players per table</label>
+        <input type="number" id="lobbyMax" min="2" max="12" onchange="updateLobbyConfig()">
+      </div>
+      <div class="field">
+        <label>Round 1 seeding</label>
+        <div class="seed-toggle">
+          <label class="seed-option"><input type="radio" name="seedMode" value="shuffle" checked> Shuffle automatically</label>
+          <label class="seed-option"><input type="radio" name="seedMode" value="order"> Use the list order above</label>
+        </div>
+      </div>
+    </div>
+
+    <div id="lobbyError" class="banner" style="display:none;background:rgba(155,59,52,0.1);border-color:rgba(155,59,52,0.4);color:var(--danger);"></div>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="beginRound1()">🚀 Start Round 1</button>
+      <button class="btn-ghost" onclick="resetTournament()">Cancel / start over</button>
+    </div>
   </div>
 
   <!-- TOURNAMENT -->
@@ -511,6 +581,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
 <script>
 /* =================================================================
    LIVE SYNC CONFIG — replace these two values with your own Supabase
@@ -547,6 +618,7 @@ function freshState(){
     code: '',
     minPerTable: 3,
     maxPerTable: 4,
+    started: false,        // false = Lobby (roster set, not yet paired); true = Round 1+ underway
     players: [],          // {name, rounds:[]}
     pairing: [],           // current round pairing awaiting scores: [{tableId, idx:[playerIdx,...], room, status}]
     pairingWarning: false, // true if this round's table sizes fall outside min/max due to player count
@@ -569,16 +641,6 @@ function loadSample(){
   document.getElementById('minPerTable').value = 3;
   document.getElementById('maxPerTable').value = 4;
   if(!document.getElementById('tcode').value) document.getElementById('tcode').value = randomCode();
-}
-
-function shufflePlayerList(){
-  const ta = document.getElementById('players');
-  const names = ta.value.split('\n').map(s=>s.trim()).filter(Boolean);
-  for(let i=names.length-1; i>0; i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [names[i], names[j]] = [names[j], names[i]];
-  }
-  ta.value = names.join('\n');
 }
 
 /* ---------------------------------------------------------------
@@ -618,6 +680,21 @@ function setSyncStatus(s){
   const bar = document.getElementById('syncBar');
   if(bar && bar.style.display !== 'none') updateSyncBar();
 }
+let lastQRRendered = {}; // canvasId -> last text drawn, so we never re-fetch/re-render needlessly
+function renderQRInto(canvasId, text, sizePx){
+  if(!window.QRCode) return;
+  const canvas = document.getElementById(canvasId);
+  if(!canvas) return;
+  if(lastQRRendered[canvasId] === text) return;
+  QRCode.toCanvas(canvas, text, {
+    width: sizePx,
+    margin: 1,
+    color: { dark: '#3A3226', light: '#FBF7EC' }
+  }, function(err){
+    if(!err) lastQRRendered[canvasId] = text;
+  });
+}
+
 function updateSyncBar(){
   const dot = document.getElementById('syncDot');
   const label = document.getElementById('syncLabel');
@@ -631,7 +708,9 @@ function updateSyncBar(){
   }
   dot.className = 'sync-dot ' + (syncState==='error' ? 'err' : 'on');
   label.textContent = syncState==='error' ? 'Sync error — check the browser console' : ('Live · code ' + state.code);
-  linkInput.value = buildShareLink();
+  const link = buildShareLink();
+  linkInput.value = link;
+  renderQRInto('syncQR', link, 88);
 }
 function buildShareLink(){
   const url = new URL(location.href);
@@ -678,7 +757,7 @@ function loadLocal(){
 /* ---------------------------------------------------------------
    SETUP
 ------------------------------------------------------------------*/
-function startTournament(){
+function createTournament(){
   const errEl = document.getElementById('setupError');
   errEl.style.display='none';
   const name = document.getElementById('tname').value.trim() || 'Tournament';
@@ -688,11 +767,6 @@ function startTournament(){
   const maxP = parseInt(document.getElementById('maxPerTable').value, 10);
   const code = (document.getElementById('tcode').value || '').trim().toUpperCase() || randomCode();
 
-  if(names.length < 4){
-    errEl.textContent = 'Enter at least 4 players (one per line).';
-    errEl.style.display='block';
-    return;
-  }
   const dupes = names.filter((n,i)=>names.indexOf(n)!==i);
   if(dupes.length){
     errEl.textContent = 'Player names must be unique. Duplicate: "'+dupes[0]+'"';
@@ -709,11 +783,6 @@ function startTournament(){
     errEl.style.display='block';
     return;
   }
-  if(names.length < minP){
-    errEl.textContent = 'You need at least '+minP+' players to fill one table.';
-    errEl.style.display='block';
-    return;
-  }
 
   state = freshState();
   state.name = name;
@@ -721,16 +790,126 @@ function startTournament(){
   state.minPerTable = minP;
   state.maxPerTable = maxP;
   state.players = names.map(n=>({name:n, rounds:[]}));
-  state.round = 1;
+  state.started = false;
+  saveLocal();
+  render();
+}
+
+function beginRound1(){
+  if(!state || state.started) return;
+  const errEl = document.getElementById('lobbyError');
+  if(errEl) errEl.style.display = 'none';
+  if(state.players.length < state.minPerTable){
+    if(errEl){
+      errEl.textContent = 'You need at least '+state.minPerTable+' players to fill one table.';
+      errEl.style.display = 'block';
+    } else {
+      alert('You need at least '+state.minPerTable+' players to fill one table.');
+    }
+    return;
+  }
   const seedModeEl = document.querySelector('input[name="seedMode"]:checked');
   const seedMode = seedModeEl ? seedModeEl.value : 'shuffle';
   const seedOrder = seedMode === 'order'
-    ? Array.from({length: names.length}, (_, i) => i)
-    : shuffledIndices(names.length);
+    ? Array.from({length: state.players.length}, (_, i) => i)
+    : shuffledIndices(state.players.length);
+  state.started = true;
+  state.round = 1;
   pairRound(1, seedOrder);
   saveLocal();
   activeTab = 'r1';
   render();
+}
+
+/* ---------------------------------------------------------------
+   LOBBY — roster editing before Round 1 is paired
+------------------------------------------------------------------*/
+function addLobbyPlayer(){
+  const input = document.getElementById('lobbyNewPlayer');
+  const name = input.value.trim();
+  if(!name) return;
+  if(state.players.some(p=>p.name.toLowerCase()===name.toLowerCase())){
+    alert('That name is already on the list.');
+    return;
+  }
+  state.players.push({name, rounds:[]});
+  input.value = '';
+  saveLocal();
+  render();
+  const refocus = document.getElementById('lobbyNewPlayer');
+  if(refocus && refocus.focus) refocus.focus();
+}
+
+function removeLobbyPlayer(i){
+  const p = state.players[i];
+  if(!p) return;
+  if(!confirm('Remove '+p.name+' from the roster?')) return;
+  state.players.splice(i, 1);
+  saveLocal();
+  render();
+}
+
+function renameLobbyPlayer(i, value){
+  const name = value.trim();
+  if(!state.players[i]) return;
+  if(name) state.players[i].name = name;
+  saveLocal();
+  render();
+}
+
+function shuffleLobbyOrder(){
+  const arr = state.players;
+  for(let i=arr.length-1; i>0; i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  saveLocal();
+  render();
+}
+
+function updateLobbyConfig(){
+  const minP = parseInt(document.getElementById('lobbyMin').value, 10);
+  const maxP = parseInt(document.getElementById('lobbyMax').value, 10);
+  if(minP && minP >= 2 && minP <= 10) state.minPerTable = minP;
+  if(maxP && maxP >= state.minPerTable && maxP <= 12) state.maxPerTable = maxP;
+  saveLocal();
+}
+
+function renderLobby(){
+  const countEl = document.getElementById('lobbyCount');
+  if(countEl) countEl.textContent = state.players.length + ' player' + (state.players.length===1?'':'s');
+  const minEl = document.getElementById('lobbyMin');
+  const maxEl = document.getElementById('lobbyMax');
+  if(minEl && document.activeElement !== minEl) minEl.value = state.minPerTable;
+  if(maxEl && document.activeElement !== maxEl) maxEl.value = state.maxPerTable;
+
+  const listEl = document.getElementById('lobbyList');
+  if(!listEl) return;
+  if(state.players.length === 0){
+    listEl.innerHTML = '<p class="hint">No players yet — add some above.</p>';
+    return;
+  }
+  listEl.innerHTML = state.players.map((p,i)=>`
+    <div class="lobby-row">
+      <span class="lobby-seat lc-badge ${lcClass(i)}">${i+1}</span>
+      <input type="text" class="lobby-name-input" value="${escapeHtml(p.name)}" onchange="renameLobbyPlayer(${i}, this.value)">
+      <button class="lobby-remove" onclick="removeLobbyPlayer(${i})" title="Remove">✕</button>
+    </div>
+  `).join('');
+}
+
+function renderLobbyHype(){
+  const names = state.players.map((p,i)=>`
+    <div class="lobby-hype-name">
+      <span class="lc-badge ${lcClass(i)}">${i+1}</span>
+      ${escapeHtml(p.name)}
+    </div>
+  `).join('');
+  return `<div class="card">
+    <h2>${escapeHtml(state.name)} <span class="pill">${state.players.length} registered</span></h2>
+    <p class="hint">🎉 Tournament starting soon — here's who's in so far.</p>
+    <div class="lobby-hype-grid">${names || '<p class="hint">Waiting for players to be added…</p>'}</div>
+  </div>`;
 }
 
 function shuffledIndices(n){
@@ -995,6 +1174,7 @@ function resetTournament(){
 ------------------------------------------------------------------*/
 function render(){
   const setupCard = document.getElementById('setupCard');
+  const lobbyCard = document.getElementById('lobbyCard');
   const area = document.getElementById('tournamentArea');
   const badge = document.getElementById('roundBadge');
   const syncBar = document.getElementById('syncBar');
@@ -1015,8 +1195,9 @@ function render(){
   wrap.style.display = '';
 
   if(VIEW_ONLY){
-    if(tvModeBtn) tvModeBtn.style.display = state ? 'block' : 'none';
+    if(tvModeBtn) tvModeBtn.style.display = (state && state.started) ? 'block' : 'none';
     setupCard.style.display = 'none';
+    lobbyCard.style.display = 'none';
     if(syncBar) syncBar.style.display = 'none';
     area.style.display = 'block';
     if(adminButtons) adminButtons.style.display = 'none';
@@ -1032,7 +1213,13 @@ function render(){
       badge.textContent = 'Viewer — waiting';
       document.getElementById('tabs').innerHTML = '';
       document.getElementById('tabContent').innerHTML =
-        `<div class="card"><p class="empty">Waiting for the organizer to start the tournament…</p></div>`;
+        `<div class="card"><p class="empty">Waiting for the organizer to set up the tournament…</p></div>`;
+      return;
+    }
+    if(!state.started){
+      badge.textContent = 'Lobby — starting soon';
+      document.getElementById('tabs').innerHTML = '';
+      document.getElementById('tabContent').innerHTML = renderLobbyHype();
       return;
     }
     badge.textContent = (state.finished ? 'Final standings' : ('Round '+state.round+' of '+TOTAL_ROUNDS)) + ' · live viewer';
@@ -1044,12 +1231,25 @@ function render(){
   if(tvModeBtn) tvModeBtn.style.display = 'none';
   if(!state){
     setupCard.style.display='block';
+    lobbyCard.style.display='none';
     area.style.display='none';
     badge.textContent='Setup';
     if(syncBar) syncBar.style.display='none';
     return;
   }
+
   setupCard.style.display='none';
+
+  if(!state.started){
+    lobbyCard.style.display='block';
+    area.style.display='none';
+    badge.textContent = 'Lobby';
+    if(syncBar){ syncBar.style.display='flex'; updateSyncBar(); }
+    renderLobby();
+    return;
+  }
+
+  lobbyCard.style.display='none';
   area.style.display='block';
   if(adminButtons) adminButtons.style.display='flex';
   badge.textContent = state.finished ? 'Final standings' : ('Round '+state.round+' of '+TOTAL_ROUNDS);
@@ -1355,10 +1555,42 @@ function updateTVClock(){
 }
 function renderTVMode(){
   document.getElementById('tvTitle').textContent = state.name || 'Tournament';
+  const qrBox = document.getElementById('tvQRBox');
+  if(qrBox && state.code){
+    qrBox.style.display = 'block';
+    renderQRInto('tvQR', buildShareLink(), 110);
+  }
+  if(!state.started){
+    document.getElementById('tvRound').textContent = 'Starting soon';
+    updateTVClock();
+    document.getElementById('tvBody').innerHTML = tvLobbyPanel();
+    renderTVLobbyTicker();
+    return;
+  }
   document.getElementById('tvRound').textContent = state.finished ? 'Final Standings' : ('Round '+state.round+' of '+TOTAL_ROUNDS);
   updateTVClock();
   renderTVBody();
   renderTVTicker();
+}
+function tvLobbyPanel(){
+  const names = state.players.map((p,i)=>`
+    <div class="tv-table-card" style="text-align:center;">
+      <div class="tv-tid lc-badge ${lcClass(i)}" style="display:inline-block;">${i+1}</div>
+      <div class="tv-players" style="margin-top:8px;font-size:clamp(16px,1.8vw,26px);font-weight:600;">${escapeHtml(p.name)}</div>
+    </div>
+  `).join('');
+  return `<div class="tv-panel">
+    <p style="font-family:'Fraunces',serif;font-size:clamp(24px,2.6vw,38px);margin:0 0 2vh;">🎉 ${state.players.length} players registered — starting soon</p>
+    <div class="tv-tables-grid">${names || ''}</div>
+  </div>`;
+}
+function renderTVLobbyTicker(){
+  const track = document.getElementById('tvTickerTrack');
+  if(!track) return;
+  const items = [`${state.name} — registration open`, ...state.players.map(p=>p.name)];
+  const html = items.map(t=>`<span>${escapeHtml(t)}</span>`).join('');
+  track.innerHTML = html + html;
+  track.style.animationDuration = Math.max(20, items.length * 4) + 's';
 }
 function renderTVBody(){
   const body = document.getElementById('tvBody');
@@ -1454,7 +1686,7 @@ function renderTVTicker(){
 
 function renderStandings(){
   if(state.completed === 0){
-    return `<div class="card"><p class="empty">Standings appear once Round 1 is submitted.</p></div>`;
+    return `<div class="card"><p class="empty">Standings appear once Round 1 is submitted.</p></div>${VIEW_ONLY ? '' : renderNameEditor()}`;
   }
   const through = state.completed;
   const ordered = computePlacements(through);
@@ -1559,7 +1791,32 @@ function renderStandings(){
     <h2 class="detail-heading">Round-by-round detail</h2>
     <p class="hint">Table assignments, raw scores and per-round Swiss points. Expand a round to see it.</p>
     ${roundBlocks.join('')}
-  </div>`;
+  </div>
+  ${VIEW_ONLY ? '' : renderNameEditor()}`;
+}
+
+function renderNameEditor(){
+  const rows = state.players.map((p,i)=>`
+    <div class="lobby-row">
+      <span class="lobby-seat lc-badge ${lcClass(i)}">${i+1}</span>
+      <input type="text" class="lobby-name-input" value="${escapeHtml(p.name)}" onchange="renamePlayerMidTourney(${i}, this.value)">
+    </div>
+  `).join('');
+  return `<details class="round-detail">
+    <summary>✎ Fix a player's name</summary>
+    <div style="padding:14px;">
+      <p class="hint" style="margin:0 0 10px;">Renaming updates everywhere instantly — past rounds, standings, the schedule, CSV export. This only relabels a player; it doesn't remove or add anyone once Round 1 has started.</p>
+      ${rows}
+    </div>
+  </details>`;
+}
+
+function renamePlayerMidTourney(i, value){
+  const name = value.trim();
+  if(!state.players[i] || !name) { render(); return; }
+  state.players[i].name = name;
+  saveLocal();
+  render();
 }
 
 function ordinal(n){
@@ -1631,7 +1888,7 @@ function csvSafe(v){
   }
 
   const saved = loadLocal();
-  if(saved && saved.players && saved.players.length){
+  if(saved && saved.players){
     state = saved;
     if(!state.code) state.code = randomCode();
     activeTab = state.finished ? 'standings' : ('r'+state.round);
