@@ -526,6 +526,17 @@
     <div id="setupError" class="banner" style="display:none;background:rgba(155,59,52,0.1);border-color:rgba(155,59,52,0.4);color:var(--danger);"></div>
   </div>
 
+  <!-- RESUME ON THIS DEVICE (admin picking up a tournament created elsewhere) -->
+  <div class="card" id="resumeCard">
+    <h2>Resume on this device</h2>
+    <p class="hint" id="resumeHint">Checking live-sync setup…</p>
+    <div style="display:flex;gap:8px;">
+      <input type="text" id="resumeCode" placeholder="Tournament code, e.g. AUTUMN26">
+      <button id="resumeBtn" class="btn-brass" onclick="resumeTournament()">Resume</button>
+    </div>
+    <div id="resumeError" class="banner" style="display:none;background:rgba(155,59,52,0.1);border-color:rgba(155,59,52,0.4);color:var(--danger);margin-top:12px;"></div>
+  </div>
+
   <!-- LOBBY (roster set, not yet paired) -->
   <div class="card" id="lobbyCard" style="display:none;">
     <h2>Lobby <span class="pill" id="lobbyCount">0 players</span></h2>
@@ -757,6 +768,39 @@ function loadLocal(){
 /* ---------------------------------------------------------------
    SETUP
 ------------------------------------------------------------------*/
+async function resumeTournament(){
+  const errEl = document.getElementById('resumeError');
+  errEl.style.display = 'none';
+  const codeInput = document.getElementById('resumeCode');
+  const code = (codeInput.value || '').trim().toUpperCase();
+  if(!code){
+    errEl.textContent = 'Enter the tournament code shown in the other device\'s sync bar.';
+    errEl.style.display = 'block';
+    return;
+  }
+  if(!sb){
+    errEl.textContent = "Live sync isn't configured on this copy of the page yet — add the same Supabase keys here as on the device that created the tournament, then this will work.";
+    errEl.style.display = 'block';
+    return;
+  }
+  const btn = document.getElementById('resumeBtn');
+  btn.disabled = true;
+  btn.textContent = 'Loading…';
+  const remote = await fetchRemote(code);
+  btn.disabled = false;
+  btn.textContent = 'Resume';
+
+  if(!remote){
+    errEl.textContent = 'No tournament found for code "'+code+'". Double-check it against the other device\'s sync bar.';
+    errEl.style.display = 'block';
+    return;
+  }
+  state = remote;
+  activeTab = !state.started ? 'r1' : (state.finished ? 'standings' : ('r'+state.round));
+  saveLocal(); // keeps this device in sync locally too, and re-publishes (harmless, same data)
+  render();
+}
+
 function createTournament(){
   const errEl = document.getElementById('setupError');
   errEl.style.display='none';
@@ -1174,6 +1218,7 @@ function resetTournament(){
 ------------------------------------------------------------------*/
 function render(){
   const setupCard = document.getElementById('setupCard');
+  const resumeCard = document.getElementById('resumeCard');
   const lobbyCard = document.getElementById('lobbyCard');
   const area = document.getElementById('tournamentArea');
   const badge = document.getElementById('roundBadge');
@@ -1197,6 +1242,7 @@ function render(){
   if(VIEW_ONLY){
     if(tvModeBtn) tvModeBtn.style.display = (state && state.started) ? 'block' : 'none';
     setupCard.style.display = 'none';
+    if(resumeCard) resumeCard.style.display = 'none';
     lobbyCard.style.display = 'none';
     if(syncBar) syncBar.style.display = 'none';
     area.style.display = 'block';
@@ -1231,6 +1277,7 @@ function render(){
   if(tvModeBtn) tvModeBtn.style.display = 'none';
   if(!state){
     setupCard.style.display='block';
+    if(resumeCard) resumeCard.style.display='block';
     lobbyCard.style.display='none';
     area.style.display='none';
     badge.textContent='Setup';
@@ -1239,6 +1286,7 @@ function render(){
   }
 
   setupCard.style.display='none';
+  if(resumeCard) resumeCard.style.display='none';
 
   if(!state.started){
     lobbyCard.style.display='block';
@@ -1901,8 +1949,14 @@ function csvSafe(v){
   const syncNote = document.getElementById('setupSyncNote');
   if(syncNote){
     syncNote.textContent = sb
-      ? 'Live sync is configured — a shareable viewer link will appear once you start the tournament.'
+      ? 'Live sync is configured — a shareable viewer link will appear once you create the tournament.'
       : 'Live sync isn\'t configured on this page yet — it\'ll run locally only until Supabase keys are added.';
+  }
+  const resumeHint = document.getElementById('resumeHint');
+  if(resumeHint){
+    resumeHint.textContent = sb
+      ? 'Set this tournament up on another device (or your home PC)? Enter its code below to pick it up here — same live sync, same data.'
+      : "Live sync isn't configured on this page yet, so there's nothing to resume from a different device until Supabase keys are added.";
   }
 })();
 </script>
