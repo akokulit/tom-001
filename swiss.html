@@ -8,21 +8,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    /* Harmonies-inspired palette — soft, pastel, nature-toned, after the
-       game's six landscape-token colors: forest, water, mountain, field,
-       meadow (bush), building. */
-    --felt: #4A7856;        /* forest — primary accent (was dark felt green) */
-    --felt-dark: #345940;   /* deep forest — hovers */
-    --felt-line: #8FB07A;   /* meadow/bush — soft secondary green */
+    --felt: #4A7856;
+    --felt-dark: #345940;
+    --felt-line: #8FB07A;
     --water: #6D9BB8;
     --water-light: #A9C9DC;
     --mountain: #9098A0;
-    --accent: #C97B5A;      /* building — warm terracotta emphasis */
-    --paper: #FBF7EC;       /* card background — warm cream */
+    --accent: #C97B5A;
+    --paper: #FBF7EC;
     --paper-dim: #F1E7CE;
-    --ink: #3A3226;         /* warm dark brown-black */
+    --ink: #3A3226;
     --ink-soft: #79694E;
-    --brass: #D9A536;       /* field — warm gold */
+    --brass: #D9A536;
     --brass-light: #EFCE7C;
     --gold: #D9A536;
     --silver: #A8ADB3;
@@ -44,78 +41,21 @@
     min-height:100vh;
   }
   .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 80px;}
-
-  /* ---- Header ---- */
   .masthead{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:22px;}
-  .masthead h1{
-    font-family:'Fraunces', serif;
-    font-weight:700;
-    font-size:clamp(28px,4vw,42px);
-    color: var(--felt);
-    margin:0;
-    letter-spacing:0.2px;
-  }
+  .masthead h1{font-family:'Fraunces', serif;font-weight:700;font-size:clamp(28px,4vw,42px);color: var(--felt);margin:0;letter-spacing:0.2px;}
   .masthead h1 span{color:var(--accent);font-style:italic;font-weight:600;}
-  .masthead .sub{
-    font-family:'IBM Plex Mono', monospace;
-    background:rgba(74,120,86,0.12);
-    color:var(--felt-dark);
-    padding:5px 10px;
-    border-radius:20px;
-    font-size:12.5px;
-    letter-spacing:0.4px;
-  }
-
-  /* ---- Card ---- */
-  .card{
-    background: var(--paper);
-    border-radius: var(--radius);
-    padding: 22px 24px;
-    box-shadow: 0 10px 26px rgba(74,120,86,0.14), 0 2px 8px rgba(58,50,38,0.06);
-    border: 1px solid rgba(74,120,86,0.12);
-    margin-bottom:20px;
-  }
-  .card h2{
-    font-family:'Fraunces', serif;
-    font-weight:600;
-    font-size:22px;
-    margin:0 0 4px;
-    color:var(--ink);
-  }
+  .masthead .sub{font-family:'IBM Plex Mono', monospace;background:rgba(74,120,86,0.12);color:var(--felt-dark);padding:5px 10px;border-radius:20px;font-size:12.5px;letter-spacing:0.4px;}
+  .card{background: var(--paper);border-radius: var(--radius);padding: 22px 24px;box-shadow: 0 10px 26px rgba(74,120,86,0.14), 0 2px 8px rgba(58,50,38,0.06);border: 1px solid rgba(74,120,86,0.12);margin-bottom:20px;}
+  .card h2{font-family:'Fraunces', serif;font-weight:600;font-size:22px;margin:0 0 4px;color:var(--ink);}
   .card .hint{color:var(--ink-soft);font-size:13.5px;margin:0 0 18px;line-height:1.5;}
-
   label{display:block;font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--ink-soft);margin-bottom:6px;}
-  input[type=text], input[type=number], textarea, select{
-    width:100%;
-    font-family:'Quicksand', sans-serif;
-    font-weight:500;
-    font-size:15px;
-    padding:10px 12px;
-    border-radius:11px;
-    border:1.5px solid #DED0A8;
-    background:#fff;
-    color:var(--ink);
-    outline:none;
-  }
-  input[type=text]:focus, input[type=number]:focus, textarea:focus, select:focus{
-    border-color:var(--felt);
-    box-shadow:0 0 0 3px rgba(74,120,86,0.18);
-  }
+  input[type=text], input[type=number], textarea, select{width:100%;font-family:'Quicksand', sans-serif;font-weight:500;font-size:15px;padding:10px 12px;border-radius:11px;border:1.5px solid #DED0A8;background:#fff;color:var(--ink);outline:none;}
+  input[type=text]:focus, input[type=number]:focus, textarea:focus, select:focus{border-color:var(--felt);box-shadow:0 0 0 3px rgba(74,120,86,0.18);}
   textarea{min-height:150px;font-family:'IBM Plex Mono', monospace;font-size:13.5px;resize:vertical;}
   .field{margin-bottom:16px;}
   .row2{display:grid;grid-template-columns:1fr 180px;gap:16px;}
   @media (max-width:560px){.row2{grid-template-columns:1fr;}}
-
-  button{
-    font-family:'Quicksand', sans-serif;
-    font-weight:600;
-    font-size:14.5px;
-    padding:11px 20px;
-    border-radius:24px;
-    border:none;
-    cursor:pointer;
-    transition:transform .08s ease, box-shadow .08s ease;
-  }
+  button{font-family:'Quicksand', sans-serif;font-weight:600;font-size:14.5px;padding:11px 20px;border-radius:24px;border:none;cursor:pointer;transition:transform .08s ease, box-shadow .08s ease;}
   button:active{transform:translateY(1px);}
   .btn-primary{background:var(--felt);color:var(--paper);}
   .btn-primary:hover{background:var(--felt-dark);}
@@ -127,353 +67,106 @@
   .btn-danger:hover{background:rgba(192,85,76,0.08);}
   button:disabled{opacity:0.4;cursor:not-allowed;}
   .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;}
-
-  /* ---- Tabs ---- */
   .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;}
-  .tab{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:13px;
-    padding:9px 16px;
-    border-radius:20px;
-    background:rgba(74,120,86,0.10);
-    color:var(--ink-soft);
-    cursor:pointer;
-    border:1px solid rgba(74,120,86,0.16);
-  }
+  .tab{font-family:'IBM Plex Mono', monospace;font-size:13px;padding:9px 16px;border-radius:20px;background:rgba(74,120,86,0.10);color:var(--ink-soft);cursor:pointer;border:1px solid rgba(74,120,86,0.16);}
   .tab.active{background:var(--paper);color:var(--ink);font-weight:600;border-color:rgba(74,120,86,0.3);box-shadow:0 2px 8px rgba(74,120,86,0.14);}
   .tab.locked{opacity:0.35;cursor:not-allowed;}
   .tab .dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:6px;background:var(--brass);}
   .tab.done .dot{background:var(--felt);}
-
-  /* ---- Landscape token colors (cycled across tables, Harmonies-style) ---- */
   .lc-badge{display:inline-block;color:#fff;padding:4px 12px;border-radius:20px;font-weight:600;}
-  .lc-0{background:#4A7856;} /* forest */
-  .lc-1{background:#6D9BB8;} /* water */
-  .lc-2{background:#9098A0;} /* mountain */
-  .lc-3{background:#D9A536;color:#3A2A08;} /* field */
-  .lc-4{background:#8FB07A;} /* meadow */
-  .lc-5{background:#C97B5A;} /* building */
-
-  /* ---- Table tent cards (pairing) ---- */
+  .lc-0{background:#4A7856;}.lc-1{background:#6D9BB8;}.lc-2{background:#9098A0;}.lc-3{background:#D9A536;color:#3A2A08;}.lc-4{background:#8FB07A;}.lc-5{background:#C97B5A;}
   .table-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;}
-  .tent{
-    background:#fff;
-    border:1.5px solid #EAE0BE;
-    border-radius:16px;
-    overflow:hidden;
-  }
-  .tent-head{
-    background: var(--paper-dim);
-    color:var(--ink);
-    padding:10px 14px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-  }
-  .tent-head .tid{
-    font-family:'IBM Plex Mono', monospace;
-    font-weight:600;
-    font-size:14px;
-    letter-spacing:0.3px;
-  }
+  .tent{background:#fff;border:1.5px solid #EAE0BE;border-radius:16px;overflow:hidden;}
+  .tent-head{background: var(--paper-dim);color:var(--ink);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;}
+  .tent-head .tid{font-family:'IBM Plex Mono', monospace;font-weight:600;font-size:14px;letter-spacing:0.3px;}
   .tent-head .tcount{font-size:11.5px;opacity:0.75;}
   .tent-body{padding:6px 14px 14px;}
-  .prow{
-    display:grid;
-    grid-template-columns:1fr 100px 46px;
-    align-items:center;
-    gap:8px;
-    padding:9px 0;
-    border-bottom:1px dashed #EFE8D2;
-  }
+  .prow{display:grid;grid-template-columns:1fr 100px 46px;align-items:center;gap:8px;padding:9px 0;border-bottom:1px dashed #EFE8D2;}
   .prow:last-child{border-bottom:none;}
   .prow .pname{font-size:14.5px;font-weight:500;}
   .prow input{padding:7px 8px;font-family:'IBM Plex Mono', monospace;text-align:right;}
-  .prow .rankbadge{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    text-align:center;
-    color:var(--ink-soft);
-  }
+  .prow .rankbadge{font-family:'IBM Plex Mono', monospace;font-size:12px;text-align:center;color:var(--ink-soft);}
   .prow.r1 .pname{font-weight:700;}
-  .prow.r1{box-shadow:inset 3px 0 0 var(--gold);}
-  .prow.r2{box-shadow:inset 3px 0 0 var(--silver);}
-  .prow.r3{box-shadow:inset 3px 0 0 var(--bronze);}
+  .prow.r1{box-shadow:inset 3px 0 0 var(--gold);}.prow.r2{box-shadow:inset 3px 0 0 var(--silver);}.prow.r3{box-shadow:inset 3px 0 0 var(--bronze);}
   .prow.is-default{opacity:0.75;box-shadow:inset 3px 0 0 var(--danger);}
-  .default-check{
-    display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink-soft);
-    font-family:'IBM Plex Mono', monospace;cursor:pointer;justify-content:center;
-  }
+  .default-check{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink-soft);font-family:'IBM Plex Mono', monospace;cursor:pointer;justify-content:center;}
   .default-check input{width:14px;height:14px;margin:0;accent-color:var(--danger);cursor:pointer;}
   input[type=number]:disabled{opacity:0.4;background:var(--paper-dim);}
-
-  /* ---- Standings table ---- */
   .table-scroll{overflow-x:auto;}
   table.standings{border-collapse:collapse;width:100%;font-size:13.5px;min-width:720px;}
-  table.standings th, table.standings td{
-    padding:8px 10px;
-    text-align:right;
-    white-space:nowrap;
-    border-bottom:1px solid #EAE1C6;
-  }
-  table.standings th{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:10.5px;
-    text-transform:uppercase;
-    letter-spacing:0.4px;
-    color:var(--ink-soft);
-    background:var(--paper-dim);
-    position:sticky;top:0;
-  }
+  table.standings th, table.standings td{padding:8px 10px;text-align:right;white-space:nowrap;border-bottom:1px solid #EAE1C6;}
+  table.standings th{font-family:'IBM Plex Mono', monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.4px;color:var(--ink-soft);background:var(--paper-dim);position:sticky;top:0;}
   table.standings td:first-child, table.standings th:first-child{text-align:left;position:sticky;left:0;background:var(--paper);}
   table.standings th:first-child{background:var(--paper-dim);}
   table.standings tbody tr:hover td{background:#FBF7EA;}
   table.standings td.placement{font-weight:700;font-family:'IBM Plex Mono', monospace;}
   .group-sep td{border-right:2px solid #D8CFAF;}
-  td.medal-1{color:#7A6100;font-weight:700;}
-  td.medal-2{color:#5A6169;font-weight:700;}
-  td.medal-3{color:#79451F;font-weight:700;}
-
-  /* ---- Headline standings: placement + the two tiebreakers get the emphasis ---- */
+  td.medal-1{color:#7A6100;font-weight:700;}td.medal-2{color:#5A6169;font-weight:700;}td.medal-3{color:#79451F;font-weight:700;}
   table.standings.headline{min-width:0;font-size:14.5px;}
   table.standings.headline th{font-size:11px;white-space:normal;}
-  table.standings.headline th small{
-    display:block;text-transform:none;font-weight:400;letter-spacing:0;color:var(--ink-soft);opacity:0.75;font-size:9.5px;margin-top:2px;
-  }
+  table.standings.headline th small{display:block;text-transform:none;font-weight:400;letter-spacing:0;color:var(--ink-soft);opacity:0.75;font-size:9.5px;margin-top:2px;}
   table.standings.headline th, table.standings.headline td{padding:11px 14px;}
-  .place-col{width:64px;}
-  td.place-cell{text-align:center;}
-  .place-badge{
-    font-family:'IBM Plex Mono', monospace;font-weight:600;font-size:13px;
-    display:inline-block;min-width:34px;padding:4px 6px;border-radius:20px;
-    background:var(--paper-dim);color:var(--ink-soft);
-  }
-  td.place-cell.medal-1 .place-badge{background:var(--gold);color:#fff;}
-  td.place-cell.medal-2 .place-badge{background:var(--silver);color:#fff;}
-  td.place-cell.medal-3 .place-badge{background:var(--bronze);color:#fff;}
-  td.name-cell{text-align:left;font-weight:600;font-size:15px;}
-  td.stat-cell{font-family:'IBM Plex Mono', monospace;}
-  td.stat-pts{color:var(--ink-soft);font-size:13.5px;}
-  td.stat-diff{
-    font-weight:700;font-size:18px;
-    padding-left:16px;padding-right:16px;
-  }
-  td.stat-diff.pos{color:#2E6B45;}
-  td.stat-diff.neg{color:var(--danger);}
-  td.stat-raw{color:var(--ink-soft);font-size:14px;font-weight:500;}
-  td.stat-defaults{color:var(--ink-soft);opacity:0.5;font-size:13px;}
-  td.stat-defaults.has-defaults{color:var(--danger);opacity:1;font-weight:700;}
-
+  .place-col{width:64px;}.place-cell{ text-align:center; }
+  .place-badge{font-family:'IBM Plex Mono', monospace;font-weight:600;font-size:13px;display:inline-block;min-width:34px;padding:4px 6px;border-radius:20px;background:var(--paper-dim);color:var(--ink-soft);}
+  td.place-cell.medal-1 .place-badge{background:var(--gold);color:#fff;}td.place-cell.medal-2 .place-badge{background:var(--silver);color:#fff;}td.place-cell.medal-3 .place-badge{background:var(--bronze);color:#fff;}
+  td.name-cell{text-align:left;font-weight:600;font-size:15px;}td.stat-cell{font-family:'IBM Plex Mono', monospace;}td.stat-pts{color:var(--ink-soft);font-size:13.5px;}
+  td.stat-diff{font-weight:700;font-size:18px;padding-left:16px;padding-right:16px;}td.stat-diff.pos{color:#2E6B45;}td.stat-diff.neg{color:var(--danger);}
+  td.stat-raw{color:var(--ink-soft);font-size:14px;font-weight:500;}td.stat-defaults{color:var(--ink-soft);opacity:0.5;font-size:13px;}td.stat-defaults.has-defaults{color:var(--danger);opacity:1;font-weight:700;}
   table.standings.headline td.journey-cell{text-align:left;font-family:'IBM Plex Mono', monospace;white-space:normal;}
-  .journey-overall{font-size:13px;color:var(--ink-soft);letter-spacing:0.2px;}
-  .journey-overall b{color:var(--ink);font-size:14px;}
-  .journey-overall .arrow{color:#C9BB93;margin:0 3px;}
-  .journey-overall .trend{margin-left:6px;font-size:11px;}
-  .journey-overall .trend.up{color:#2E6B45;}
-  .journey-overall .trend.down{color:var(--danger);}
-  .journey-overall .trend.flat{color:var(--ink-soft);}
-  .journey-table{font-size:10.5px;color:var(--ink-soft);opacity:0.75;margin-top:3px;text-transform:uppercase;letter-spacing:0.3px;}
-  .journey-x{color:var(--danger);font-weight:700;opacity:1;}
-
-  /* ---- Round-by-round detail: intentionally quiet ---- */
-  .detail-card{padding-top:18px;padding-bottom:18px;background:var(--paper-dim);box-shadow:none;border:1px dashed #D8CFAF;}
-  .detail-heading{font-size:16px;color:var(--ink-soft);}
-  .round-detail{
-    background:#fff;border:1px solid #E7DFC6;border-radius:7px;margin-top:8px;overflow:hidden;
-  }
-  .round-detail summary{
-    cursor:pointer;padding:9px 14px;font-family:'IBM Plex Mono', monospace;font-size:12.5px;
-    color:var(--ink-soft);list-style:none;display:flex;align-items:center;gap:8px;
-  }
-  .round-detail summary::-webkit-details-marker{display:none;}
-  .round-detail summary::before{content:'▸';font-size:10px;color:var(--brass);}
-  .round-detail[open] summary::before{content:'▾';}
-  .round-detail[open] summary{border-bottom:1px solid #EFE8D2;}
-  table.detail-table{border-collapse:collapse;width:100%;font-size:12px;min-width:520px;}
-  table.detail-table th, table.detail-table td{padding:6px 12px;text-align:right;color:var(--ink-soft);border-bottom:1px solid #F1EBD8;}
+  .journey-overall{font-size:13px;color:var(--ink-soft);letter-spacing:0.2px;}.journey-overall b{color:var(--ink);font-size:14px;}.journey-overall .arrow{color:#C9BB93;margin:0 3px;}
+  .journey-overall .trend{margin-left:6px;font-size:11px;}.journey-overall .trend.up{color:#2E6B45;}.journey-overall .trend.down{color:var(--danger);}.journey-overall .trend.flat{color:var(--ink-soft);}
+  .journey-table{font-size:10.5px;color:var(--ink-soft);opacity:0.75;margin-top:3px;text-transform:uppercase;letter-spacing:0.3px;}.journey-x{color:var(--danger);font-weight:700;opacity:1;}
+  .detail-card{padding-top:18px;padding-bottom:18px;background:var(--paper-dim);box-shadow:none;border:1px dashed #D8CFAF;}.detail-heading{font-size:16px;color:var(--ink-soft);}
+  .round-detail{background:#fff;border:1px solid #E7DFC6;border-radius:7px;margin-top:8px;overflow:hidden;}
+  .round-detail summary{cursor:pointer;padding:9px 14px;font-family:'IBM Plex Mono', monospace;font-size:12.5px;color:var(--ink-soft);list-style:none;display:flex;align-items:center;gap:8px;}
+  .round-detail summary::-webkit-details-marker{display:none;}.round-detail summary::before{content:'▸';font-size:10px;color:var(--brass);}.round-detail[open] summary::before{content:'▾';}.round-detail[open] summary{border-bottom:1px solid #EFE8D2;}
+  table.detail-table{border-collapse:collapse;width:100%;font-size:12px;min-width:520px;}table.detail-table th, table.detail-table td{padding:6px 12px;text-align:right;color:var(--ink-soft);border-bottom:1px solid #F1EBD8;}
   table.detail-table th{font-family:'IBM Plex Mono', monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:0.3px;background:#FAF6E9;}
-  table.detail-table td:first-child, table.detail-table th:first-child,
-  table.detail-table td:nth-child(2), table.detail-table th:nth-child(2){text-align:left;}
-  table.detail-table td:nth-child(2){color:var(--ink);font-weight:500;}
-
-  .empty{
-    color:var(--paper-dim);
-    text-align:center;
-    padding:60px 20px;
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-size:18px;
-  }
-  .banner{
-    background:rgba(201,162,39,0.14);
-    border:1px solid rgba(201,162,39,0.4);
-    color:#5B4A10;
-    padding:10px 14px;
-    border-radius:7px;
-    font-size:13.5px;
-    margin-bottom:16px;
-  }
+  table.detail-table td:first-child, table.detail-table th:first-child,table.detail-table td:nth-child(2), table.detail-table th:nth-child(2){text-align:left;}table.detail-table td:nth-child(2){color:var(--ink);font-weight:500;}
+  .empty{color:var(--paper-dim);text-align:center;padding:60px 20px;font-family:'Fraunces', serif;font-style:italic;font-size:18px;}
+  .banner{background:rgba(201,162,39,0.14);border:1px solid rgba(201,162,39,0.4);color:#5B4A10;padding:10px 14px;border-radius:7px;font-size:13.5px;margin-bottom:16px;}
   .footer-note{color:var(--paper-dim);opacity:0.65;font-size:12px;text-align:center;margin-top:30px;font-family:'IBM Plex Mono', monospace;}
   .banner.edit-banner{background:rgba(74,120,86,0.08);border-color:rgba(74,120,86,0.3);color:var(--felt-dark);}
-  .pill{
-    display:inline-block;font-family:'IBM Plex Mono', monospace;font-size:11.5px;
-    background:var(--felt);color:var(--paper);padding:3px 9px;border-radius:20px;margin-left:8px;
-  }
-  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:var(--ink-soft);}
-  .legend span{display:inline-flex;align-items:center;gap:6px;}
-  .legend i{width:10px;height:10px;border-radius:2px;display:inline-block;}
-
-  .row3{display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:16px;}
-  @media (max-width:720px){.row3{grid-template-columns:1fr;}}
-
-  .seed-toggle{display:flex;gap:18px;flex-wrap:wrap;}
-  .seed-option{
-    display:flex;align-items:center;gap:7px;font-size:14px;font-weight:500;
-    text-transform:none;letter-spacing:0;color:var(--ink);cursor:pointer;
-  }
-  .seed-option input{width:15px;height:15px;accent-color:var(--felt);cursor:pointer;}
-
-  /* ---- Lobby roster list ---- */
-  .lobby-list{display:flex;flex-direction:column;gap:7px;margin:16px 0;}
-  .lobby-row{
-    display:flex;align-items:center;gap:10px;background:#fff;
-    border:1px solid #EAE0BE;border-radius:12px;padding:7px 10px 7px 7px;
-  }
-  .lobby-seat{
-    display:inline-flex;align-items:center;justify-content:center;
-    min-width:26px;height:26px;border-radius:50%;font-family:'IBM Plex Mono',monospace;
-    font-size:12px;font-weight:600;flex-shrink:0;
-  }
-  .lobby-name-input{flex:1;border:none;background:transparent;padding:6px 4px;font-size:14.5px;font-weight:500;}
-  .lobby-name-input:focus{outline:none;background:var(--paper-dim);border-radius:6px;}
-  .lobby-remove{
-    background:transparent;border:none;color:var(--ink-soft);cursor:pointer;
-    font-size:15px;padding:4px 8px;border-radius:50%;line-height:1;
-  }
-  .lobby-remove:hover{color:var(--danger);background:rgba(192,85,76,0.1);}
-
-  /* ---- Lobby viewer (hype) ---- */
-  .lobby-hype-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:16px;}
-  .lobby-hype-name{
-    display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #EAE0BE;
-    border-radius:12px;padding:10px 12px;font-weight:600;font-size:14.5px;
-  }
-  .lobby-hype-name .lc-badge{min-width:24px;height:24px;padding:0;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;}
-
-  /* ---- Sync bar ---- */
+  .pill{display:inline-block;font-family:'IBM Plex Mono', monospace;font-size:11.5px;background:var(--felt);color:var(--paper);padding:3px 9px;border-radius:20px;margin-left:8px;}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:var(--ink-soft);}.legend span{display:inline-flex;align-items:center;gap:6px;}.legend i{width:10px;height:10px;border-radius:2px;display:inline-block;}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:16px;}@media (max-width:720px){.row3{grid-template-columns:1fr;}}
+  .seed-toggle{display:flex;gap:18px;flex-wrap:wrap;}.seed-option{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--ink);cursor:pointer;}.seed-option input{width:15px;height:15px;accent-color:var(--felt);cursor:pointer;}
+  .lobby-list{display:flex;flex-direction:column;gap:7px;margin:16px 0;}.lobby-row{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #EAE0BE;border-radius:12px;padding:7px 10px 7px 7px;}
+  .lobby-seat{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;flex-shrink:0;}
+  .lobby-name-input{flex:1;border:none;background:transparent;padding:6px 4px;font-size:14.5px;font-weight:500;}.lobby-name-input:focus{outline:none;background:var(--paper-dim);border-radius:6px;}
+  .lobby-remove{background:transparent;border:none;color:var(--ink-soft);cursor:pointer;font-size:15px;padding:4px 8px;border-radius:50%;line-height:1;}.lobby-remove:hover{color:var(--danger);background:rgba(192,85,76,0.1);}
+  .lobby-hype-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:16px;}.lobby-hype-name{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #EAE0BE;border-radius:12px;padding:10px 12px;font-weight:600;font-size:14.5px;}.lobby-hype-name .lc-badge{min-width:24px;height:24px;padding:0;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;}
   .sync-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--felt);padding:10px 16px;border-radius:20px;margin-bottom:18px;box-shadow:0 6px 18px rgba(74,120,86,0.25);}
-  .sync-dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0;}
-  .sync-dot.off{background:#C7D9C2;}
-  .sync-dot.on{background:#EFCE7C;box-shadow:0 0 0 3px rgba(239,206,124,0.3);}
-  .sync-dot.err{background:#F0A99C;}
-  .sync-label{font-family:'IBM Plex Mono', monospace;font-size:11.5px;color:var(--paper);white-space:nowrap;}
-  .sync-bar input{max-width:300px;font-size:12px;padding:6px 9px;font-family:'IBM Plex Mono', monospace;background:rgba(255,255,255,0.92);}
-  .sync-bar button{padding:7px 12px;font-size:12px;}
-  .sync-bar .btn-ghost{color:var(--paper);border-color:rgba(251,247,236,0.4);}
-  .sync-bar .btn-ghost:hover{border-color:var(--paper);color:#fff;}
-  .sync-qr{width:44px;height:44px;border-radius:6px;background:#fff;padding:3px;flex-shrink:0;}
-
-  .tv-qr-box{
-    position:absolute;bottom:9.5vh;right:4vw;background:rgba(251,247,236,0.95);
-    border-radius:12px;padding:10px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,0.35);
-  }
-  .tv-qr-box canvas{width:min(11vh,110px);height:min(11vh,110px);display:block;}
-  .tv-qr-label{font-family:'IBM Plex Mono', monospace;font-size:10.5px;color:var(--ink);margin-top:5px;white-space:nowrap;}
-
-  /* ---- Schedule tab ---- */
-  .sched-round{margin-bottom:20px;}
-  .sched-round-title{font-family:'Fraunces', serif;font-weight:600;font-size:17px;margin:0 0 10px;display:flex;align-items:center;gap:8px;color:var(--ink);}
-  .sched-row{background:#fff;border:1px solid #EAE0BE;border-radius:14px;padding:12px 14px;margin-bottom:9px;}
-  .sched-main{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:7px;flex-wrap:wrap;}
-  .sched-main .tid{font-family:'IBM Plex Mono', monospace;font-weight:600;font-size:14px;}
-  .sched-status{font-family:'IBM Plex Mono', monospace;font-size:10.5px;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:0.3px;}
-  .status-waiting{background:rgba(217,165,54,0.18);color:#8a6a2f;}
-  .status-progress{background:rgba(109,155,184,0.18);color:#3E6A85;}
-  .status-complete{background:rgba(74,120,86,0.16);color:var(--felt-dark);}
-  .sched-players{font-size:13.5px;color:var(--ink-soft);margin-bottom:9px;}
-  .sched-room-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
-  .room-input{max-width:220px;padding:7px 10px;font-size:13.5px;}
-  .room-value{font-family:'IBM Plex Mono', monospace;font-size:12.5px;color:var(--ink-soft);}
-  .sched-toggle{padding:6px 12px;font-size:12px;}
-  .sched-placeholder{opacity:0.65;}
-  .sched-placeholder .sched-round-title{color:var(--ink-soft);}
-
-  /* ---- TV Mode ---- */
-  .tv-mode-btn{
-    position:fixed;top:18px;right:18px;z-index:9998;
-    background:rgba(0,0,0,0.35);color:var(--paper);border:1px solid rgba(243,236,217,0.35);
-    padding:9px 16px;border-radius:22px;font-family:'IBM Plex Mono', monospace;font-size:12.5px;cursor:pointer;
-  }
-  .tv-mode-btn:hover{background:rgba(0,0,0,0.55);}
-  .tv-screen{
-    display:none;position:fixed;inset:0;z-index:9999;
-    background:radial-gradient(ellipse at top, #2E5240 0%, #12251C 75%);
-    color:var(--paper);flex-direction:column;padding:3.2vh 4vw;font-family:'Quicksand', sans-serif;
-    box-sizing:border-box;
-  }
-  .tv-exit{
-    position:absolute;top:16px;right:20px;font-size:13px;color:rgba(243,236,217,0.32);
-    cursor:pointer;padding:7px 14px;border:1px solid rgba(243,236,217,0.2);border-radius:20px;
-    font-family:'IBM Plex Mono', monospace;
-  }
-  .tv-exit:hover{color:rgba(243,236,217,0.95);border-color:rgba(243,236,217,0.55);}
-  .tv-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2.4vh;flex-wrap:wrap;gap:1vh 2vw;}
-  .tv-title{font-family:'Fraunces', serif;font-weight:700;font-size:clamp(26px,3.2vw,50px);color:var(--brass-light);}
-  .tv-round{font-family:'IBM Plex Mono', monospace;font-size:clamp(15px,1.5vw,24px);color:#BFE0CE;}
-  .tv-clock{font-family:'IBM Plex Mono', monospace;font-size:clamp(15px,1.5vw,24px);color:#BFE0CE;opacity:0.65;}
-  .tv-body{flex:1;position:relative;overflow:hidden;}
-  .tv-panel{position:absolute;inset:0;}
-  .tv-panel.empty{display:flex;align-items:center;justify-content:center;opacity:0.6;font-family:'Fraunces',serif;font-style:italic;font-size:clamp(20px,2.2vw,32px);}
-
-  .tv-standings table{width:100%;border-collapse:collapse;}
-  .tv-standings th, .tv-standings td{padding:1.1vh 1vw;font-size:clamp(16px,1.9vw,30px);text-align:left;}
-  .tv-standings th{font-family:'IBM Plex Mono', monospace;text-transform:uppercase;font-size:clamp(10.5px,1vw,15px);letter-spacing:0.4px;color:rgba(243,236,217,0.55);border-bottom:2px solid rgba(243,236,217,0.22);}
-  .tv-standings td{border-bottom:1px solid rgba(243,236,217,0.12);}
-  .tv-place{font-family:'IBM Plex Mono', monospace;font-weight:700;}
-  .tv-place.gold{color:#F0C94A;} .tv-place.silver{color:#D7DEE4;} .tv-place.bronze{color:#E3A468;}
-  .tv-name{font-weight:600;}
-  .tv-diff.pos{color:#7FD79A;} .tv-diff.neg{color:#E58A82;}
-  .tv-more-note{opacity:0.55;font-size:clamp(13px,1.1vw,18px);margin-top:1.6vh;}
-
-  .tv-tables-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.6vh 1.6vw;align-content:start;height:100%;}
-  .tv-table-card{background:rgba(243,236,217,0.06);border:1px solid rgba(243,236,217,0.18);border-radius:14px;padding:2vh 1.6vw;}
-  .tv-table-card .tv-tid{font-family:'IBM Plex Mono', monospace;font-weight:700;font-size:clamp(15px,1.5vw,22px);padding:4px 12px;}
-  .tv-table-card .tv-room{font-family:'IBM Plex Mono', monospace;font-size:clamp(13px,1.2vw,18px);color:#BFE0CE;opacity:0.85;margin:0.6vh 0 1.2vh;}
-  .tv-table-card .tv-players{font-size:clamp(15px,1.5vw,22px);line-height:1.5;}
-  .tv-status-chip{display:inline-block;font-family:'IBM Plex Mono', monospace;font-size:clamp(10px,0.9vw,14px);padding:0.35vh 1vw;border-radius:20px;margin-bottom:1.2vh;text-transform:uppercase;letter-spacing:0.3px;}
-  .tv-screen .status-waiting{background:rgba(201,162,39,0.28);color:#F0DE9E;}
-  .tv-screen .status-progress{background:rgba(79,122,95,0.35);color:#9FE8B9;}
-  .tv-screen .status-complete{background:rgba(90,97,105,0.32);color:#D6DADE;}
-
-  .tv-ticker{margin-top:2.2vh;height:6.5vh;overflow:hidden;background:rgba(0,0,0,0.28);border-radius:10px;display:flex;align-items:center;flex-shrink:0;}
-  .tv-ticker-track{display:inline-flex;white-space:nowrap;animation:tv-scroll 30s linear infinite;}
-  .tv-ticker-track span{margin-right:5vw;font-family:'IBM Plex Mono', monospace;font-size:clamp(14px,1.6vw,24px);color:var(--paper);}
-  @keyframes tv-scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  .sync-dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0;}.sync-dot.off{background:#C7D9C2;}.sync-dot.on{background:#EFCE7C;box-shadow:0 0 0 3px rgba(239,206,124,0.3);}.sync-dot.err{background:#F0A99C;}
+  .sync-label{font-family:'IBM Plex Mono', monospace;font-size:11.5px;color:var(--paper);white-space:nowrap;}.sync-bar input{max-width:300px;font-size:12px;padding:6px 9px;font-family:'IBM Plex Mono', monospace;background:rgba(255,255,255,0.92);}.sync-bar button{padding:7px 12px;font-size:12px;}.sync-bar .btn-ghost{color:var(--paper);border-color:rgba(251,247,236,0.4);}.sync-bar .btn-ghost:hover{border-color:var(--paper);color:#fff;}
+  .sync-qr{width:72px;height:72px;border-radius:8px;background:#fff;padding:4px;flex-shrink:0;}
+  .tv-qr-box{position:absolute;bottom:9.5vh;right:4vw;background:rgba(251,247,236,0.95);border-radius:12px;padding:10px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,0.35);}
+  .tv-qr-box canvas{width:min(11vh,110px);height:min(11vh,110px);display:block;}.tv-qr-label{font-family:'IBM Plex Mono', monospace;font-size:10.5px;color:var(--ink);margin-top:5px;white-space:nowrap;}
+  .sched-round{margin-bottom:20px;}.sched-round-title{font-family:'Fraunces', serif;font-weight:600;font-size:17px;margin:0 0 10px;display:flex;align-items:center;gap:8px;color:var(--ink);}.sched-row{background:#fff;border:1px solid #EAE0BE;border-radius:14px;padding:12px 14px;margin-bottom:9px;}
+  .sched-main{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:7px;flex-wrap:wrap;}.sched-main .tid{font-family:'IBM Plex Mono', monospace;font-weight:600;font-size:14px;}.sched-status{font-family:'IBM Plex Mono', monospace;font-size:10.5px;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:0.3px;}
+  .status-waiting{background:rgba(217,165,54,0.18);color:#8a6a2f;}.status-progress{background:rgba(109,155,184,0.18);color:#3E6A85;}.status-complete{background:rgba(74,120,86,0.16);color:var(--felt-dark);}
+  .sched-players{font-size:13.5px;color:var(--ink-soft);margin-bottom:9px;}.sched-room-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}.room-input{max-width:220px;padding:7px 10px;font-size:13.5px;}.room-value{font-family:'IBM Plex Mono', monospace;font-size:12.5px;color:var(--ink-soft);}.sched-toggle{padding:6px 12px;font-size:12px;}.sched-placeholder{opacity:0.65;}.sched-placeholder .sched-round-title{color:var(--ink-soft);}
+  .tv-mode-btn{position:fixed;top:18px;right:18px;z-index:9998;background:rgba(0,0,0,0.35);color:var(--paper);border:1px solid rgba(243,236,217,0.35);padding:9px 16px;border-radius:22px;font-family:'IBM Plex Mono', monospace;font-size:12.5px;cursor:pointer;}.tv-mode-btn:hover{background:rgba(0,0,0,0.55);}
+  .tv-screen{display:none;position:fixed;inset:0;z-index:9999;background:radial-gradient(ellipse at top, #2E5240 0%, #12251C 75%);color:var(--paper);flex-direction:column;padding:3.2vh 4vw;font-family:'Quicksand', sans-serif;box-sizing:border-box;}
+  .tv-exit{position:absolute;top:16px;right:20px;font-size:13px;color:rgba(243,236,217,0.32);cursor:pointer;padding:7px 14px;border:1px solid rgba(243,236,217,0.2);border-radius:20px;font-family:'IBM Plex Mono', monospace;}.tv-exit:hover{color:rgba(243,236,217,0.95);border-color:rgba(243,236,217,0.55);}
+  .tv-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2.4vh;flex-wrap:wrap;gap:1vh 2vw;}.tv-title{font-family:'Fraunces', serif;font-weight:700;font-size:clamp(26px,3.2vw,50px);color:var(--brass-light);}.tv-round{font-family:'IBM Plex Mono', monospace;font-size:clamp(15px,1.5vw,24px);color:#BFE0CE;}.tv-clock{font-family:'IBM Plex Mono', monospace;font-size:clamp(15px,1.5vw,24px);color:#BFE0CE;opacity:0.65;}
+  .tv-body{flex:1;position:relative;overflow:hidden;}.tv-panel{position:absolute;inset:0;}.tv-panel.empty{display:flex;align-items:center;justify-content:center;opacity:0.6;font-family:'Fraunces',serif;font-style:italic;font-size:clamp(20px,2.2vw,32px);}
+  .tv-standings table{width:100%;border-collapse:collapse;}.tv-standings th, .tv-standings td{padding:1.1vh 1vw;font-size:clamp(16px,1.9vw,30px);text-align:left;}.tv-standings th{font-family:'IBM Plex Mono', monospace;text-transform:uppercase;font-size:clamp(10.5px,1vw,15px);letter-spacing:0.4px;color:rgba(243,236,217,0.55);border-bottom:2px solid rgba(243,236,217,0.22);}.tv-standings td{border-bottom:1px solid rgba(243,236,217,0.12);}.tv-place{font-family:'IBM Plex Mono', monospace;font-weight:700;}.tv-place.gold{color:#F0C94A;}.tv-place.silver{color:#D7DEE4;}.tv-place.bronze{color:#E3A468;}.tv-name{font-weight:600;}.tv-diff.pos{color:#7FD79A;}.tv-diff.neg{color:#E58A82;}.tv-more-note{opacity:0.55;font-size:clamp(13px,1.1vw,18px);margin-top:1.6vh;}
+  .tv-tables-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.6vh 1.6vw;align-content:start;height:100%;}.tv-table-card{background:rgba(243,236,217,0.06);border:1px solid rgba(243,236,217,0.18);border-radius:14px;padding:2vh 1.6vw;}.tv-table-card .tv-tid{font-family:'IBM Plex Mono', monospace;font-weight:700;font-size:clamp(15px,1.5vw,22px);padding:4px 12px;}.tv-table-card .tv-room{font-family:'IBM Plex Mono', monospace;font-size:clamp(13px,1.2vw,18px);color:#BFE0CE;opacity:0.85;margin:0.6vh 0 1.2vh;}.tv-table-card .tv-players{font-size:clamp(15px,1.5vw,22px);line-height:1.5;}.tv-status-chip{display:inline-block;font-family:'IBM Plex Mono', monospace;font-size:clamp(10px,0.9vw,14px);padding:0.35vh 1vw;border-radius:20px;margin-bottom:1.2vh;text-transform:uppercase;letter-spacing:0.3px;}.tv-screen .status-waiting{background:rgba(201,162,39,0.28);color:#F0DE9E;}.tv-screen .status-progress{background:rgba(79,122,95,0.35);color:#9FE8B9;}.tv-screen .status-complete{background:rgba(90,97,105,0.32);color:#D6DADE;}
+  .tv-ticker{margin-top:2.2vh;height:6.5vh;overflow:hidden;background:rgba(0,0,0,0.28);border-radius:10px;display:flex;align-items:center;flex-shrink:0;}.tv-ticker-track{display:inline-flex;white-space:nowrap;animation:tv-scroll 30s linear infinite;}.tv-ticker-track span{margin-right:5vw;font-family:'IBM Plex Mono', monospace;font-size:clamp(14px,1.6vw,24px);color:var(--paper);}@keyframes tv-scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
 </style>
 </head>
 <body>
 <div class="tv-screen" id="tvScreen">
   <div class="tv-exit" onclick="exitTVMode()">✕ exit tv mode</div>
-  <div class="tv-header">
-    <div class="tv-title" id="tvTitle"></div>
-    <div class="tv-round" id="tvRound"></div>
-    <div class="tv-clock" id="tvClock"></div>
-  </div>
+  <div class="tv-header"><div class="tv-title" id="tvTitle"></div><div class="tv-round" id="tvRound"></div><div class="tv-clock" id="tvClock"></div></div>
   <div class="tv-body" id="tvBody"></div>
   <div class="tv-ticker"><div class="tv-ticker-track" id="tvTickerTrack"></div></div>
-  <div class="tv-qr-box" id="tvQRBox" style="display:none;">
-    <canvas id="tvQR"></canvas>
-    <div class="tv-qr-label">📱 follow along</div>
-  </div>
+  <div class="tv-qr-box" id="tvQRBox" style="display:none;"><canvas id="tvQR"></canvas><div class="tv-qr-label">📱 follow along</div></div>
 </div>
 <button id="tvModeBtn" class="tv-mode-btn" style="display:none;" onclick="enterTVMode()">📺 TV Mode</button>
 <div class="wrap">
-
-  <div class="masthead">
-    <h1>Swiss <span>Table</span></h1>
-    <div class="sub" id="roundBadge">Setup</div>
-  </div>
-
+  <div class="masthead"><h1>Swiss <span>Table</span></h1><div class="sub" id="roundBadge">Setup</div></div>
   <div class="sync-bar" id="syncBar" style="display:none;">
     <canvas id="syncQR" class="sync-qr"></canvas>
     <span class="sync-dot off" id="syncDot"></span>
@@ -482,1483 +175,1462 @@
     <button class="btn-ghost" onclick="copyShareLink()">Copy live link</button>
     <button class="btn-ghost" onclick="openTVDisplay()">Open TV display ↗</button>
   </div>
-
-  <!-- SETUP -->
   <div class="card" id="setupCard">
     <h2>New tournament</h2>
     <p class="hint">Four rounds. Players are grouped into tables each round; a player's placement at their table earns Swiss points, and cumulative Swiss points — not raw game scores — decide the overall standings and the next round's pairings.</p>
-
-    <div class="field">
-      <label for="tname">Tournament name</label>
-      <input type="text" id="tname" placeholder="e.g. Autumn Catan Open" value="Tournament">
-    </div>
-
-    <div class="field">
-      <label for="players">Players (one name per line)</label>
-      <textarea id="players" placeholder="Alice&#10;Bob&#10;Carla&#10;Dan&#10;Erin&#10;Femi&#10;..."></textarea>
-      <p class="hint" style="margin-top:8px;">You don't need everyone yet — add, remove, or fix names in the Lobby before Round 1 starts, and the live viewer can show the roster right away to build hype.</p>
-    </div>
-
+    <div class="field"><label for="tname">Tournament name</label><input type="text" id="tname" placeholder="e.g. Autumn Catan Open" value="Tournament"></div>
+    <div class="field"><label for="players">Players (one name per line)</label><textarea id="players" placeholder="Alice&#10;Bob&#10;Carla&#10;Dan&#10;Erin&#10;Femi&#10;..."></textarea><p class="hint" style="margin-top:8px;">You don't need everyone yet — add, remove, or fix names in the Lobby before Round 1 starts, and the live viewer can show the roster right away to build hype.</p></div>
     <div class="row3">
-      <div class="field">
-        <label for="minPerTable">Min players per table</label>
-        <input type="number" id="minPerTable" min="2" max="10" value="3">
-      </div>
-      <div class="field">
-        <label for="maxPerTable">Max players per table</label>
-        <input type="number" id="maxPerTable" min="2" max="12" value="4">
-        <p class="hint" style="margin-top:8px;">Most games in a round will sit at max; a table only drops toward min if the player count doesn't divide evenly, and the leftover seats fill the bottom tables first.</p>
-      </div>
-      <div class="field">
-        <label for="tcode">Tournament code <span style="font-weight:400;text-transform:none;letter-spacing:0;">— used for the live viewer link</span></label>
-        <div style="display:flex;gap:8px;">
-          <input type="text" id="tcode" placeholder="e.g. AUTUMN26">
-          <button type="button" class="btn-ghost" onclick="document.getElementById('tcode').value=randomCode()">Generate</button>
-        </div>
-        <p class="hint" style="margin-top:8px;" id="setupSyncNote">Checking live-sync setup…</p>
-      </div>
+      <div class="field"><label for="minPerTable">Min players per table</label><input type="number" id="minPerTable" min="2" max="10" value="3"></div>
+      <div class="field"><label for="maxPerTable">Max players per table</label><input type="number" id="maxPerTable" min="2" max="12" value="4"><p class="hint" style="margin-top:8px;">Most games in a round will sit at max; a table only drops toward min if the player count doesn't divide evenly, and the leftover seats fill the bottom tables first.</p></div>
+      <div class="field"><label for="tcode">Tournament code <span style="font-weight:400;text-transform:none;letter-spacing:0;">— used for the live viewer link</span></label><div style="display:flex;gap:8px;"><input type="text" id="tcode" placeholder="e.g. AUTUMN26"><button type="button" class="btn-ghost" onclick="document.getElementById('tcode').value=randomCode()">Generate</button></div><p class="hint" style="margin-top:8px;" id="setupSyncNote">Checking live-sync setup…</p></div>
     </div>
-
-    <div class="btn-row">
-      <button class="btn-primary" onclick="createTournament()">Create tournament</button>
-      <button class="btn-ghost" onclick="loadSample()">Fill sample data</button>
-    </div>
+    <div class="btn-row"><button class="btn-primary" onclick="createTournament()">Create tournament</button><button class="btn-ghost" onclick="loadSample()">Fill sample data</button></div>
     <div id="setupError" class="banner" style="display:none;background:rgba(155,59,52,0.1);border-color:rgba(155,59,52,0.4);color:var(--danger);"></div>
   </div>
-
-  <!-- RESUME ON THIS DEVICE (admin picking up a tournament created elsewhere) -->
-  <div class="card" id="resumeCard">
-    <h2>Resume on this device</h2>
-    <p class="hint" id="resumeHint">Checking live-sync setup…</p>
-    <div style="display:flex;gap:8px;">
-      <input type="text" id="resumeCode" placeholder="Tournament code, e.g. AUTUMN26">
-      <button id="resumeBtn" class="btn-brass" onclick="resumeTournament()">Resume</button>
-    </div>
-    <div id="resumeError" class="banner" style="display:none;background:rgba(155,59,52,0.1);border-color:rgba(155,59,52,0.4);color:var(--danger);margin-top:12px;"></div>
-  </div>
-
-  <!-- LOBBY (roster set, not yet paired) -->
+  <div class="card" id="resumeCard"><h2>Resume on this device</h2><p class="hint" id="resumeHint">Checking live-sync setup…</p><div style="display:flex;gap:8px;"><input type="text" id="resumeCode" placeholder="Tournament code, e.g. AUTUMN26"><button id="resumeBtn" class="btn-brass" onclick="resumeTournament()">Resume</button></div><div id="resumeError" class="banner" style="display:none;background:rgba(155,59,52,0.1);border-color:rgba(155,59,52,0.4);color:var(--danger);margin-top:12px;"></div></div>
   <div class="card" id="lobbyCard" style="display:none;">
-    <h2>Lobby <span class="pill" id="lobbyCount">0 players</span></h2>
-    <p class="hint">Add, remove, or fix names below — the live viewer can already show this roster to build hype. Start Round 1 whenever everyone's in.</p>
-
-    <div class="field">
-      <label>Add a player</label>
-      <div style="display:flex;gap:8px;">
-        <input type="text" id="lobbyNewPlayer" placeholder="Player name" onkeydown="if(event.key==='Enter'){event.preventDefault();addLobbyPlayer();}">
-        <button type="button" class="btn-brass" onclick="addLobbyPlayer()">+ Add</button>
-        <button type="button" class="btn-ghost" onclick="shuffleLobbyOrder()">🔀 Shuffle order</button>
-      </div>
-    </div>
-
+    <h2>Lobby <span class="pill" id="lobbyCount">0 players</span></h2><p class="hint">Add, remove, or fix names below — the live viewer can already show this roster to build hype. Start Round 1 whenever everyone's in.</p>
+    <div class="field"><label>Add a player</label><div style="display:flex;gap:8px;"><input type="text" id="lobbyNewPlayer" placeholder="Player name" onkeydown="if(event.key==='Enter'){event.preventDefault();addLobbyPlayer();}"><button type="button" class="btn-brass" onclick="addLobbyPlayer()">+ Add</button><button type="button" class="btn-ghost" onclick="shuffleLobbyOrder()">🔀 Shuffle order</button></div></div>
     <div class="lobby-list" id="lobbyList"></div>
-
-    <div class="row3" style="margin-top:6px;">
-      <div class="field">
-        <label for="lobbyMin">Min players per table</label>
-        <input type="number" id="lobbyMin" min="2" max="10" onchange="updateLobbyConfig()">
-      </div>
-      <div class="field">
-        <label for="lobbyMax">Max players per table</label>
-        <input type="number" id="lobbyMax" min="2" max="12" onchange="updateLobbyConfig()">
-      </div>
-      <div class="field">
-        <label>Round 1 seeding</label>
-        <div class="seed-toggle">
-          <label class="seed-option"><input type="radio" name="seedMode" value="shuffle" checked> Shuffle automatically</label>
-          <label class="seed-option"><input type="radio" name="seedMode" value="order"> Use the list order above</label>
-        </div>
-      </div>
-    </div>
-
+    <div class="row3" style="margin-top:6px;"><div class="field"><label for="lobbyMin">Min players per table</label><input type="number" id="lobbyMin" min="2" max="10" onchange="updateLobbyConfig()"></div><div class="field"><label for="lobbyMax">Max players per table</label><input type="number" id="lobbyMax" min="2" max="12" onchange="updateLobbyConfig()"></div><div class="field"><label>Round 1 seeding</label><div class="seed-toggle"><label class="seed-option"><input type="radio" name="seedMode" value="shuffle" checked> Shuffle automatically</label><label class="seed-option"><input type="radio" name="seedMode" value="order"> Use the list order above</label></div></div></div>
     <div id="lobbyError" class="banner" style="display:none;background:rgba(155,59,52,0.1);border-color:rgba(155,59,52,0.4);color:var(--danger);"></div>
-    <div class="btn-row">
-      <button class="btn-primary" onclick="beginRound1()">🚀 Start Round 1</button>
-      <button class="btn-ghost" onclick="resetTournament()">Cancel / start over</button>
-    </div>
+    <div class="btn-row"><button class="btn-primary" onclick="beginRound1()">🚀 Start Round 1</button><button class="btn-ghost" onclick="resetTournament()">Cancel / start over</button></div>
   </div>
-
-  <!-- TOURNAMENT -->
-  <div id="tournamentArea" style="display:none;">
-    <div class="tabs" id="tabs"></div>
-    <div id="tabContent"></div>
-    <div class="btn-row" id="adminButtons" style="margin-top:6px;">
-      <button class="btn-ghost" onclick="resetTournament()">Reset tournament</button>
-      <button class="btn-ghost" onclick="exportCSV()">Export standings CSV</button>
-    </div>
-  </div>
-
+  <div id="tournamentArea" style="display:none;"><div class="tabs" id="tabs"></div><div id="tabContent"></div><div class="btn-row" id="adminButtons" style="margin-top:6px;"><button class="btn-ghost" onclick="resetTournament()">Reset tournament</button><button class="btn-ghost" onclick="exportCSV()">Export standings CSV</button></div></div>
   <div class="footer-note">Swiss Pts per table = 1st: 4 · 2nd: 2 · 3rd: 1 · 4th: 0 · ties share the higher placement · Diff = score − table's top score</div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
 <script>
-/* =================================================================
-   LIVE SYNC CONFIG — replace these two values with your own Supabase
-   project's URL and public "anon" key (Project Settings → API).
-   Leave them as-is to run fully offline (localStorage only).
-================================================================== */
+/* Embedded QR generator based on QRCode for JavaScript by Kazuhiko Arase
+   (MIT License). Bundled locally so QR rendering does not depend on a CDN. */
+(function(global){
+  'use strict';
+  var modules = {};
+  modules['./QRMode'] = function(require, module, exports){
+module.exports = {
+    MODE_NUMBER :       1 << 0,
+    MODE_ALPHA_NUM :    1 << 1,
+    MODE_8BIT_BYTE :    1 << 2,
+    MODE_KANJI :        1 << 3
+};
+
+  };
+  modules['./QRErrorCorrectLevel'] = function(require, module, exports){
+module.exports = {
+	L : 1,
+	M : 0,
+	Q : 3,
+	H : 2
+};
+
+
+  };
+  modules['./QRMaskPattern'] = function(require, module, exports){
+module.exports = {
+	PATTERN000 : 0,
+	PATTERN001 : 1,
+	PATTERN010 : 2,
+	PATTERN011 : 3,
+	PATTERN100 : 4,
+	PATTERN101 : 5,
+	PATTERN110 : 6,
+	PATTERN111 : 7
+};
+
+  };
+  modules['./QRMath'] = function(require, module, exports){
+var QRMath = {
+
+	glog : function(n) {
+	
+		if (n < 1) {
+			throw new Error("glog(" + n + ")");
+		}
+		
+		return QRMath.LOG_TABLE[n];
+	},
+	
+	gexp : function(n) {
+	
+		while (n < 0) {
+			n += 255;
+		}
+	
+		while (n >= 256) {
+			n -= 255;
+		}
+	
+		return QRMath.EXP_TABLE[n];
+	},
+	
+	EXP_TABLE : new Array(256),
+	
+	LOG_TABLE : new Array(256)
+
+};
+	
+for (var i = 0; i < 8; i++) {
+	QRMath.EXP_TABLE[i] = 1 << i;
+}
+for (var i = 8; i < 256; i++) {
+	QRMath.EXP_TABLE[i] = QRMath.EXP_TABLE[i - 4]
+		^ QRMath.EXP_TABLE[i - 5]
+		^ QRMath.EXP_TABLE[i - 6]
+		^ QRMath.EXP_TABLE[i - 8];
+}
+for (var i = 0; i < 255; i++) {
+	QRMath.LOG_TABLE[QRMath.EXP_TABLE[i] ] = i;
+}
+
+module.exports = QRMath;
+
+  };
+  modules['./QRPolynomial'] = function(require, module, exports){
+var QRMath = require('./QRMath');
+
+function QRPolynomial(num, shift) {
+	if (num.length === undefined) {
+		throw new Error(num.length + "/" + shift);
+	}
+
+	var offset = 0;
+
+	while (offset < num.length && num[offset] === 0) {
+		offset++;
+	}
+
+	this.num = new Array(num.length - offset + shift);
+	for (var i = 0; i < num.length - offset; i++) {
+		this.num[i] = num[i + offset];
+	}
+}
+
+QRPolynomial.prototype = {
+
+	get : function(index) {
+		return this.num[index];
+	},
+	
+	getLength : function() {
+		return this.num.length;
+	},
+	
+	multiply : function(e) {
+	
+		var num = new Array(this.getLength() + e.getLength() - 1);
+	
+		for (var i = 0; i < this.getLength(); i++) {
+			for (var j = 0; j < e.getLength(); j++) {
+				num[i + j] ^= QRMath.gexp(QRMath.glog(this.get(i) ) + QRMath.glog(e.get(j) ) );
+			}
+		}
+	
+		return new QRPolynomial(num, 0);
+	},
+	
+	mod : function(e) {
+	
+		if (this.getLength() - e.getLength() < 0) {
+			return this;
+		}
+	
+		var ratio = QRMath.glog(this.get(0) ) - QRMath.glog(e.get(0) );
+	
+		var num = new Array(this.getLength() );
+		
+		for (var i = 0; i < this.getLength(); i++) {
+			num[i] = this.get(i);
+		}
+		
+		for (var x = 0; x < e.getLength(); x++) {
+			num[x] ^= QRMath.gexp(QRMath.glog(e.get(x) ) + ratio);
+		}
+	
+		// recursive call
+		return new QRPolynomial(num, 0).mod(e);
+	}
+};
+
+module.exports = QRPolynomial;
+
+  };
+  modules['./QRBitBuffer'] = function(require, module, exports){
+function QRBitBuffer() {
+	this.buffer = [];
+	this.length = 0;
+}
+
+QRBitBuffer.prototype = {
+
+	get : function(index) {
+		var bufIndex = Math.floor(index / 8);
+		return ( (this.buffer[bufIndex] >>> (7 - index % 8) ) & 1) == 1;
+	},
+	
+	put : function(num, length) {
+		for (var i = 0; i < length; i++) {
+			this.putBit( ( (num >>> (length - i - 1) ) & 1) == 1);
+		}
+	},
+	
+	getLengthInBits : function() {
+		return this.length;
+	},
+	
+	putBit : function(bit) {
+	
+		var bufIndex = Math.floor(this.length / 8);
+		if (this.buffer.length <= bufIndex) {
+			this.buffer.push(0);
+		}
+	
+		if (bit) {
+			this.buffer[bufIndex] |= (0x80 >>> (this.length % 8) );
+		}
+	
+		this.length++;
+	}
+};
+
+module.exports = QRBitBuffer;
+
+  };
+  modules['./QR8bitByte'] = function(require, module, exports){
+var QRMode = require('./QRMode');
+
+function QR8bitByte(data) {
+	this.mode = QRMode.MODE_8BIT_BYTE;
+	this.data = data;
+}
+
+QR8bitByte.prototype = {
+
+	getLength : function() {
+		return this.data.length;
+	},
+	
+	write : function(buffer) {
+		for (var i = 0; i < this.data.length; i++) {
+			// not JIS ...
+			buffer.put(this.data.charCodeAt(i), 8);
+		}
+	}
+};
+
+module.exports = QR8bitByte;
+
+  };
+  modules['./QRRSBlock'] = function(require, module, exports){
+var QRErrorCorrectLevel = require('./QRErrorCorrectLevel');
+
+function QRRSBlock(totalCount, dataCount) {
+	this.totalCount = totalCount;
+	this.dataCount  = dataCount;
+}
+
+QRRSBlock.RS_BLOCK_TABLE = [
+
+	// L
+	// M
+	// Q
+	// H
+
+	// 1
+	[1, 26, 19],
+	[1, 26, 16],
+	[1, 26, 13],
+	[1, 26, 9],
+	
+	// 2
+	[1, 44, 34],
+	[1, 44, 28],
+	[1, 44, 22],
+	[1, 44, 16],
+
+	// 3
+	[1, 70, 55],
+	[1, 70, 44],
+	[2, 35, 17],
+	[2, 35, 13],
+
+	// 4		
+	[1, 100, 80],
+	[2, 50, 32],
+	[2, 50, 24],
+	[4, 25, 9],
+	
+	// 5
+	[1, 134, 108],
+	[2, 67, 43],
+	[2, 33, 15, 2, 34, 16],
+	[2, 33, 11, 2, 34, 12],
+	
+	// 6
+	[2, 86, 68],
+	[4, 43, 27],
+	[4, 43, 19],
+	[4, 43, 15],
+	
+	// 7		
+	[2, 98, 78],
+	[4, 49, 31],
+	[2, 32, 14, 4, 33, 15],
+	[4, 39, 13, 1, 40, 14],
+	
+	// 8
+	[2, 121, 97],
+	[2, 60, 38, 2, 61, 39],
+	[4, 40, 18, 2, 41, 19],
+	[4, 40, 14, 2, 41, 15],
+	
+	// 9
+	[2, 146, 116],
+	[3, 58, 36, 2, 59, 37],
+	[4, 36, 16, 4, 37, 17],
+	[4, 36, 12, 4, 37, 13],
+	
+	// 10		
+	[2, 86, 68, 2, 87, 69],
+	[4, 69, 43, 1, 70, 44],
+	[6, 43, 19, 2, 44, 20],
+	[6, 43, 15, 2, 44, 16],
+
+	// 11
+	[4, 101, 81],
+	[1, 80, 50, 4, 81, 51],
+	[4, 50, 22, 4, 51, 23],
+	[3, 36, 12, 8, 37, 13],
+
+	// 12
+	[2, 116, 92, 2, 117, 93],
+	[6, 58, 36, 2, 59, 37],
+	[4, 46, 20, 6, 47, 21],
+	[7, 42, 14, 4, 43, 15],
+
+	// 13
+	[4, 133, 107],
+	[8, 59, 37, 1, 60, 38],
+	[8, 44, 20, 4, 45, 21],
+	[12, 33, 11, 4, 34, 12],
+
+	// 14
+	[3, 145, 115, 1, 146, 116],
+	[4, 64, 40, 5, 65, 41],
+	[11, 36, 16, 5, 37, 17],
+	[11, 36, 12, 5, 37, 13],
+
+	// 15
+	[5, 109, 87, 1, 110, 88],
+	[5, 65, 41, 5, 66, 42],
+	[5, 54, 24, 7, 55, 25],
+	[11, 36, 12],
+
+	// 16
+	[5, 122, 98, 1, 123, 99],
+	[7, 73, 45, 3, 74, 46],
+	[15, 43, 19, 2, 44, 20],
+	[3, 45, 15, 13, 46, 16],
+
+	// 17
+	[1, 135, 107, 5, 136, 108],
+	[10, 74, 46, 1, 75, 47],
+	[1, 50, 22, 15, 51, 23],
+	[2, 42, 14, 17, 43, 15],
+
+	// 18
+	[5, 150, 120, 1, 151, 121],
+	[9, 69, 43, 4, 70, 44],
+	[17, 50, 22, 1, 51, 23],
+	[2, 42, 14, 19, 43, 15],
+
+	// 19
+	[3, 141, 113, 4, 142, 114],
+	[3, 70, 44, 11, 71, 45],
+	[17, 47, 21, 4, 48, 22],
+	[9, 39, 13, 16, 40, 14],
+
+	// 20
+	[3, 135, 107, 5, 136, 108],
+	[3, 67, 41, 13, 68, 42],
+	[15, 54, 24, 5, 55, 25],
+	[15, 43, 15, 10, 44, 16],
+
+	// 21
+	[4, 144, 116, 4, 145, 117],
+	[17, 68, 42],
+	[17, 50, 22, 6, 51, 23],
+	[19, 46, 16, 6, 47, 17],
+
+	// 22
+	[2, 139, 111, 7, 140, 112],
+	[17, 74, 46],
+	[7, 54, 24, 16, 55, 25],
+	[34, 37, 13],
+
+	// 23
+	[4, 151, 121, 5, 152, 122],
+	[4, 75, 47, 14, 76, 48],
+	[11, 54, 24, 14, 55, 25],
+	[16, 45, 15, 14, 46, 16],
+
+	// 24
+	[6, 147, 117, 4, 148, 118],
+	[6, 73, 45, 14, 74, 46],
+	[11, 54, 24, 16, 55, 25],
+	[30, 46, 16, 2, 47, 17],
+
+	// 25
+	[8, 132, 106, 4, 133, 107],
+	[8, 75, 47, 13, 76, 48],
+	[7, 54, 24, 22, 55, 25],
+	[22, 45, 15, 13, 46, 16],
+
+	// 26
+	[10, 142, 114, 2, 143, 115],
+	[19, 74, 46, 4, 75, 47],
+	[28, 50, 22, 6, 51, 23],
+	[33, 46, 16, 4, 47, 17],
+
+	// 27
+	[8, 152, 122, 4, 153, 123],
+	[22, 73, 45, 3, 74, 46],
+	[8, 53, 23, 26, 54, 24],
+	[12, 45, 15, 28, 46, 16],
+
+	// 28
+	[3, 147, 117, 10, 148, 118],
+	[3, 73, 45, 23, 74, 46],
+	[4, 54, 24, 31, 55, 25],
+	[11, 45, 15, 31, 46, 16],
+
+	// 29
+	[7, 146, 116, 7, 147, 117],
+	[21, 73, 45, 7, 74, 46],
+	[1, 53, 23, 37, 54, 24],
+	[19, 45, 15, 26, 46, 16],
+
+	// 30
+	[5, 145, 115, 10, 146, 116],
+	[19, 75, 47, 10, 76, 48],
+	[15, 54, 24, 25, 55, 25],
+	[23, 45, 15, 25, 46, 16],
+
+	// 31
+	[13, 145, 115, 3, 146, 116],
+	[2, 74, 46, 29, 75, 47],
+	[42, 54, 24, 1, 55, 25],
+	[23, 45, 15, 28, 46, 16],
+
+	// 32
+	[17, 145, 115],
+	[10, 74, 46, 23, 75, 47],
+	[10, 54, 24, 35, 55, 25],
+	[19, 45, 15, 35, 46, 16],
+
+	// 33
+	[17, 145, 115, 1, 146, 116],
+	[14, 74, 46, 21, 75, 47],
+	[29, 54, 24, 19, 55, 25],
+	[11, 45, 15, 46, 46, 16],
+
+	// 34
+	[13, 145, 115, 6, 146, 116],
+	[14, 74, 46, 23, 75, 47],
+	[44, 54, 24, 7, 55, 25],
+	[59, 46, 16, 1, 47, 17],
+
+	// 35
+	[12, 151, 121, 7, 152, 122],
+	[12, 75, 47, 26, 76, 48],
+	[39, 54, 24, 14, 55, 25],
+	[22, 45, 15, 41, 46, 16],
+
+	// 36
+	[6, 151, 121, 14, 152, 122],
+	[6, 75, 47, 34, 76, 48],
+	[46, 54, 24, 10, 55, 25],
+	[2, 45, 15, 64, 46, 16],
+
+	// 37
+	[17, 152, 122, 4, 153, 123],
+	[29, 74, 46, 14, 75, 47],
+	[49, 54, 24, 10, 55, 25],
+	[24, 45, 15, 46, 46, 16],
+
+	// 38
+	[4, 152, 122, 18, 153, 123],
+	[13, 74, 46, 32, 75, 47],
+	[48, 54, 24, 14, 55, 25],
+	[42, 45, 15, 32, 46, 16],
+
+	// 39
+	[20, 147, 117, 4, 148, 118],
+	[40, 75, 47, 7, 76, 48],
+	[43, 54, 24, 22, 55, 25],
+	[10, 45, 15, 67, 46, 16],
+
+	// 40
+	[19, 148, 118, 6, 149, 119],
+	[18, 75, 47, 31, 76, 48],
+	[34, 54, 24, 34, 55, 25],
+	[20, 45, 15, 61, 46, 16]
+];
+
+QRRSBlock.getRSBlocks = function(typeNumber, errorCorrectLevel) {
+	
+	var rsBlock = QRRSBlock.getRsBlockTable(typeNumber, errorCorrectLevel);
+	
+	if (rsBlock === undefined) {
+		throw new Error("bad rs block @ typeNumber:" + typeNumber + "/errorCorrectLevel:" + errorCorrectLevel);
+	}
+
+	var length = rsBlock.length / 3;
+	
+	var list = [];
+	
+	for (var i = 0; i < length; i++) {
+
+		var count = rsBlock[i * 3 + 0];
+		var totalCount = rsBlock[i * 3 + 1];
+		var dataCount  = rsBlock[i * 3 + 2];
+
+		for (var j = 0; j < count; j++) {
+			list.push(new QRRSBlock(totalCount, dataCount) );	
+		}
+	}
+	
+	return list;
+};
+
+QRRSBlock.getRsBlockTable = function(typeNumber, errorCorrectLevel) {
+
+	switch(errorCorrectLevel) {
+	case QRErrorCorrectLevel.L :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 0];
+	case QRErrorCorrectLevel.M :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 1];
+	case QRErrorCorrectLevel.Q :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 2];
+	case QRErrorCorrectLevel.H :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 3];
+	default :
+		return undefined;
+	}
+};
+
+module.exports = QRRSBlock;
+
+  };
+  modules['./QRUtil'] = function(require, module, exports){
+var QRMode = require('./QRMode');
+var QRPolynomial = require('./QRPolynomial');
+var QRMath = require('./QRMath');
+var QRMaskPattern = require('./QRMaskPattern');
+
+var QRUtil = {
+
+    PATTERN_POSITION_TABLE : [
+        [],
+        [6, 18],
+        [6, 22],
+        [6, 26],
+        [6, 30],
+        [6, 34],
+        [6, 22, 38],
+        [6, 24, 42],
+        [6, 26, 46],
+        [6, 28, 50],
+        [6, 30, 54],        
+        [6, 32, 58],
+        [6, 34, 62],
+        [6, 26, 46, 66],
+        [6, 26, 48, 70],
+        [6, 26, 50, 74],
+        [6, 30, 54, 78],
+        [6, 30, 56, 82],
+        [6, 30, 58, 86],
+        [6, 34, 62, 90],
+        [6, 28, 50, 72, 94],
+        [6, 26, 50, 74, 98],
+        [6, 30, 54, 78, 102],
+        [6, 28, 54, 80, 106],
+        [6, 32, 58, 84, 110],
+        [6, 30, 58, 86, 114],
+        [6, 34, 62, 90, 118],
+        [6, 26, 50, 74, 98, 122],
+        [6, 30, 54, 78, 102, 126],
+        [6, 26, 52, 78, 104, 130],
+        [6, 30, 56, 82, 108, 134],
+        [6, 34, 60, 86, 112, 138],
+        [6, 30, 58, 86, 114, 142],
+        [6, 34, 62, 90, 118, 146],
+        [6, 30, 54, 78, 102, 126, 150],
+        [6, 24, 50, 76, 102, 128, 154],
+        [6, 28, 54, 80, 106, 132, 158],
+        [6, 32, 58, 84, 110, 136, 162],
+        [6, 26, 54, 82, 110, 138, 166],
+        [6, 30, 58, 86, 114, 142, 170]
+    ],
+
+    G15 : (1 << 10) | (1 << 8) | (1 << 5) | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0),
+    G18 : (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0),
+    G15_MASK : (1 << 14) | (1 << 12) | (1 << 10)    | (1 << 4) | (1 << 1),
+
+    getBCHTypeInfo : function(data) {
+        var d = data << 10;
+        while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15) >= 0) {
+            d ^= (QRUtil.G15 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15) ) );    
+        }
+        return ( (data << 10) | d) ^ QRUtil.G15_MASK;
+    },
+
+    getBCHTypeNumber : function(data) {
+        var d = data << 12;
+        while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18) >= 0) {
+            d ^= (QRUtil.G18 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18) ) );    
+        }
+        return (data << 12) | d;
+    },
+
+    getBCHDigit : function(data) {
+
+        var digit = 0;
+
+        while (data !== 0) {
+            digit++;
+            data >>>= 1;
+        }
+
+        return digit;
+    },
+
+    getPatternPosition : function(typeNumber) {
+        return QRUtil.PATTERN_POSITION_TABLE[typeNumber - 1];
+    },
+
+    getMask : function(maskPattern, i, j) {
+        
+        switch (maskPattern) {
+            
+        case QRMaskPattern.PATTERN000 : return (i + j) % 2 === 0;
+        case QRMaskPattern.PATTERN001 : return i % 2 === 0;
+        case QRMaskPattern.PATTERN010 : return j % 3 === 0;
+        case QRMaskPattern.PATTERN011 : return (i + j) % 3 === 0;
+        case QRMaskPattern.PATTERN100 : return (Math.floor(i / 2) + Math.floor(j / 3) ) % 2 === 0;
+        case QRMaskPattern.PATTERN101 : return (i * j) % 2 + (i * j) % 3 === 0;
+        case QRMaskPattern.PATTERN110 : return ( (i * j) % 2 + (i * j) % 3) % 2 === 0;
+        case QRMaskPattern.PATTERN111 : return ( (i * j) % 3 + (i + j) % 2) % 2 === 0;
+
+        default :
+            throw new Error("bad maskPattern:" + maskPattern);
+        }
+    },
+
+    getErrorCorrectPolynomial : function(errorCorrectLength) {
+
+        var a = new QRPolynomial([1], 0);
+
+        for (var i = 0; i < errorCorrectLength; i++) {
+            a = a.multiply(new QRPolynomial([1, QRMath.gexp(i)], 0) );
+        }
+
+        return a;
+    },
+
+    getLengthInBits : function(mode, type) {
+
+        if (1 <= type && type < 10) {
+
+            // 1 - 9
+
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 10;
+            case QRMode.MODE_ALPHA_NUM  : return 9;
+            case QRMode.MODE_8BIT_BYTE  : return 8;
+            case QRMode.MODE_KANJI      : return 8;
+            default :
+                throw new Error("mode:" + mode);
+            }
+
+        } else if (type < 27) {
+
+            // 10 - 26
+
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 12;
+            case QRMode.MODE_ALPHA_NUM  : return 11;
+            case QRMode.MODE_8BIT_BYTE  : return 16;
+            case QRMode.MODE_KANJI      : return 10;
+            default :
+                throw new Error("mode:" + mode);
+            }
+
+        } else if (type < 41) {
+
+            // 27 - 40
+
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 14;
+            case QRMode.MODE_ALPHA_NUM  : return 13;
+            case QRMode.MODE_8BIT_BYTE  : return 16;
+            case QRMode.MODE_KANJI      : return 12;
+            default :
+                throw new Error("mode:" + mode);
+            }
+
+        } else {
+            throw new Error("type:" + type);
+        }
+    },
+
+    getLostPoint : function(qrCode) {
+        
+        var moduleCount = qrCode.getModuleCount();
+        var lostPoint = 0;
+        var row = 0; 
+        var col = 0;
+
+        
+        // LEVEL1
+        
+        for (row = 0; row < moduleCount; row++) {
+
+            for (col = 0; col < moduleCount; col++) {
+
+                var sameCount = 0;
+                var dark = qrCode.isDark(row, col);
+
+                for (var r = -1; r <= 1; r++) {
+
+                    if (row + r < 0 || moduleCount <= row + r) {
+                        continue;
+                    }
+
+                    for (var c = -1; c <= 1; c++) {
+
+                        if (col + c < 0 || moduleCount <= col + c) {
+                            continue;
+                        }
+
+                        if (r === 0 && c === 0) {
+                            continue;
+                        }
+
+                        if (dark === qrCode.isDark(row + r, col + c) ) {
+                            sameCount++;
+                        }
+                    }
+                }
+
+                if (sameCount > 5) {
+                    lostPoint += (3 + sameCount - 5);
+                }
+            }
+        }
+
+        // LEVEL2
+
+        for (row = 0; row < moduleCount - 1; row++) {
+            for (col = 0; col < moduleCount - 1; col++) {
+                var count = 0;
+                if (qrCode.isDark(row,     col    ) ) count++;
+                if (qrCode.isDark(row + 1, col    ) ) count++;
+                if (qrCode.isDark(row,     col + 1) ) count++;
+                if (qrCode.isDark(row + 1, col + 1) ) count++;
+                if (count === 0 || count === 4) {
+                    lostPoint += 3;
+                }
+            }
+        }
+
+        // LEVEL3
+
+        for (row = 0; row < moduleCount; row++) {
+            for (col = 0; col < moduleCount - 6; col++) {
+                if (qrCode.isDark(row, col) && 
+                        !qrCode.isDark(row, col + 1) && 
+                         qrCode.isDark(row, col + 2) && 
+                         qrCode.isDark(row, col + 3) && 
+                         qrCode.isDark(row, col + 4) && 
+                        !qrCode.isDark(row, col + 5) && 
+                         qrCode.isDark(row, col + 6) ) {
+                    lostPoint += 40;
+                }
+            }
+        }
+
+        for (col = 0; col < moduleCount; col++) {
+            for (row = 0; row < moduleCount - 6; row++) {
+                if (qrCode.isDark(row, col) &&
+                        !qrCode.isDark(row + 1, col) &&
+                         qrCode.isDark(row + 2, col) &&
+                         qrCode.isDark(row + 3, col) &&
+                         qrCode.isDark(row + 4, col) &&
+                        !qrCode.isDark(row + 5, col) &&
+                         qrCode.isDark(row + 6, col) ) {
+                    lostPoint += 40;
+                }
+            }
+        }
+
+        // LEVEL4
+        
+        var darkCount = 0;
+
+        for (col = 0; col < moduleCount; col++) {
+            for (row = 0; row < moduleCount; row++) {
+                if (qrCode.isDark(row, col) ) {
+                    darkCount++;
+                }
+            }
+        }
+        
+        var ratio = Math.abs(100 * darkCount / moduleCount / moduleCount - 50) / 5;
+        lostPoint += ratio * 10;
+
+        return lostPoint;       
+    }
+
+};
+
+module.exports = QRUtil;
+
+  };
+  modules['./index'] = function(require, module, exports){
+//---------------------------------------------------------------------
+// QRCode for JavaScript
+//
+// Copyright (c) 2009 Kazuhiko Arase
+//
+// URL: http://www.d-project.com/
+//
+// Licensed under the MIT license:
+//   http://www.opensource.org/licenses/mit-license.php
+//
+// The word "QR Code" is registered trademark of 
+// DENSO WAVE INCORPORATED
+//   http://www.denso-wave.com/qrcode/faqpatent-e.html
+//
+//---------------------------------------------------------------------
+// Modified to work in node for this project (and some refactoring)
+//---------------------------------------------------------------------
+
+var QR8bitByte = require('./QR8bitByte');
+var QRUtil = require('./QRUtil');
+var QRPolynomial = require('./QRPolynomial');
+var QRRSBlock = require('./QRRSBlock');
+var QRBitBuffer = require('./QRBitBuffer');
+
+function QRCode(typeNumber, errorCorrectLevel) {
+	this.typeNumber = typeNumber;
+	this.errorCorrectLevel = errorCorrectLevel;
+	this.modules = null;
+	this.moduleCount = 0;
+	this.dataCache = null;
+	this.dataList = [];
+}
+
+QRCode.prototype = {
+	
+	addData : function(data) {
+		var newData = new QR8bitByte(data);
+		this.dataList.push(newData);
+		this.dataCache = null;
+	},
+	
+	isDark : function(row, col) {
+		if (row < 0 || this.moduleCount <= row || col < 0 || this.moduleCount <= col) {
+			throw new Error(row + "," + col);
+		}
+		return this.modules[row][col];
+	},
+
+	getModuleCount : function() {
+		return this.moduleCount;
+	},
+	
+	make : function() {
+		// Calculate automatically typeNumber if provided is < 1
+		if (this.typeNumber < 1 ){
+			var typeNumber = 1;
+			for (typeNumber = 1; typeNumber < 40; typeNumber++) {
+				var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, this.errorCorrectLevel);
+
+				var buffer = new QRBitBuffer();
+				var totalDataCount = 0;
+				for (var i = 0; i < rsBlocks.length; i++) {
+					totalDataCount += rsBlocks[i].dataCount;
+				}
+
+				for (var x = 0; x < this.dataList.length; x++) {
+					var data = this.dataList[x];
+					buffer.put(data.mode, 4);
+					buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber) );
+					data.write(buffer);
+				}
+				if (buffer.getLengthInBits() <= totalDataCount * 8)
+					break;
+			}
+			this.typeNumber = typeNumber;
+		}
+		this.makeImpl(false, this.getBestMaskPattern() );
+	},
+	
+	makeImpl : function(test, maskPattern) {
+		
+		this.moduleCount = this.typeNumber * 4 + 17;
+		this.modules = new Array(this.moduleCount);
+		
+		for (var row = 0; row < this.moduleCount; row++) {
+			
+			this.modules[row] = new Array(this.moduleCount);
+			
+			for (var col = 0; col < this.moduleCount; col++) {
+				this.modules[row][col] = null;//(col + row) % 3;
+			}
+		}
+	
+		this.setupPositionProbePattern(0, 0);
+		this.setupPositionProbePattern(this.moduleCount - 7, 0);
+		this.setupPositionProbePattern(0, this.moduleCount - 7);
+		this.setupPositionAdjustPattern();
+		this.setupTimingPattern();
+		this.setupTypeInfo(test, maskPattern);
+		
+		if (this.typeNumber >= 7) {
+			this.setupTypeNumber(test);
+		}
+	
+		if (this.dataCache === null) {
+			this.dataCache = QRCode.createData(this.typeNumber, this.errorCorrectLevel, this.dataList);
+		}
+	
+		this.mapData(this.dataCache, maskPattern);
+	},
+
+	setupPositionProbePattern : function(row, col)  {
+		
+		for (var r = -1; r <= 7; r++) {
+			
+			if (row + r <= -1 || this.moduleCount <= row + r) continue;
+			
+			for (var c = -1; c <= 7; c++) {
+				
+				if (col + c <= -1 || this.moduleCount <= col + c) continue;
+				
+				if ( (0 <= r && r <= 6 && (c === 0 || c === 6) ) || 
+                     (0 <= c && c <= 6 && (r === 0 || r === 6) ) || 
+                     (2 <= r && r <= 4 && 2 <= c && c <= 4) ) {
+					this.modules[row + r][col + c] = true;
+				} else {
+					this.modules[row + r][col + c] = false;
+				}
+			}		
+		}		
+	},
+	
+	getBestMaskPattern : function() {
+	
+		var minLostPoint = 0;
+		var pattern = 0;
+	
+		for (var i = 0; i < 8; i++) {
+			
+			this.makeImpl(true, i);
+	
+			var lostPoint = QRUtil.getLostPoint(this);
+	
+			if (i === 0 || minLostPoint >  lostPoint) {
+				minLostPoint = lostPoint;
+				pattern = i;
+			}
+		}
+	
+		return pattern;
+	},
+	
+	createMovieClip : function(target_mc, instance_name, depth) {
+	
+		var qr_mc = target_mc.createEmptyMovieClip(instance_name, depth);
+		var cs = 1;
+	
+		this.make();
+
+		for (var row = 0; row < this.modules.length; row++) {
+			
+			var y = row * cs;
+			
+			for (var col = 0; col < this.modules[row].length; col++) {
+	
+				var x = col * cs;
+				var dark = this.modules[row][col];
+			
+				if (dark) {
+					qr_mc.beginFill(0, 100);
+					qr_mc.moveTo(x, y);
+					qr_mc.lineTo(x + cs, y);
+					qr_mc.lineTo(x + cs, y + cs);
+					qr_mc.lineTo(x, y + cs);
+					qr_mc.endFill();
+				}
+			}
+		}
+		
+		return qr_mc;
+	},
+
+	setupTimingPattern : function() {
+		
+		for (var r = 8; r < this.moduleCount - 8; r++) {
+			if (this.modules[r][6] !== null) {
+				continue;
+			}
+			this.modules[r][6] = (r % 2 === 0);
+		}
+	
+		for (var c = 8; c < this.moduleCount - 8; c++) {
+			if (this.modules[6][c] !== null) {
+				continue;
+			}
+			this.modules[6][c] = (c % 2 === 0);
+		}
+	},
+	
+	setupPositionAdjustPattern : function() {
+	
+		var pos = QRUtil.getPatternPosition(this.typeNumber);
+		
+		for (var i = 0; i < pos.length; i++) {
+		
+			for (var j = 0; j < pos.length; j++) {
+			
+				var row = pos[i];
+				var col = pos[j];
+				
+				if (this.modules[row][col] !== null) {
+					continue;
+				}
+				
+				for (var r = -2; r <= 2; r++) {
+				
+					for (var c = -2; c <= 2; c++) {
+					
+						if (Math.abs(r) === 2 || 
+                            Math.abs(c) === 2 ||
+                            (r === 0 && c === 0) ) {
+							this.modules[row + r][col + c] = true;
+						} else {
+							this.modules[row + r][col + c] = false;
+						}
+					}
+				}
+			}
+		}
+	},
+	
+	setupTypeNumber : function(test) {
+	
+		var bits = QRUtil.getBCHTypeNumber(this.typeNumber);
+        var mod;
+	
+		for (var i = 0; i < 18; i++) {
+			mod = (!test && ( (bits >> i) & 1) === 1);
+			this.modules[Math.floor(i / 3)][i % 3 + this.moduleCount - 8 - 3] = mod;
+		}
+	
+		for (var x = 0; x < 18; x++) {
+			mod = (!test && ( (bits >> x) & 1) === 1);
+			this.modules[x % 3 + this.moduleCount - 8 - 3][Math.floor(x / 3)] = mod;
+		}
+	},
+	
+	setupTypeInfo : function(test, maskPattern) {
+	
+		var data = (this.errorCorrectLevel << 3) | maskPattern;
+		var bits = QRUtil.getBCHTypeInfo(data);
+        var mod;
+	
+		// vertical		
+		for (var v = 0; v < 15; v++) {
+	
+			mod = (!test && ( (bits >> v) & 1) === 1);
+	
+			if (v < 6) {
+				this.modules[v][8] = mod;
+			} else if (v < 8) {
+				this.modules[v + 1][8] = mod;
+			} else {
+				this.modules[this.moduleCount - 15 + v][8] = mod;
+			}
+		}
+	
+		// horizontal
+		for (var h = 0; h < 15; h++) {
+	
+			mod = (!test && ( (bits >> h) & 1) === 1);
+			
+			if (h < 8) {
+				this.modules[8][this.moduleCount - h - 1] = mod;
+			} else if (h < 9) {
+				this.modules[8][15 - h - 1 + 1] = mod;
+			} else {
+				this.modules[8][15 - h - 1] = mod;
+			}
+		}
+	
+		// fixed module
+		this.modules[this.moduleCount - 8][8] = (!test);
+	
+	},
+	
+	mapData : function(data, maskPattern) {
+		
+		var inc = -1;
+		var row = this.moduleCount - 1;
+		var bitIndex = 7;
+		var byteIndex = 0;
+		
+		for (var col = this.moduleCount - 1; col > 0; col -= 2) {
+	
+			if (col === 6) col--;
+	
+			while (true) {
+	
+				for (var c = 0; c < 2; c++) {
+					
+					if (this.modules[row][col - c] === null) {
+						
+						var dark = false;
+	
+						if (byteIndex < data.length) {
+							dark = ( ( (data[byteIndex] >>> bitIndex) & 1) === 1);
+						}
+	
+						var mask = QRUtil.getMask(maskPattern, row, col - c);
+	
+						if (mask) {
+							dark = !dark;
+						}
+						
+						this.modules[row][col - c] = dark;
+						bitIndex--;
+	
+						if (bitIndex === -1) {
+							byteIndex++;
+							bitIndex = 7;
+						}
+					}
+				}
+								
+				row += inc;
+	
+				if (row < 0 || this.moduleCount <= row) {
+					row -= inc;
+					inc = -inc;
+					break;
+				}
+			}
+		}
+		
+	}
+
+};
+
+QRCode.PAD0 = 0xEC;
+QRCode.PAD1 = 0x11;
+
+QRCode.createData = function(typeNumber, errorCorrectLevel, dataList) {
+	
+	var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, errorCorrectLevel);
+	
+	var buffer = new QRBitBuffer();
+	
+	for (var i = 0; i < dataList.length; i++) {
+		var data = dataList[i];
+		buffer.put(data.mode, 4);
+		buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber) );
+		data.write(buffer);
+	}
+
+	// calc num max data.
+	var totalDataCount = 0;
+	for (var x = 0; x < rsBlocks.length; x++) {
+		totalDataCount += rsBlocks[x].dataCount;
+	}
+
+	if (buffer.getLengthInBits() > totalDataCount * 8) {
+		throw new Error("code length overflow. (" + 
+            buffer.getLengthInBits() + 
+            ">" +  
+            totalDataCount * 8 + 
+            ")");
+	}
+
+	// end code
+	if (buffer.getLengthInBits() + 4 <= totalDataCount * 8) {
+		buffer.put(0, 4);
+	}
+
+	// padding
+	while (buffer.getLengthInBits() % 8 !== 0) {
+		buffer.putBit(false);
+	}
+
+	// padding
+	while (true) {
+		
+		if (buffer.getLengthInBits() >= totalDataCount * 8) {
+			break;
+		}
+		buffer.put(QRCode.PAD0, 8);
+		
+		if (buffer.getLengthInBits() >= totalDataCount * 8) {
+			break;
+		}
+		buffer.put(QRCode.PAD1, 8);
+	}
+
+	return QRCode.createBytes(buffer, rsBlocks);
+};
+
+QRCode.createBytes = function(buffer, rsBlocks) {
+
+	var offset = 0;
+	
+	var maxDcCount = 0;
+	var maxEcCount = 0;
+	
+	var dcdata = new Array(rsBlocks.length);
+	var ecdata = new Array(rsBlocks.length);
+	
+	for (var r = 0; r < rsBlocks.length; r++) {
+
+		var dcCount = rsBlocks[r].dataCount;
+		var ecCount = rsBlocks[r].totalCount - dcCount;
+
+		maxDcCount = Math.max(maxDcCount, dcCount);
+		maxEcCount = Math.max(maxEcCount, ecCount);
+		
+		dcdata[r] = new Array(dcCount);
+		
+		for (var i = 0; i < dcdata[r].length; i++) {
+			dcdata[r][i] = 0xff & buffer.buffer[i + offset];
+		}
+		offset += dcCount;
+		
+		var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount);
+		var rawPoly = new QRPolynomial(dcdata[r], rsPoly.getLength() - 1);
+
+		var modPoly = rawPoly.mod(rsPoly);
+		ecdata[r] = new Array(rsPoly.getLength() - 1);
+		for (var x = 0; x < ecdata[r].length; x++) {
+            var modIndex = x + modPoly.getLength() - ecdata[r].length;
+			ecdata[r][x] = (modIndex >= 0)? modPoly.get(modIndex) : 0;
+		}
+
+	}
+	
+	var totalCodeCount = 0;
+	for (var y = 0; y < rsBlocks.length; y++) {
+		totalCodeCount += rsBlocks[y].totalCount;
+	}
+
+	var data = new Array(totalCodeCount);
+	var index = 0;
+
+	for (var z = 0; z < maxDcCount; z++) {
+		for (var s = 0; s < rsBlocks.length; s++) {
+			if (z < dcdata[s].length) {
+				data[index++] = dcdata[s][z];
+			}
+		}
+	}
+
+	for (var xx = 0; xx < maxEcCount; xx++) {
+		for (var t = 0; t < rsBlocks.length; t++) {
+			if (xx < ecdata[t].length) {
+				data[index++] = ecdata[t][xx];
+			}
+		}
+	}
+
+	return data;
+
+};
+
+module.exports = QRCode;
+
+  };
+
+  var cache = {};
+  function requireModule(id){
+    if(cache[id]) return cache[id].exports;
+    if(!modules[id]) throw new Error('Embedded QR module not found: ' + id);
+    var module = { exports: {} };
+    cache[id] = module;
+    modules[id](requireModule, module, module.exports);
+    return module.exports;
+  }
+
+  var QRCodeCore = requireModule('./index');
+  var ErrorLevels = requireModule('./QRErrorCorrectLevel');
+
+  function normaliseColour(value, fallback){
+    if(typeof value !== 'string' || !value) return fallback;
+    // node-qrcode often uses 8-digit hex; older canvas implementations may not.
+    if(/^#[0-9a-f]{8}$/i.test(value)) return value.slice(0, 7);
+    return value;
+  }
+
+  function toCanvas(canvas, text, options, callback){
+    try{
+      if(!canvas || typeof canvas.getContext !== 'function'){
+        throw new Error('A valid canvas element is required.');
+      }
+      if(text === undefined || text === null || String(text).length === 0){
+        throw new Error('QR text cannot be empty.');
+      }
+
+      options = options || {};
+      var requestedLevel = String(options.errorCorrectionLevel || 'M').toUpperCase();
+      var level = ErrorLevels[requestedLevel] || ErrorLevels.M;
+      var qr = new QRCodeCore(-1, level);
+      qr.addData(String(text));
+      qr.make();
+
+      var moduleCount = qr.getModuleCount();
+      var margin = Number.isFinite(Number(options.margin)) ? Math.max(0, Math.floor(Number(options.margin))) : 4;
+      var requestedWidth = Number.isFinite(Number(options.width)) ? Math.max(32, Math.floor(Number(options.width))) : 256;
+      var totalModules = moduleCount + margin * 2;
+      var scale = Math.max(1, Math.floor(requestedWidth / totalModules));
+      var actualSize = totalModules * scale;
+
+      // Setting width/height clears the canvas, so do this immediately before drawing.
+      canvas.width = actualSize;
+      canvas.height = actualSize;
+
+      var context = canvas.getContext('2d');
+      context.imageSmoothingEnabled = false;
+      var colours = options.color || {};
+      var light = normaliseColour(colours.light, '#FFFFFF');
+      var dark = normaliseColour(colours.dark, '#000000');
+
+      context.fillStyle = light;
+      context.fillRect(0, 0, actualSize, actualSize);
+      context.fillStyle = dark;
+
+      for(var row = 0; row < moduleCount; row++){
+        for(var col = 0; col < moduleCount; col++){
+          if(qr.isDark(row, col)){
+            context.fillRect((col + margin) * scale, (row + margin) * scale, scale, scale);
+          }
+        }
+      }
+
+      canvas.dataset.qrRendered = '1';
+      canvas.dataset.qrText = String(text);
+      if(typeof callback === 'function') callback(null);
+      return canvas;
+    }catch(error){
+      if(typeof callback === 'function') callback(error);
+      else throw error;
+      return null;
+    }
+  }
+
+  global.QRCode = { toCanvas: toCanvas };
+})(window);
+</script>
+<script>
 const SUPABASE_URL = 'https://vaqjqwldsmyszghkvtou.supabase.co/';
 const SUPABASE_ANON_KEY = 'sb_publishable_qocS8DiuJcIa_4He4LSKtg_brd0v74Z';
-
-/* ---------------------------------------------------------------
-   STATE
-   Each player: { name, rounds: [ {tableId, points, rank, diff,
-                  swissPts, cumPts, cumDiff, cumRaw, room, placement}, ... up to 4 ] }
-------------------------------------------------------------------*/
 const TOTAL_ROUNDS = 4;
-// Swiss points awarded by table rank: 1st, 2nd, 3rd, 4th... any rank beyond
-// the list (larger tables) scores 0.
 const SWISS_POINTS_BY_RANK = [4, 2, 1, 0];
-function swissPointsForRank(rank){
-  return SWISS_POINTS_BY_RANK[rank-1] ?? 0;
-}
-let state = null;
-let activeTab = 'r1';
-let VIEW_ONLY = false;
-let TV_MODE = false;
-let tvPanelIndex = 0;
-let tvIntervalStarted = false;
-let sb = null;
-let syncState = 'idle'; // idle | synced | error
-
-function freshState(){
-  return {
-    name: 'Tournament',
-    code: '',
-    minPerTable: 3,
-    maxPerTable: 4,
-    started: false,        // false = Lobby (roster set, not yet paired); true = Round 1+ underway
-    players: [],          // {name, rounds:[]}
-    pairing: [],           // current round pairing awaiting scores: [{tableId, idx:[playerIdx,...], room, status}]
-    pairingWarning: false, // true if this round's table sizes fall outside min/max due to player count
-    round: 1,              // round currently open for pairing/input
-    completed: 0,          // number of fully-submitted rounds
-    finished: false,
-    pendingScores: {},     // playerIdx -> score, used to prefill inputs when editing a past round
-    pendingDefaults: {}    // playerIdx -> bool, used to prefill the Default checkbox when editing
-  };
-}
-
-function randomCode(){
-  return Math.random().toString(36).slice(2,8).toUpperCase();
-}
-
-function loadSample(){
-  document.getElementById('tname').value = 'Autumn Catan Open';
-  document.getElementById('players').value =
-    ['Alice','Bob','Carla','Dan','Erin','Femi','Grace','Hassan','Ines','Jon','Kira','Leo'].join('\n');
-  document.getElementById('minPerTable').value = 3;
-  document.getElementById('maxPerTable').value = 4;
-  if(!document.getElementById('tcode').value) document.getElementById('tcode').value = randomCode();
-}
-
-/* ---------------------------------------------------------------
-   LIVE SYNC (Supabase) — optional. Everything above/below this
-   still works with plain localStorage if these aren't configured.
-------------------------------------------------------------------*/
-function isSupabaseConfigured(){
-  return !SUPABASE_URL.includes('YOUR-PROJECT') && !SUPABASE_ANON_KEY.includes('YOUR-ANON');
-}
-function initSupabase(){
-  try{
-    if(window.supabase && typeof window.supabase.createClient === 'function' && isSupabaseConfigured()){
-      sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    }
-  }catch(e){ console.error('Supabase init failed', e); sb = null; }
-}
-async function publishNow(){
-  if(!sb || !state || !state.code || VIEW_ONLY) return;
-  try{
-    await sb.from('tournaments').upsert({ id: state.code, state: state, updated_at: new Date().toISOString() });
-    setSyncStatus('synced');
-  }catch(e){
-    console.error('Publish failed', e);
-    setSyncStatus('error');
-  }
-}
-async function fetchRemote(code){
-  if(!sb) return null;
-  try{
-    const { data, error } = await sb.from('tournaments').select('state, updated_at').eq('id', code).maybeSingle();
-    if(error){ console.error(error); return null; }
-    return data ? data.state : null;
-  }catch(e){ console.error(e); return null; }
-}
-function setSyncStatus(s){
-  syncState = s;
-  const bar = document.getElementById('syncBar');
-  if(bar && bar.style.display !== 'none') updateSyncBar();
-}
-let lastQRRendered = {}; // canvasId -> last text drawn, so we never re-fetch/re-render needlessly
-function renderQRInto(canvasId, text, sizePx){
-  if(!window.QRCode) return;
-  const canvas = document.getElementById(canvasId);
-  if(!canvas) return;
-  if(lastQRRendered[canvasId] === text) return;
-  QRCode.toCanvas(canvas, text, {
-    width: sizePx,
-    margin: 1,
-    color: { dark: '#3A3226', light: '#FBF7EC' }
-  }, function(err){
-    if(!err) lastQRRendered[canvasId] = text;
-  });
-}
-
-function updateSyncBar(){
-  const dot = document.getElementById('syncDot');
-  const label = document.getElementById('syncLabel');
-  const linkInput = document.getElementById('shareLinkInput');
-  if(!dot) return;
-  if(!sb){
-    dot.className = 'sync-dot off';
-    label.textContent = 'Local only — add your Supabase keys near the top of the file to enable live sync';
-    linkInput.value = '';
-    return;
-  }
-  dot.className = 'sync-dot ' + (syncState==='error' ? 'err' : 'on');
-  label.textContent = syncState==='error' ? 'Sync error — check the browser console' : ('Live · code ' + state.code);
-  const link = buildShareLink();
-  linkInput.value = link;
-  renderQRInto('syncQR', link, 88);
-}
-function buildShareLink(){
-  const url = new URL(location.href);
-  url.search = '';
-  url.searchParams.set('code', state.code);
-  url.searchParams.set('view', '1');
-  return url.toString();
-}
-function openTVDisplay(){
-  if(!state || !state.code) return;
-  window.open(buildShareLink() + '&tv=1', '_blank');
-}
-function copyShareLink(){
-  const input = document.getElementById('shareLinkInput');
-  if(!input.value) return;
-  input.select();
-  try{ document.execCommand('copy'); }catch(e){}
-  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(input.value).catch(()=>{}); }
-  alert('Live viewer link copied to clipboard.');
-}
-async function startViewer(code){
-  await refreshViewer(code);
-  setInterval(()=>refreshViewer(code), 5000);
-}
-async function refreshViewer(code){
-  const remote = await fetchRemote(code);
-  if(remote){ state = remote; }
-  render();
-}
-
-function saveLocal(){
-  if(VIEW_ONLY) return;
-  try{ localStorage.setItem('swissTableState', JSON.stringify(state)); }catch(e){}
-  publishNow();
-}
-function loadLocal(){
-  try{
-    const raw = localStorage.getItem('swissTableState');
-    if(raw) return JSON.parse(raw);
-  }catch(e){}
-  return null;
-}
-
-/* ---------------------------------------------------------------
-   SETUP
-------------------------------------------------------------------*/
-async function resumeTournament(){
-  const errEl = document.getElementById('resumeError');
-  errEl.style.display = 'none';
-  const codeInput = document.getElementById('resumeCode');
-  const code = (codeInput.value || '').trim().toUpperCase();
-  if(!code){
-    errEl.textContent = 'Enter the tournament code shown in the other device\'s sync bar.';
-    errEl.style.display = 'block';
-    return;
-  }
-  if(!sb){
-    errEl.textContent = "Live sync isn't configured on this copy of the page yet — add the same Supabase keys here as on the device that created the tournament, then this will work.";
-    errEl.style.display = 'block';
-    return;
-  }
-  const btn = document.getElementById('resumeBtn');
-  btn.disabled = true;
-  btn.textContent = 'Loading…';
-  const remote = await fetchRemote(code);
-  btn.disabled = false;
-  btn.textContent = 'Resume';
-
-  if(!remote){
-    errEl.textContent = 'No tournament found for code "'+code+'". Double-check it against the other device\'s sync bar.';
-    errEl.style.display = 'block';
-    return;
-  }
-  state = remote;
-  activeTab = !state.started ? 'r1' : (state.finished ? 'standings' : ('r'+state.round));
-  saveLocal(); // keeps this device in sync locally too, and re-publishes (harmless, same data)
-  render();
-}
-
-function createTournament(){
-  const errEl = document.getElementById('setupError');
-  errEl.style.display='none';
-  const name = document.getElementById('tname').value.trim() || 'Tournament';
-  const raw = document.getElementById('players').value;
-  const names = raw.split('\n').map(s=>s.trim()).filter(Boolean);
-  const minP = parseInt(document.getElementById('minPerTable').value, 10);
-  const maxP = parseInt(document.getElementById('maxPerTable').value, 10);
-  const code = (document.getElementById('tcode').value || '').trim().toUpperCase() || randomCode();
-
-  const dupes = names.filter((n,i)=>names.indexOf(n)!==i);
-  if(dupes.length){
-    errEl.textContent = 'Player names must be unique. Duplicate: "'+dupes[0]+'"';
-    errEl.style.display='block';
-    return;
-  }
-  if(!minP || minP < 2 || minP > 10){
-    errEl.textContent = 'Min players per table must be between 2 and 10.';
-    errEl.style.display='block';
-    return;
-  }
-  if(!maxP || maxP < minP || maxP > 12){
-    errEl.textContent = 'Max players per table must be at least the min, and no more than 12.';
-    errEl.style.display='block';
-    return;
-  }
-
-  state = freshState();
-  state.name = name;
-  state.code = code;
-  state.minPerTable = minP;
-  state.maxPerTable = maxP;
-  state.players = names.map(n=>({name:n, rounds:[]}));
-  state.started = false;
-  saveLocal();
-  render();
-}
-
-function beginRound1(){
-  if(!state || state.started) return;
-  const errEl = document.getElementById('lobbyError');
-  if(errEl) errEl.style.display = 'none';
-  if(state.players.length < state.minPerTable){
-    if(errEl){
-      errEl.textContent = 'You need at least '+state.minPerTable+' players to fill one table.';
-      errEl.style.display = 'block';
-    } else {
-      alert('You need at least '+state.minPerTable+' players to fill one table.');
-    }
-    return;
-  }
-  const seedModeEl = document.querySelector('input[name="seedMode"]:checked');
-  const seedMode = seedModeEl ? seedModeEl.value : 'shuffle';
-  const seedOrder = seedMode === 'order'
-    ? Array.from({length: state.players.length}, (_, i) => i)
-    : shuffledIndices(state.players.length);
-  state.started = true;
-  state.round = 1;
-  pairRound(1, seedOrder);
-  saveLocal();
-  activeTab = 'r1';
-  render();
-}
-
-/* ---------------------------------------------------------------
-   LOBBY — roster editing before Round 1 is paired
-------------------------------------------------------------------*/
-function addLobbyPlayer(){
-  const input = document.getElementById('lobbyNewPlayer');
-  const name = input.value.trim();
-  if(!name) return;
-  if(state.players.some(p=>p.name.toLowerCase()===name.toLowerCase())){
-    alert('That name is already on the list.');
-    return;
-  }
-  state.players.push({name, rounds:[]});
-  input.value = '';
-  saveLocal();
-  render();
-  const refocus = document.getElementById('lobbyNewPlayer');
-  if(refocus && refocus.focus) refocus.focus();
-}
-
-function removeLobbyPlayer(i){
-  const p = state.players[i];
-  if(!p) return;
-  if(!confirm('Remove '+p.name+' from the roster?')) return;
-  state.players.splice(i, 1);
-  saveLocal();
-  render();
-}
-
-function renameLobbyPlayer(i, value){
-  const name = value.trim();
-  if(!state.players[i]) return;
-  if(name) state.players[i].name = name;
-  saveLocal();
-  render();
-}
-
-function shuffleLobbyOrder(){
-  const arr = state.players;
-  for(let i=arr.length-1; i>0; i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  saveLocal();
-  render();
-}
-
-function updateLobbyConfig(){
-  const minP = parseInt(document.getElementById('lobbyMin').value, 10);
-  const maxP = parseInt(document.getElementById('lobbyMax').value, 10);
-  if(minP && minP >= 2 && minP <= 10) state.minPerTable = minP;
-  if(maxP && maxP >= state.minPerTable && maxP <= 12) state.maxPerTable = maxP;
-  saveLocal();
-}
-
-function renderLobby(){
-  const countEl = document.getElementById('lobbyCount');
-  if(countEl) countEl.textContent = state.players.length + ' player' + (state.players.length===1?'':'s');
-  const minEl = document.getElementById('lobbyMin');
-  const maxEl = document.getElementById('lobbyMax');
-  if(minEl && document.activeElement !== minEl) minEl.value = state.minPerTable;
-  if(maxEl && document.activeElement !== maxEl) maxEl.value = state.maxPerTable;
-
-  const listEl = document.getElementById('lobbyList');
-  if(!listEl) return;
-  if(state.players.length === 0){
-    listEl.innerHTML = '<p class="hint">No players yet — add some above.</p>';
-    return;
-  }
-  listEl.innerHTML = state.players.map((p,i)=>`
-    <div class="lobby-row">
-      <span class="lobby-seat lc-badge ${lcClass(i)}">${i+1}</span>
-      <input type="text" class="lobby-name-input" value="${escapeHtml(p.name)}" onchange="renameLobbyPlayer(${i}, this.value)">
-      <button class="lobby-remove" onclick="removeLobbyPlayer(${i})" title="Remove">✕</button>
-    </div>
-  `).join('');
-}
-
-function renderLobbyHype(){
-  const names = state.players.map((p,i)=>`
-    <div class="lobby-hype-name">
-      <span class="lc-badge ${lcClass(i)}">${i+1}</span>
-      ${escapeHtml(p.name)}
-    </div>
-  `).join('');
-  return `<div class="card">
-    <h2>${escapeHtml(state.name)} <span class="pill">${state.players.length} registered</span></h2>
-    <p class="hint">🎉 Tournament starting soon — here's who's in so far.</p>
-    <div class="lobby-hype-grid">${names || '<p class="hint">Waiting for players to be added…</p>'}</div>
-  </div>`;
-}
-
-function shuffledIndices(n){
-  const arr = Array.from({length:n}, (_,i)=>i);
-  for(let i=arr.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [arr[i],arr[j]] = [arr[j],arr[i]];
-  }
-  return arr;
-}
-
-/* ---------------------------------------------------------------
-   PAIRING
-   order: array of player indices, already sorted in the order
-   they should be grouped into tables (random for R1, standings
-   order for R2+).
-------------------------------------------------------------------*/
-function computeTableSizes(n, min, max){
-  let tables = Math.max(1, Math.ceil(n / max));
-  // Reduce the table count if that's the only way to keep every table at/above min.
-  while(tables > 1 && tables * min > n) tables--;
-  const base = Math.floor(n / tables);
-  const remainder = n % tables;
-  const sizes = [];
-  for(let t=0; t<tables; t++){
-    // extra seat(s) go to the bottom table(s), not the top
-    sizes.push(base + (t >= tables - remainder ? 1 : 0));
-  }
-  return sizes;
-}
-
-function pairRound(roundNum, order){
-  const n = order.length;
-  const sizes = computeTableSizes(n, state.minPerTable, state.maxPerTable);
-  const pairing = [];
-  let cursor = 0;
-  sizes.forEach((seats, t)=>{
-    const group = order.slice(cursor, cursor+seats);
-    cursor += seats;
-    pairing.push({ tableId: 'G'+roundNum+' T'+(t+1), idx: group, room: '', status: 'waiting', submitted: false, editing: false });
-  });
-  state.pairing = pairing;
-  state.pairingWarning = sizes.some(s => s < state.minPerTable || s > state.maxPerTable);
-  state.round = roundNum;
-  state.pendingScores = {};
-  state.pendingDefaults = {};
-}
-
-/* ---------------------------------------------------------------
-   STANDINGS (cumulative, after `throughRound` rounds submitted)
-------------------------------------------------------------------*/
-function standingsOrder(throughRound){
-  return state.players.map((p,i)=>{
-    const r = p.rounds[throughRound-1];
-    return {
-      idx:i,
-      cumPts: r ? r.cumPts : 0,
-      cumDefaults: r ? (r.cumDefaults||0) : 0,
-      cumDiff: r ? r.cumDiff : 0,
-      cumRaw: r ? r.cumRaw : 0
-    };
-  }).sort((a,b)=>
-    b.cumPts - a.cumPts ||
-    a.cumDefaults - b.cumDefaults || // fewer defaults ranks higher
-    b.cumDiff - a.cumDiff ||
-    b.cumRaw - a.cumRaw ||
-    state.players[a.idx].name.localeCompare(state.players[b.idx].name)
-  );
-}
-
-function computePlacements(throughRound){
-  const ordered = standingsOrder(throughRound);
-  let lastKey = null, lastPlace = 0;
-  ordered.forEach((row, i)=>{
-    const key = row.cumPts+'|'+row.cumDefaults+'|'+row.cumDiff+'|'+row.cumRaw;
-    if(key !== lastKey){ lastPlace = i+1; lastKey = key; }
-    row.placement = lastPlace;
-  });
-  return ordered;
-}
-
-/* ---------------------------------------------------------------
-   SUBMIT ONE TABLE'S SCORES — the round finalizes (placements +
-   next pairing) automatically once every table has submitted.
-------------------------------------------------------------------*/
-function tableInputPrefill(pIdx){
-  if(state.pendingScores && state.pendingScores[pIdx] !== undefined) return state.pendingScores[pIdx];
-  const rd = state.players[pIdx].rounds[state.round-1];
-  return rd ? rd.points : '';
-}
-
-function tableDefaultPrefill(pIdx){
-  if(state.pendingDefaults && state.pendingDefaults[pIdx] !== undefined) return state.pendingDefaults[pIdx];
-  const rd = state.players[pIdx].rounds[state.round-1];
-  return rd ? !!rd.isDefault : false;
-}
-
-function onDefaultToggle(pIdx){
-  const cb = document.getElementById('default_'+pIdx);
-  const el = document.getElementById('score_'+pIdx);
-  if(!el || !cb) return;
-  el.disabled = cb.checked;
-  if(cb.checked){ el.value = ''; el.style.borderColor = ''; }
-}
-
-function submitTable(tableIdx){
-  const table = state.pairing[tableIdx];
-  const roundNum = state.round;
-  const scores = {};
-  const defaults = {};
-  let ok = true;
-  table.idx.forEach(pIdx=>{
-    const dEl = document.getElementById('default_'+pIdx);
-    const isDefault = !!(dEl && dEl.checked);
-    defaults[pIdx] = isDefault;
-    if(isDefault){
-      scores[pIdx] = 0; // defaulted players score 0 and don't need a numeric entry
-      return;
-    }
-    const el = document.getElementById('score_'+pIdx);
-    const v = el ? parseFloat(el.value) : NaN;
-    if(isNaN(v)){ ok = false; if(el) el.style.borderColor='var(--danger)'; }
-    else { scores[pIdx] = v; if(el) el.style.borderColor=''; }
-  });
-  if(!ok){
-    alert('Enter a numeric score for every player at this table (or mark them Default).');
-    return;
-  }
-
-  const withScores = table.idx.map(pIdx=>({pIdx, score:scores[pIdx]}));
-  const sorted = [...withScores].sort((a,b)=> b.score - a.score);
-  const ranks = {};
-  let lastScore = null, lastRank = 0;
-  sorted.forEach((row, i)=>{
-    if(row.score !== lastScore){ lastRank = i+1; lastScore = row.score; }
-    ranks[row.pIdx] = lastRank;
-  });
-  const topScore = Math.max(...withScores.map(w=>w.score));
-  withScores.forEach(({pIdx, score})=>{
-    const diff = Math.round((score - topScore)*100)/100;
-    const rank = ranks[pIdx];
-    const isDefault = defaults[pIdx];
-    const swissPts = isDefault ? 0 : swissPointsForRank(rank);
-    const prev = state.players[pIdx].rounds[roundNum-2];
-    const prevCum = prev ? prev.cumPts : 0;
-    const prevDefaults = prev ? (prev.cumDefaults||0) : 0;
-    const prevDiff = prev ? prev.cumDiff : 0;
-    const prevRaw = prev ? prev.cumRaw : 0;
-    state.players[pIdx].rounds[roundNum-1] = {
-      tableId: table.tableId,
-      room: table.room || '',
-      points: score,
-      rank: rank,
-      isDefault: isDefault,
-      diff: diff,
-      swissPts: swissPts,
-      cumPts: prevCum + swissPts,
-      cumDefaults: prevDefaults + (isDefault ? 1 : 0),
-      cumDiff: Math.round((prevDiff + diff)*100)/100,
-      cumRaw: Math.round((prevRaw + score)*100)/100,
-      placement: null // filled once the whole round finalizes
-    };
-  });
-
-  table.submitted = true;
-  table.editing = false;
-  table.status = 'complete';
-  saveLocal();
-
-  if(state.pairing.every(t => t.submitted)){
-    finalizeRound(roundNum);
-  } else {
-    render();
-  }
-}
-
-function finalizeRound(roundNum){
-  const ordered = computePlacements(roundNum);
-  ordered.forEach(row=>{
-    state.players[row.idx].rounds[roundNum-1].placement = row.placement;
-  });
-  state.completed = roundNum;
-
-  if(roundNum < TOTAL_ROUNDS){
-    const nextOrder = ordered.map(r=>r.idx);
-    pairRound(roundNum+1, nextOrder);
-    activeTab = 'r'+(roundNum+1);
-  } else {
-    state.finished = true;
-    state.pendingScores = {};
-    state.pendingDefaults = {};
-    activeTab = 'standings';
-  }
-  saveLocal();
-  render();
-}
-
-function startEditTable(tableIdx){
-  if(VIEW_ONLY) return;
-  state.pairing[tableIdx].editing = true;
-  render();
-}
-function cancelEditTable(tableIdx){
-  if(VIEW_ONLY) return;
-  state.pairing[tableIdx].editing = false;
-  render();
-}
-
-function editRound(r){
-  if(!state || r > state.completed) return;
-  const laterRounds = state.completed - r;
-  const msg = laterRounds > 0
-    ? `Editing Round ${r} will clear the recorded results for Round${laterRounds>1?'s':''} ${r+1}${state.completed>r+1?'–'+state.completed:''}, since those tables were paired from Round ${r}'s standings. You'll need to re-submit them. Continue?`
-    : `Edit Round ${r}'s scores?`;
-  if(!confirm(msg)) return;
-
-  // Reconstruct the round's original table groupings and scores so the edit form is prefilled.
-  const groups = {};
-  const rooms = {};
-  state.players.forEach((p,pIdx)=>{
-    const rd = p.rounds[r-1];
-    if(!groups[rd.tableId]) groups[rd.tableId] = [];
-    groups[rd.tableId].push(pIdx);
-    rooms[rd.tableId] = rd.room || '';
-  });
-  const tableIds = Object.keys(groups).sort((a,b)=>{
-    const na = parseInt(a.split('T')[1],10), nb = parseInt(b.split('T')[1],10);
-    return na-nb;
-  });
-  const pendingScores = {};
-  const pendingDefaults = {};
-  state.players.forEach((p,pIdx)=>{
-    pendingScores[pIdx] = p.rounds[r-1].points;
-    pendingDefaults[pIdx] = !!p.rounds[r-1].isDefault;
-  });
-
-  state.pairing = tableIds.map(tid=>({ tableId: tid, idx: groups[tid], room: rooms[tid], status: 'waiting', submitted: false, editing: false }));
-  state.pendingScores = pendingScores;
-  state.pendingDefaults = pendingDefaults;
-
-  // Truncate this round and everything after it — they'll be regenerated on resubmit.
-  state.players.forEach(p=>{ p.rounds.length = r-1; });
-  state.completed = r-1;
-  state.finished = false;
-  state.round = r;
-
-  activeTab = 'r'+r;
-  saveLocal();
-  render();
-}
-
-function resetTournament(){
-  if(!confirm('Reset the tournament? All rounds and scores will be lost.')) return;
-  state = null;
-  try{ localStorage.removeItem('swissTableState'); }catch(e){}
-  activeTab = 'r1';
-  render();
-}
-
-/* ---------------------------------------------------------------
-   RENDER
-------------------------------------------------------------------*/
-function render(){
-  const setupCard = document.getElementById('setupCard');
-  const resumeCard = document.getElementById('resumeCard');
-  const lobbyCard = document.getElementById('lobbyCard');
-  const area = document.getElementById('tournamentArea');
-  const badge = document.getElementById('roundBadge');
-  const syncBar = document.getElementById('syncBar');
-  const adminButtons = document.getElementById('adminButtons');
-  const tvScreen = document.getElementById('tvScreen');
-  const wrap = document.querySelector('.wrap');
-  const tvModeBtn = document.getElementById('tvModeBtn');
-
-  if(VIEW_ONLY && TV_MODE && state){
-    wrap.style.display = 'none';
-    tvScreen.style.display = 'flex';
-    if(tvModeBtn) tvModeBtn.style.display = 'none';
-    ensureTVIntervals();
-    renderTVMode();
-    return;
-  }
-  tvScreen.style.display = 'none';
-  wrap.style.display = '';
-
-  if(VIEW_ONLY){
-    if(tvModeBtn) tvModeBtn.style.display = (state && state.started) ? 'block' : 'none';
-    setupCard.style.display = 'none';
-    if(resumeCard) resumeCard.style.display = 'none';
-    lobbyCard.style.display = 'none';
-    if(syncBar) syncBar.style.display = 'none';
-    area.style.display = 'block';
-    if(adminButtons) adminButtons.style.display = 'none';
-
-    if(!sb){
-      badge.textContent = 'Viewer — not configured';
-      document.getElementById('tabs').innerHTML = '';
-      document.getElementById('tabContent').innerHTML =
-        `<div class="card"><p class="empty">Live sync isn't set up on this page yet. The organizer needs to add their Supabase keys.</p></div>`;
-      return;
-    }
-    if(!state){
-      badge.textContent = 'Viewer — waiting';
-      document.getElementById('tabs').innerHTML = '';
-      document.getElementById('tabContent').innerHTML =
-        `<div class="card"><p class="empty">Waiting for the organizer to set up the tournament…</p></div>`;
-      return;
-    }
-    if(!state.started){
-      badge.textContent = 'Lobby — starting soon';
-      document.getElementById('tabs').innerHTML = '';
-      document.getElementById('tabContent').innerHTML = renderLobbyHype();
-      return;
-    }
-    badge.textContent = (state.finished ? 'Final standings' : ('Round '+state.round+' of '+TOTAL_ROUNDS)) + ' · live viewer';
-    renderTabs();
-    renderTabContent();
-    return;
-  }
-
-  if(tvModeBtn) tvModeBtn.style.display = 'none';
-  if(!state){
-    setupCard.style.display='block';
-    if(resumeCard) resumeCard.style.display='block';
-    lobbyCard.style.display='none';
-    area.style.display='none';
-    badge.textContent='Setup';
-    if(syncBar) syncBar.style.display='none';
-    return;
-  }
-
-  setupCard.style.display='none';
-  if(resumeCard) resumeCard.style.display='none';
-
-  if(!state.started){
-    lobbyCard.style.display='block';
-    area.style.display='none';
-    badge.textContent = 'Lobby';
-    if(syncBar){ syncBar.style.display='flex'; updateSyncBar(); }
-    renderLobby();
-    return;
-  }
-
-  lobbyCard.style.display='none';
-  area.style.display='block';
-  if(adminButtons) adminButtons.style.display='flex';
-  badge.textContent = state.finished ? 'Final standings' : ('Round '+state.round+' of '+TOTAL_ROUNDS);
-  if(syncBar){
-    syncBar.style.display = 'flex';
-    updateSyncBar();
-  }
-
-  renderTabs();
-  renderTabContent();
-}
-
-function renderTabs(){
-  const tabsEl = document.getElementById('tabs');
-  let html = '';
-  for(let r=1; r<=TOTAL_ROUNDS; r++){
-    const done = r <= state.completed;
-    const locked = r > state.completed + 1;
-    const cls = ['tab'];
-    if(activeTab === 'r'+r) cls.push('active');
-    if(done) cls.push('done');
-    if(locked) cls.push('locked');
-    html += `<div class="${cls.join(' ')}" onclick="${locked?'':'switchTab(\'r'+r+'\')'}"><span class="dot"></span>Round ${r}</div>`;
-  }
-  const schedCls = ['tab'];
-  if(activeTab==='schedule') schedCls.push('active');
-  html += `<div class="${schedCls.join(' ')}" onclick="switchTab('schedule')"><span class="dot" style="background:#8a8474"></span>Schedule</div>`;
-  const stCls = ['tab'];
-  if(activeTab==='standings') stCls.push('active');
-  html += `<div class="${stCls.join(' ')}" onclick="switchTab('standings')"><span class="dot" style="background:${state.completed>0?'#4F7A5F':'#B08D57'}"></span>Standings</div>`;
-  tabsEl.innerHTML = html;
-}
-
-function switchTab(tab){
-  activeTab = tab;
-  render();
-}
-
-function renderTabContent(){
-  const el = document.getElementById('tabContent');
-  if(activeTab === 'standings'){
-    el.innerHTML = renderStandings();
-    return;
-  }
-  if(activeTab === 'schedule'){
-    el.innerHTML = renderSchedule();
-    return;
-  }
-  const r = parseInt(activeTab.slice(1),10);
-  if(r <= state.completed){
-    el.innerHTML = renderPastRound(r);
-  } else if(r === state.round){
-    el.innerHTML = renderCurrentRound(r);
-  } else {
-    el.innerHTML = '<div class="card"><p class="empty">Round '+r+' isn\'t open yet.</p></div>';
-  }
-}
-
-function medalClass(rank){
-  if(rank===1) return 'r1';
-  if(rank===2) return 'r2';
-  if(rank===3) return 'r3';
-  return '';
-}
-
-function lcClass(tableIndex){
-  return 'lc-' + (tableIndex % 6);
-}
-
-function renderCurrentRound(r){
-  if(VIEW_ONLY){
-    return `<div class="card">
-      <h2>Round ${r} <span class="pill">in progress</span></h2>
-      <p class="hint">Tables report in as they finish. Rooms below are set live by the organizer.</p>
-      ${renderScheduleCurrent(r, true)}
-    </div>`;
-  }
-
-  const submittedCount = state.pairing.filter(t=>t.submitted).length;
-  const cards = state.pairing.map((table, t)=>{
-    if(table.submitted && !table.editing){
-      const rows = table.idx.map(pIdx=>{
-        const p = state.players[pIdx];
-        const rd = p.rounds[r-1];
-        const medal = rd.isDefault ? '' : medalClass(rd.rank);
-        const scoreLabel = rd.isDefault ? '🪑 sat out' : rd.points+' pts';
-        const rankLabel = rd.isDefault ? '🪑' : '#'+rd.rank;
-        return `<div class="prow ${medal}${rd.isDefault?' is-default':''}">
-          <div class="pname">${escapeHtml(p.name)}</div>
-          <div style="text-align:right;font-family:'IBM Plex Mono',monospace;${rd.isDefault?'color:var(--danger);':''}">${scoreLabel}</div>
-          <div class="rankbadge">${rankLabel}</div>
-        </div>`;
-      }).join('');
-      return `<div class="tent">
-        <div class="tent-head"><span class="tid lc-badge ${lcClass(t)}">${table.tableId}</span><span class="tcount status-complete" style="padding:2px 9px;border-radius:20px;font-family:'IBM Plex Mono',monospace;">Complete</span></div>
-        <div class="tent-body">${rows}</div>
-        <div class="btn-row" style="padding:0 14px 14px;">
-          <button class="btn-ghost" onclick="startEditTable(${t})">Edit this table</button>
-        </div>
-      </div>`;
-    }
-
-    const wasSubmitted = table.submitted; // editing an already-submitted table
-    const rows = table.idx.map(pIdx=>{
-      const p = state.players[pIdx];
-      const prefill = tableInputPrefill(pIdx);
-      const isDef = tableDefaultPrefill(pIdx);
-      return `<div class="prow">
-        <div class="pname">${escapeHtml(p.name)}</div>
-        <input id="score_${pIdx}" type="number" step="any" placeholder="score" value="${prefill}" ${isDef?'disabled':''}>
-        <label class="default-check" title="Mark as Default — player skipped this game (0 Swiss points)"><input type="checkbox" id="default_${pIdx}" ${isDef?'checked':''} onchange="onDefaultToggle(${pIdx})"> 🪑</label>
-      </div>`;
-    }).join('');
-    const cancelBtn = wasSubmitted ? `<button class="btn-ghost" onclick="cancelEditTable(${t})">Cancel</button>` : '';
-    return `<div class="tent">
-      <div class="tent-head"><span class="tid lc-badge ${lcClass(t)}">${table.tableId}</span><span class="tcount">${table.idx.length} players</span></div>
-      <div class="tent-body">${rows}</div>
-      <div class="btn-row" style="padding:0 14px 14px;">
-        <button class="btn-primary" onclick="submitTable(${t})">${wasSubmitted?'Save':'Submit'} this table</button>
-        ${cancelBtn}
-      </div>
-    </div>`;
-  }).join('');
-
-  const warnBanner = state.pairingWarning ? `<div class="banner" style="background:rgba(155,59,52,0.08);border-color:rgba(155,59,52,0.3);color:var(--danger);">Some tables this round fall outside your configured ${state.minPerTable}–${state.maxPerTable} player range — there weren't enough players to keep every table in range.</div>` : '';
-
-  return `<div class="card">
-    <h2>Round ${r} <span class="pill">${submittedCount} of ${state.pairing.length} tables in</span></h2>
-    <p class="hint">Submit each table's score as soon as that game finishes — no need to wait for the others. Round ${r} finalizes automatically once every table is in. Check 🪑 for a player who skipped the game — they score 0 Swiss points and it counts against them in tiebreaks. Assign rooms on the Schedule tab.</p>
-    ${warnBanner}
-    <div class="table-grid">${cards}</div>
-  </div>`;
-}
-
-function renderPastRound(r){
-  const groups = {};
-  state.players.forEach((p,pIdx)=>{
-    const rd = p.rounds[r-1];
-    if(!rd) return;
-    if(!groups[rd.tableId]) groups[rd.tableId] = [];
-    groups[rd.tableId].push({pIdx, ...rd});
-  });
-  const tableIds = Object.keys(groups).sort((a,b)=>{
-    const na = parseInt(a.split('T')[1],10), nb = parseInt(b.split('T')[1],10);
-    return na-nb;
-  });
-  const cards = tableIds.map((tid,t)=>{
-    const rows = groups[tid].sort((a,b)=>a.rank-b.rank).map(row=>{
-      const p = state.players[row.pIdx];
-      const medal = row.isDefault ? '' : medalClass(row.rank);
-      const scoreLabel = row.isDefault ? '🪑 sat out' : row.points+' pts';
-      const rankLabel = row.isDefault ? '🪑' : '#'+row.rank;
-      return `<div class="prow ${medal}${row.isDefault?' is-default':''}">
-        <div class="pname">${escapeHtml(p.name)}</div>
-        <div style="text-align:right;font-family:'IBM Plex Mono',monospace;${row.isDefault?'color:var(--danger);':''}">${scoreLabel}</div>
-        <div class="rankbadge">${rankLabel}</div>
-      </div>`;
-    }).join('');
-    return `<div class="tent">
-      <div class="tent-head"><span class="tid lc-badge ${lcClass(t)}">${tid}</span><span class="tcount">${groups[tid].length} players</span></div>
-      <div class="tent-body">${rows}</div>
-    </div>`;
-  }).join('');
-
-  const laterRounds = state.completed - r;
-  const cascadeNote = laterRounds > 0
-    ? `Editing will clear the recorded results for Round${laterRounds>1?'s':''} ${r+1}${state.completed>r+1?'–'+state.completed:''}, since they were paired using Round ${r}'s standings.`
-    : `No later rounds are recorded yet, so editing is safe.`;
-
-  const editControls = VIEW_ONLY ? '' : `<div class="btn-row">
-      <button class="btn-ghost" onclick="editRound(${r})">Edit Round ${r} scores</button>
-    </div>
-    <p class="hint" style="margin:10px 0 0;">${cascadeNote}</p>`;
-
-  return `<div class="card">
-    <h2>Round ${r} results <span class="pill">closed</span></h2>
-    <p class="hint">Table rank and score for round ${r}. Swiss points and running totals are on the Standings tab.</p>
-    <div class="table-grid">${cards}</div>
-    ${editControls}
-  </div>`;
-}
-
-function renderSchedule(){
-  const blocks = [];
-  for(let r=1; r<=TOTAL_ROUNDS; r++){
-    if(r <= state.completed){
-      blocks.push(renderScheduleCompleted(r));
-    } else if(r === state.round && !state.finished){
-      blocks.push(renderScheduleCurrent(r, false));
-    } else {
-      blocks.push(renderSchedulePlaceholder(r));
-    }
-  }
-  return `<div class="card">
-    <h2>Schedule</h2>
-    <p class="hint">Table assignments and rooms for every round.${VIEW_ONLY ? '' : ' Assign a room to each table below — it saves and syncs automatically.'}</p>
-    ${blocks.join('')}
-  </div>`;
-}
-
-function renderScheduleCurrent(r, viewOnlyOverride){
-  const readOnly = VIEW_ONLY || !!viewOnlyOverride;
-  const warn = state.pairingWarning ? `<div class="banner" style="background:rgba(155,59,52,0.08);border-color:rgba(155,59,52,0.3);color:var(--danger);margin-bottom:10px;">Some tables fall outside your configured ${state.minPerTable}–${state.maxPerTable} player range this round.</div>` : '';
-  const rows = state.pairing.map((table,t)=>{
-    const names = table.idx.map(pIdx=>escapeHtml(state.players[pIdx].name)).join(', ');
-    const statusClass = table.submitted ? 'status-complete' : (table.status==='in_progress' ? 'status-progress' : 'status-waiting');
-    const statusLabel = table.submitted ? 'Complete' : (table.status==='in_progress' ? 'In progress' : 'Waiting for players');
-    const roomField = readOnly
-      ? `<span class="room-value">${table.room ? escapeHtml(table.room) : '— room TBD —'}</span>`
-      : `<input type="text" class="room-input" value="${escapeHtml(table.room||'')}" placeholder="Room / table #" onchange="updateRoom(${t}, this.value)">`;
-    const statusBtn = (readOnly || table.submitted) ? '' : `<button class="btn-ghost sched-toggle" onclick="cycleStatus(${t})">Mark ${table.status==='in_progress'?'waiting':'in progress'}</button>`;
-    return `<div class="sched-row">
-      <div class="sched-main">
-        <span class="tid lc-badge ${lcClass(t)}">${table.tableId}</span>
-        <span class="sched-status ${statusClass}">${statusLabel}</span>
-      </div>
-      <div class="sched-players">${names}</div>
-      <div class="sched-room-row">${roomField}${statusBtn}</div>
-    </div>`;
-  }).join('');
-  return `<div class="sched-round">
-    <h3 class="sched-round-title">Round ${r} <span class="pill">open</span></h3>
-    ${warn}
-    ${rows}
-  </div>`;
-}
-
-function renderScheduleCompleted(r){
-  const groups = {};
-  state.players.forEach(p=>{
-    const rd = p.rounds[r-1];
-    if(!rd) return;
-    if(!groups[rd.tableId]) groups[rd.tableId] = { room: rd.room, players: [] };
-    groups[rd.tableId].players.push(p.name);
-  });
-  const tableIds = Object.keys(groups).sort((a,b)=>{
-    const na = parseInt(a.split('T')[1],10), nb = parseInt(b.split('T')[1],10);
-    return na-nb;
-  });
-  const rows = tableIds.map((tid,t)=>{
-    const g = groups[tid];
-    return `<div class="sched-row">
-      <div class="sched-main">
-        <span class="tid lc-badge ${lcClass(t)}">${tid}</span>
-        <span class="sched-status status-complete">Complete</span>
-      </div>
-      <div class="sched-players">${g.players.map(n=>escapeHtml(n)).join(', ')}</div>
-      <div class="sched-room-row"><span class="room-value">${g.room ? escapeHtml(g.room) : '— no room recorded —'}</span></div>
-    </div>`;
-  }).join('');
-  return `<div class="sched-round">
-    <h3 class="sched-round-title">Round ${r} <span class="pill" style="background:var(--felt);">complete</span></h3>
-    ${rows}
-  </div>`;
-}
-
-function renderSchedulePlaceholder(r){
-  return `<div class="sched-round sched-placeholder">
-    <h3 class="sched-round-title">Round ${r} <span class="pill" style="background:#8a8474;">TBA</span></h3>
-    <p class="hint" style="margin:0;">Tables and rooms are TBA until everyone finishes Round ${r-1} — pairing happens automatically.</p>
-  </div>`;
-}
-
-function updateRoom(tableIdx, value){
-  if(VIEW_ONLY || !state) return;
-  state.pairing[tableIdx].room = value;
-  saveLocal();
-}
-
-function cycleStatus(tableIdx){
-  if(VIEW_ONLY || !state) return;
-  const t = state.pairing[tableIdx];
-  t.status = t.status === 'in_progress' ? 'waiting' : 'in_progress';
-  saveLocal();
-  render();
-}
-
-/* ---------------------------------------------------------------
-   TV MODE — big-screen, hands-off rotating display for viewers
-------------------------------------------------------------------*/
-function ensureTVIntervals(){
-  if(tvIntervalStarted) return;
-  tvIntervalStarted = true;
-  setInterval(()=>{ tvPanelIndex = (tvPanelIndex+1) % 2; if(TV_MODE) renderTVBody(); }, 12000);
-  setInterval(()=>{ if(TV_MODE) updateTVClock(); }, 1000);
-}
-function enterTVMode(){
-  TV_MODE = true;
-  tvPanelIndex = 0;
-  render();
-  ensureTVIntervals();
-  try{ document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); }catch(e){}
-}
-function exitTVMode(){
-  TV_MODE = false;
-  if(document.fullscreenElement){ try{ document.exitFullscreen(); }catch(e){} }
-  render();
-}
-function updateTVClock(){
-  const el = document.getElementById('tvClock');
-  if(!el) return;
-  el.textContent = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-}
-function renderTVMode(){
-  document.getElementById('tvTitle').textContent = state.name || 'Tournament';
-  const qrBox = document.getElementById('tvQRBox');
-  if(qrBox && state.code){
-    qrBox.style.display = 'block';
-    renderQRInto('tvQR', buildShareLink(), 110);
-  }
-  if(!state.started){
-    document.getElementById('tvRound').textContent = 'Starting soon';
-    updateTVClock();
-    document.getElementById('tvBody').innerHTML = tvLobbyPanel();
-    renderTVLobbyTicker();
-    return;
-  }
-  document.getElementById('tvRound').textContent = state.finished ? 'Final Standings' : ('Round '+state.round+' of '+TOTAL_ROUNDS);
-  updateTVClock();
-  renderTVBody();
-  renderTVTicker();
-}
-function tvLobbyPanel(){
-  const names = state.players.map((p,i)=>`
-    <div class="tv-table-card" style="text-align:center;">
-      <div class="tv-tid lc-badge ${lcClass(i)}" style="display:inline-block;">${i+1}</div>
-      <div class="tv-players" style="margin-top:8px;font-size:clamp(16px,1.8vw,26px);font-weight:600;">${escapeHtml(p.name)}</div>
-    </div>
-  `).join('');
-  return `<div class="tv-panel">
-    <p style="font-family:'Fraunces',serif;font-size:clamp(24px,2.6vw,38px);margin:0 0 2vh;">🎉 ${state.players.length} players registered — starting soon</p>
-    <div class="tv-tables-grid">${names || ''}</div>
-  </div>`;
-}
-function renderTVLobbyTicker(){
-  const track = document.getElementById('tvTickerTrack');
-  if(!track) return;
-  const items = [`${state.name} — registration open`, ...state.players.map(p=>p.name)];
-  const html = items.map(t=>`<span>${escapeHtml(t)}</span>`).join('');
-  track.innerHTML = html + html;
-  track.style.animationDuration = Math.max(20, items.length * 4) + 's';
-}
-function renderTVBody(){
-  const body = document.getElementById('tvBody');
-  if(!body) return;
-  body.innerHTML = (tvPanelIndex % 2 === 0) ? tvStandingsPanel() : tvPlayingPanel();
-}
-function tvStandingsPanel(){
-  if(state.completed === 0){
-    return `<div class="tv-panel empty">Standings will appear once Round 1 finishes.</div>`;
-  }
-  const through = state.completed;
-  const ordered = computePlacements(through);
-  const showN = Math.min(ordered.length, 12);
-  const rows = ordered.slice(0, showN).map(row=>{
-    const p = state.players[row.idx];
-    const rd = p.rounds[through-1];
-    const placeClass = row.placement===1?'gold':row.placement===2?'silver':row.placement===3?'bronze':'';
-    return `<tr>
-      <td class="tv-place ${placeClass}">${ordinal(row.placement)}</td>
-      <td class="tv-name">${escapeHtml(p.name)}</td>
-      <td>${rd.cumPts}</td>
-      <td class="tv-diff ${rd.cumDiff>0?'pos':rd.cumDiff<0?'neg':''}">${rd.cumDiff>0?'+':''}${rd.cumDiff}</td>
-      <td>${rd.cumRaw}</td>
-    </tr>`;
-  }).join('');
-  const more = ordered.length > showN ? `<div class="tv-more-note">+ ${ordered.length-showN} more players</div>` : '';
-  return `<div class="tv-panel tv-standings">
-    <table>
-      <thead><tr><th>Place</th><th>Player</th><th>Pts</th><th>Diff</th><th>Raw</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table>
-    ${more}
-  </div>`;
-}
-function tvPlayingPanel(){
-  if(state.finished){
-    const ordered = computePlacements(TOTAL_ROUNDS);
-    const top3 = ordered.slice(0,3).map((row,i)=>{
-      const p = state.players[row.idx];
-      const rd = p.rounds[TOTAL_ROUNDS-1];
-      const medal = ['gold','silver','bronze'][i];
-      return `<div class="tv-table-card" style="text-align:center;">
-        <div class="tv-place ${medal}" style="font-size:clamp(22px,2.4vw,36px);">${ordinal(row.placement)}</div>
-        <div class="tv-name" style="font-size:clamp(20px,2vw,30px);margin:0.6vh 0;">${escapeHtml(p.name)}</div>
-        <div style="opacity:0.7;font-family:'IBM Plex Mono',monospace;">${rd.cumPts} pts · ${rd.cumDiff>0?'+':''}${rd.cumDiff} diff</div>
-      </div>`;
-    }).join('');
-    return `<div class="tv-panel">
-      <p style="font-family:'Fraunces',serif;font-size:clamp(22px,2.4vw,34px);margin:0 0 2vh;">🏆 Tournament Complete</p>
-      <div class="tv-tables-grid" style="grid-template-columns:repeat(3,1fr);">${top3}</div>
-    </div>`;
-  }
-  if(!state.pairing || !state.pairing.length){
-    return `<div class="tv-panel empty">No round currently open.</div>`;
-  }
-  const cards = state.pairing.map((table,t)=>{
-    const names = table.idx.map(pIdx=>escapeHtml(state.players[pIdx].name)).join(', ');
-    const statusClass = table.submitted ? 'status-complete' : (table.status==='in_progress' ? 'status-progress' : 'status-waiting');
-    const statusLabel = table.submitted ? 'Complete' : (table.status==='in_progress' ? 'In progress' : 'Waiting');
-    return `<div class="tv-table-card">
-      <span class="tv-status-chip ${statusClass}">${statusLabel}</span>
-      <div class="tv-tid lc-badge ${lcClass(t)}" style="display:inline-block;">${table.tableId}</div>
-      <div class="tv-room">${table.room ? escapeHtml(table.room) : 'Room TBD'}</div>
-      <div class="tv-players">${names}</div>
-    </div>`;
-  }).join('');
-  return `<div class="tv-panel"><div class="tv-tables-grid">${cards}</div></div>`;
-}
-function renderTVTicker(){
-  const track = document.getElementById('tvTickerTrack');
-  if(!track) return;
-  const items = [];
-  if(state.finished){
-    items.push(`🏆 ${state.name} — Final Results`);
-    computePlacements(TOTAL_ROUNDS).slice(0,5).forEach(row=>{
-      items.push(`${ordinal(row.placement)} ${state.players[row.idx].name}`);
-    });
-  } else {
-    items.push(`${state.name} — Round ${state.round} of ${TOTAL_ROUNDS}`);
-    (state.pairing||[]).forEach(table=>{
-      const names = table.idx.map(pIdx=>state.players[pIdx].name).join(', ');
-      const status = table.submitted ? 'COMPLETE' : (table.status==='in_progress' ? 'IN PROGRESS' : 'WAITING');
-      items.push(`${table.tableId}${table.room?' · '+table.room:''} — ${names} [${status}]`);
-    });
-    if(state.round < TOTAL_ROUNDS){
-      items.push(`Round ${state.round+1} pairs once this round finishes`);
-    }
-  }
-  const html = items.map(t=>`<span>${escapeHtml(t)}</span>`).join('');
-  track.innerHTML = html + html; // duplicated for a seamless loop
-  track.style.animationDuration = Math.max(20, items.length * 4) + 's';
-}
-
-function renderStandings(){
-  if(state.completed === 0){
-    return `<div class="card"><p class="empty">Standings appear once Round 1 is submitted.</p></div>${VIEW_ONLY ? '' : renderNameEditor()}`;
-  }
-  const through = state.completed;
-  const ordered = computePlacements(through);
-
-  const finishNote = state.finished
-    ? `<div class="banner">🏆 Tournament complete. Final Rank is Swiss Pts first; ties are broken by fewest Defaults, then cumulative Diff vs table leader, then cumulative raw points.</div>`
-    : `<div class="banner">Standings after Round ${through}. Ranked by Swiss Pts; ties broken by fewest Defaults, then cumulative Diff vs table leader, then cumulative raw points. This order sets Round ${through+1}'s table groupings.</div>`;
-
-  const headlineRows = ordered.map(row=>{
-    const p = state.players[row.idx];
-    const rd = p.rounds[through-1];
-    const medal = row.placement===1?'medal-1':row.placement===2?'medal-2':row.placement===3?'medal-3':'';
-
-    const placementTrail = [];
-    const tableTrail = [];
-    for(let r=1; r<=through; r++){
-      const rr = p.rounds[r-1];
-      placementTrail.push(rr.placement);
-      tableTrail.push(rr.isDefault ? '<span class="journey-x">X</span>' : ordinal(rr.rank));
-    }
-    const first = placementTrail[0], last = placementTrail[placementTrail.length-1];
-    const trendArrow = through<2 ? '' : (last<first ? '<span class="trend up">▲</span>' : last>first ? '<span class="trend down">▼</span>' : '<span class="trend flat">—</span>');
-    const overallLine = placementTrail.map((v,i)=> i===placementTrail.length-1 ? `<b>${v}</b>` : v).join('<span class="arrow">→</span>');
-    const tableLine = tableTrail.join(' · ');
-
-    return `<tr>
-      <td class="place-cell ${medal}"><span class="place-badge">${ordinal(row.placement)}</span></td>
-      <td class="name-cell">${escapeHtml(p.name)}</td>
-      <td class="stat-cell stat-pts">${rd.cumPts}</td>
-      <td class="stat-cell stat-defaults ${rd.cumDefaults>0?'has-defaults':''}">${rd.cumDefaults||0}</td>
-      <td class="stat-cell stat-diff ${rd.cumDiff>0?'pos':rd.cumDiff<0?'neg':''}">${rd.cumDiff>0?'+':''}${rd.cumDiff}</td>
-      <td class="stat-cell stat-raw">${rd.cumRaw}</td>
-      <td class="journey-cell">
-        <div class="journey-overall">${overallLine}${trendArrow}</div>
-        <div class="journey-table">table: ${tableLine}</div>
-      </td>
-    </tr>`;
-  }).join('');
-
-  // Round-by-round detail, grouped by round then by table
-  const roundBlocks = [];
-  for(let r=1; r<=through; r++){
-    const groups = {};
-    state.players.forEach((p,pIdx)=>{
-      const rd = p.rounds[r-1];
-      if(!groups[rd.tableId]) groups[rd.tableId] = [];
-      groups[rd.tableId].push({pIdx, ...rd});
-    });
-    const tableIds = Object.keys(groups).sort((a,b)=>{
-      const na = parseInt(a.split('T')[1],10), nb = parseInt(b.split('T')[1],10);
-      return na-nb;
-    });
-    const rowsHtml = tableIds.map(tid=>{
-      const rows = groups[tid].sort((a,b)=>a.rank-b.rank).map(row=>{
-        const p = state.players[row.pIdx];
-        return `<tr>
-          <td>${tid}</td>
-          <td>${escapeHtml(p.name)}</td>
-          <td>${row.points}</td>
-          <td>#${row.rank}</td>
-          <td>${row.diff>0?'+':''}${row.diff}</td>
-          <td>${row.swissPts}</td>
-        </tr>`;
-      }).join('');
-      return rows;
-    }).join('');
-    roundBlocks.push(`<details class="round-detail">
-      <summary>Round ${r} — table-by-table detail</summary>
-      <div class="table-scroll">
-        <table class="detail-table">
-          <thead><tr><th>Table</th><th>Player</th><th>G${r} Pts</th><th>G${r} Rank</th><th>G${r} Diff</th><th>G${r} Swiss</th></tr></thead>
-          <tbody>${rowsHtml}</tbody>
-        </table>
-      </div>
-    </details>`);
-  }
-
-  return `<div class="card">
-    <h2>Standings ${state.finished?'— Final':''}</h2>
-    ${finishNote}
-    <div class="table-scroll">
-      <table class="standings headline">
-        <thead><tr>
-          <th class="place-col">Place</th>
-          <th>Player</th>
-          <th>Swiss Pts</th>
-          <th>🪑 Defaults <small>tiebreak 1</small></th>
-          <th>Diff <small>tiebreak 2 · vs table leader</small></th>
-          <th>Raw Total <small>tiebreak 3</small></th>
-          <th>Journey <small>overall place · table rank</small></th>
-        </tr></thead>
-        <tbody>${headlineRows}</tbody>
-      </table>
-    </div>
-    <div class="legend">
-      <span><i style="background:var(--gold)"></i>1st place</span>
-      <span><i style="background:var(--silver)"></i>2nd place</span>
-      <span><i style="background:var(--bronze)"></i>3rd place</span>
-    </div>
-  </div>
-  <div class="card detail-card">
-    <h2 class="detail-heading">Round-by-round detail</h2>
-    <p class="hint">Table assignments, raw scores and per-round Swiss points. Expand a round to see it.</p>
-    ${roundBlocks.join('')}
-  </div>
-  ${VIEW_ONLY ? '' : renderNameEditor()}`;
-}
-
-function renderNameEditor(){
-  const rows = state.players.map((p,i)=>`
-    <div class="lobby-row">
-      <span class="lobby-seat lc-badge ${lcClass(i)}">${i+1}</span>
-      <input type="text" class="lobby-name-input" value="${escapeHtml(p.name)}" onchange="renamePlayerMidTourney(${i}, this.value)">
-    </div>
-  `).join('');
-  return `<details class="round-detail">
-    <summary>✎ Fix a player's name</summary>
-    <div style="padding:14px;">
-      <p class="hint" style="margin:0 0 10px;">Renaming updates everywhere instantly — past rounds, standings, the schedule, CSV export. This only relabels a player; it doesn't remove or add anyone once Round 1 has started.</p>
-      ${rows}
-    </div>
-  </details>`;
-}
-
-function renamePlayerMidTourney(i, value){
-  const name = value.trim();
-  if(!state.players[i] || !name) { render(); return; }
-  state.players[i].name = name;
-  saveLocal();
-  render();
-}
-
-function ordinal(n){
-  const s = ['th','st','nd','rd'];
-  const v = n % 100;
-  return n + (s[(v-20)%10] || s[v] || s[0]);
-}
-function escapeHtml(str){
-  return String(str).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-
-/* ---------------------------------------------------------------
-   CSV EXPORT
-------------------------------------------------------------------*/
-function exportCSV(){
-  if(!state || state.completed===0){ alert('Submit at least one round first.'); return; }
-  const through = state.completed;
-  const ordered = computePlacements(through);
-  const header = ['Placement','Player','Swiss Pts','Cum Defaults (tiebreak 1)','Cum Diff (tiebreak 2)','Cum Raw Total (tiebreak 3)'];
-  for(let r=1;r<=through;r++){
-    header.push(`G${r} T-ID`,`G${r} Room`,`G${r} Points`,`G${r} Rank`,`G${r} Default`,`G${r} Diff`,`G${r} Swiss Pts`,`Pts After R${r}`,`Defaults After R${r}`,`Diff After R${r}`,`Raw After R${r}`,`R${r} Placement`);
-  }
-  if(state.finished) header.push('Final Rank');
-  const lines = [header.join(',')];
-  ordered.forEach(row=>{
-    const p = state.players[row.idx];
-    const latest = p.rounds[through-1];
-    const cells = [row.placement, csvSafe(p.name), latest.cumPts, latest.cumDefaults||0, latest.cumDiff, latest.cumRaw];
-    for(let r=1;r<=through;r++){
-      const rd = p.rounds[r-1];
-      cells.push(rd.tableId, csvSafe(rd.room||''), rd.points, rd.rank, rd.isDefault?'Y':'', rd.diff, rd.swissPts, rd.cumPts, rd.cumDefaults||0, rd.cumDiff, rd.cumRaw, rd.placement);
-    }
-    if(state.finished) cells.push(row.placement);
-    lines.push(cells.join(','));
-  });
-  const blob = new Blob([lines.join('\n')], {type:'text/csv'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = (state.name || 'tournament').replace(/[^a-z0-9]+/gi,'_') + '_standings.csv';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-}
-function csvSafe(v){
-  const s = String(v);
-  return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s;
-}
-
-/* ---------------------------------------------------------------
-   INIT
-------------------------------------------------------------------*/
-(function init(){
-  initSupabase();
-
-  const params = new URLSearchParams(location.search);
-  const urlCode = params.get('code');
-  const wantsView = params.get('view') === '1';
-  const wantsTV = params.get('tv') === '1';
-
-  if(wantsView && urlCode){
-    VIEW_ONLY = true;
-    TV_MODE = wantsTV; // renders normally until state arrives, then flips into TV layout
-    activeTab = 'schedule';
-    render(); // shows "not configured" or "waiting" immediately
-    if(sb) startViewer(urlCode.toUpperCase());
-    return;
-  }
-
-  const saved = loadLocal();
-  if(saved && saved.players){
-    state = saved;
-    if(!state.code) state.code = randomCode();
-    activeTab = state.finished ? 'standings' : ('r'+state.round);
-  }
-  render();
-
-  // Setup-form niceties (safe even though the form starts hidden if a tournament is already loaded)
-  const tcodeEl = document.getElementById('tcode');
-  if(tcodeEl && !tcodeEl.value) tcodeEl.value = randomCode();
-  const syncNote = document.getElementById('setupSyncNote');
-  if(syncNote){
-    syncNote.textContent = sb
-      ? 'Live sync is configured — a shareable viewer link will appear once you create the tournament.'
-      : 'Live sync isn\'t configured on this page yet — it\'ll run locally only until Supabase keys are added.';
-  }
-  const resumeHint = document.getElementById('resumeHint');
-  if(resumeHint){
-    resumeHint.textContent = sb
-      ? 'Set this tournament up on another device (or your home PC)? Enter its code below to pick it up here — same live sync, same data.'
-      : "Live sync isn't configured on this page yet, so there's nothing to resume from a different device until Supabase keys are added.";
-  }
-})();
+function swissPointsForRank(rank){ return SWISS_POINTS_BY_RANK[rank-1] ?? 0; }
+let state = null, activeTab = 'r1', VIEW_ONLY = false, TV_MODE = false, tvPanelIndex = 0, tvIntervalStarted = false, sb = null, syncState = 'idle';
+function freshState(){return {name:'Tournament',code:'',minPerTable:3,maxPerTable:4,started:false,players:[],pairing:[],pairingWarning:false,round:1,completed:0,finished:false,pendingScores:{},pendingDefaults:{}};}
+function randomCode(){return Math.random().toString(36).slice(2,8).toUpperCase();}
+function loadSample(){document.getElementById('tname').value='Autumn Catan Open';document.getElementById('players').value=['Alice','Bob','Carla','Dan','Erin','Femi','Grace','Hassan','Ines','Jon','Kira','Leo'].join('\n');document.getElementById('minPerTable').value=3;document.getElementById('maxPerTable').value=4;if(!document.getElementById('tcode').value) document.getElementById('tcode').value=randomCode();}
+function isSupabaseConfigured(){return !SUPABASE_URL.includes('YOUR-PROJECT') && !SUPABASE_ANON_KEY.includes('YOUR-ANON');}
+function initSupabase(){try{if(window.supabase&&typeof window.supabase.createClient==='function'&&isSupabaseConfigured()) sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);}catch(e){console.error('Supabase init failed',e);sb=null;}}
+async function publishNow(){if(!sb||!state||!state.code||VIEW_ONLY)return;try{const {error}=await sb.from('tournaments').upsert({id:state.code,state:state,updated_at:new Date().toISOString()});if(error) throw error;setSyncStatus('synced');}catch(e){console.error('Publish failed',e);setSyncStatus('error');}}
+async function fetchRemote(code){if(!sb)return null;try{const {data,error}=await sb.from('tournaments').select('state, updated_at').eq('id',code).maybeSingle();if(error){console.error(error);return null;}return data?data.state:null;}catch(e){console.error(e);return null;}}
+function setSyncStatus(s){syncState=s;const bar=document.getElementById('syncBar');if(bar&&bar.style.display!=='none')updateSyncBar();}
+let lastQRRendered={};
+function renderQRInto(canvasId,text,sizePx){
+  const canvas=document.getElementById(canvasId);
+  if(!canvas){console.error(`QR canvas not found: ${canvasId}`);return;}
+  if(!text){console.error(`No QR text supplied for: ${canvasId}`);return;}
+  if(!window.QRCode||typeof window.QRCode.toCanvas!=='function'){console.error('QRCode library did not load. Check the QRCode script URL.');return;}
+  if(lastQRRendered[canvasId]===text && canvas.dataset.qrRendered==='1')return;
+  window.QRCode.toCanvas(canvas,text,{width:sizePx,margin:2,errorCorrectionLevel:'M',color:{dark:'#3A3226',light:'#FBF7EC'}},function(error){if(error){console.error(`QR generation failed for ${canvasId}:`,error);return;}lastQRRendered[canvasId]=text;});
+}
+function updateSyncBar(){const dot=document.getElementById('syncDot'),label=document.getElementById('syncLabel'),linkInput=document.getElementById('shareLinkInput');if(!dot)return;if(!sb){dot.className='sync-dot off';label.textContent='Local only — add your Supabase keys near the top of the file to enable live sync';linkInput.value='';return;}dot.className='sync-dot '+(syncState==='error'?'err':'on');label.textContent=syncState==='error'?'Sync error — check the browser console':('Live · code '+state.code);const link=buildShareLink();linkInput.value=link;renderQRInto('syncQR',link,144);}
+function buildShareLink(){const url=new URL(location.href);url.search='';url.searchParams.set('code',state.code);url.searchParams.set('view','1');return url.toString();}
+function openTVDisplay(){if(!state||!state.code)return;window.open(buildShareLink()+'&tv=1','_blank');}
+function copyShareLink(){const input=document.getElementById('shareLinkInput');if(!input.value)return;input.select();try{document.execCommand('copy');}catch(e){}if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(input.value).catch(()=>{});alert('Live viewer link copied to clipboard.');}
+async function startViewer(code){await refreshViewer(code);setInterval(()=>refreshViewer(code),5000);}
+async function refreshViewer(code){const remote=await fetchRemote(code);if(remote)state=remote;render();}
+function saveLocal(){if(VIEW_ONLY)return;try{localStorage.setItem('swissTableState',JSON.stringify(state));}catch(e){}publishNow();}
+function loadLocal(){try{const raw=localStorage.getItem('swissTableState');if(raw)return JSON.parse(raw);}catch(e){}return null;}
+async function resumeTournament(){const errEl=document.getElementById('resumeError');errEl.style.display='none';const codeInput=document.getElementById('resumeCode');const code=(codeInput.value||'').trim().toUpperCase();if(!code){errEl.textContent='Enter the tournament code shown in the other device\'s sync bar.';errEl.style.display='block';return;}if(!sb){errEl.textContent="Live sync isn't configured on this copy of the page yet — add the same Supabase keys here as on the device that created the tournament, then this will work.";errEl.style.display='block';return;}const btn=document.getElementById('resumeBtn');btn.disabled=true;btn.textContent='Loading…';const remote=await fetchRemote(code);btn.disabled=false;btn.textContent='Resume';if(!remote){errEl.textContent='No tournament found for code "'+code+'". Double-check it against the other device\'s sync bar.';errEl.style.display='block';return;}state=remote;activeTab=!state.started?'r1':(state.finished?'standings':('r'+state.round));saveLocal();render();}
+function createTournament(){const errEl=document.getElementById('setupError');errEl.style.display='none';const name=document.getElementById('tname').value.trim()||'Tournament';const raw=document.getElementById('players').value;const names=raw.split('\n').map(s=>s.trim()).filter(Boolean);const minP=parseInt(document.getElementById('minPerTable').value,10);const maxP=parseInt(document.getElementById('maxPerTable').value,10);const code=(document.getElementById('tcode').value||'').trim().toUpperCase()||randomCode();const dupes=names.filter((n,i)=>names.indexOf(n)!==i);if(dupes.length){errEl.textContent='Player names must be unique. Duplicate: "'+dupes[0]+'"';errEl.style.display='block';return;}if(!minP||minP<2||minP>10){errEl.textContent='Min players per table must be between 2 and 10.';errEl.style.display='block';return;}if(!maxP||maxP<minP||maxP>12){errEl.textContent='Max players per table must be at least the min, and no more than 12.';errEl.style.display='block';return;}state=freshState();state.name=name;state.code=code;state.minPerTable=minP;state.maxPerTable=maxP;state.players=names.map(n=>({name:n,rounds:[]}));saveLocal();render();}
+function beginRound1(){if(!state||state.started)return;const errEl=document.getElementById('lobbyError');if(errEl)errEl.style.display='none';if(state.players.length<state.minPerTable){if(errEl){errEl.textContent='You need at least '+state.minPerTable+' players to fill one table.';errEl.style.display='block';}else alert('You need at least '+state.minPerTable+' players to fill one table.');return;}const seedModeEl=document.querySelector('input[name="seedMode"]:checked');const seedMode=seedModeEl?seedModeEl.value:'shuffle';const seedOrder=seedMode==='order'?Array.from({length:state.players.length},(_,i)=>i):shuffledIndices(state.players.length);state.started=true;state.round=1;pairRound(1,seedOrder);saveLocal();activeTab='r1';render();}
+function addLobbyPlayer(){const input=document.getElementById('lobbyNewPlayer');const name=input.value.trim();if(!name)return;if(state.players.some(p=>p.name.toLowerCase()===name.toLowerCase())){alert('That name is already on the list.');return;}state.players.push({name,rounds:[]});input.value='';saveLocal();render();const refocus=document.getElementById('lobbyNewPlayer');if(refocus&&refocus.focus)refocus.focus();}
+function removeLobbyPlayer(i){const p=state.players[i];if(!p)return;if(!confirm('Remove '+p.name+' from the roster?'))return;state.players.splice(i,1);saveLocal();render();}
+function renameLobbyPlayer(i,value){const name=value.trim();if(!state.players[i])return;if(name)state.players[i].name=name;saveLocal();render();}
+function shuffleLobbyOrder(){const arr=state.players;for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}saveLocal();render();}
+function updateLobbyConfig(){const minP=parseInt(document.getElementById('lobbyMin').value,10);const maxP=parseInt(document.getElementById('lobbyMax').value,10);if(minP&&minP>=2&&minP<=10)state.minPerTable=minP;if(maxP&&maxP>=state.minPerTable&&maxP<=12)state.maxPerTable=maxP;saveLocal();}
+function renderLobby(){const countEl=document.getElementById('lobbyCount');if(countEl)countEl.textContent=state.players.length+' player'+(state.players.length===1?'':'s');const minEl=document.getElementById('lobbyMin'),maxEl=document.getElementById('lobbyMax');if(minEl&&document.activeElement!==minEl)minEl.value=state.minPerTable;if(maxEl&&document.activeElement!==maxEl)maxEl.value=state.maxPerTable;const listEl=document.getElementById('lobbyList');if(!listEl)return;if(state.players.length===0){listEl.innerHTML='<p class="hint">No players yet — add some above.</p>';return;}listEl.innerHTML=state.players.map((p,i)=>`<div class="lobby-row"><span class="lobby-seat lc-badge ${lcClass(i)}">${i+1}</span><input type="text" class="lobby-name-input" value="${escapeHtml(p.name)}" onchange="renameLobbyPlayer(${i}, this.value)"><button class="lobby-remove" onclick="removeLobbyPlayer(${i})" title="Remove">✕</button></div>`).join('');}
+function renderLobbyHype(){const names=state.players.map((p,i)=>`<div class="lobby-hype-name"><span class="lc-badge ${lcClass(i)}">${i+1}</span>${escapeHtml(p.name)}</div>`).join('');return `<div class="card"><h2>${escapeHtml(state.name)} <span class="pill">${state.players.length} registered</span></h2><p class="hint">🎉 Tournament starting soon — here's who's in so far.</p><div class="lobby-hype-grid">${names||'<p class="hint">Waiting for players to be added…</p>'}</div></div>`;}
+function shuffledIndices(n){const arr=Array.from({length:n},(_,i)=>i);for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+function computeTableSizes(n,min,max){let tables=Math.max(1,Math.ceil(n/max));while(tables>1&&tables*min>n)tables--;const base=Math.floor(n/tables),remainder=n%tables,sizes=[];for(let t=0;t<tables;t++)sizes.push(base+(t>=tables-remainder?1:0));return sizes;}
+function pairRound(roundNum,order){const sizes=computeTableSizes(order.length,state.minPerTable,state.maxPerTable),pairing=[];let cursor=0;sizes.forEach((seats,t)=>{const group=order.slice(cursor,cursor+seats);cursor+=seats;pairing.push({tableId:'G'+roundNum+' T'+(t+1),idx:group,room:'',status:'waiting',submitted:false,editing:false});});state.pairing=pairing;state.pairingWarning=sizes.some(s=>s<state.minPerTable||s>state.maxPerTable);state.round=roundNum;state.pendingScores={};state.pendingDefaults={};}
+function standingsOrder(throughRound){return state.players.map((p,i)=>{const r=p.rounds[throughRound-1];return{idx:i,cumPts:r?r.cumPts:0,cumDefaults:r?(r.cumDefaults||0):0,cumDiff:r?r.cumDiff:0,cumRaw:r?r.cumRaw:0};}).sort((a,b)=>b.cumPts-a.cumPts||a.cumDefaults-b.cumDefaults||b.cumDiff-a.cumDiff||b.cumRaw-a.cumRaw||state.players[a.idx].name.localeCompare(state.players[b.idx].name));}
+function computePlacements(throughRound){const ordered=standingsOrder(throughRound);let lastKey=null,lastPlace=0;ordered.forEach((row,i)=>{const key=row.cumPts+'|'+row.cumDefaults+'|'+row.cumDiff+'|'+row.cumRaw;if(key!==lastKey){lastPlace=i+1;lastKey=key;}row.placement=lastPlace;});return ordered;}
+function tableInputPrefill(pIdx){if(state.pendingScores&&state.pendingScores[pIdx]!==undefined)return state.pendingScores[pIdx];const rd=state.players[pIdx].rounds[state.round-1];return rd?rd.points:'';}
+function tableDefaultPrefill(pIdx){if(state.pendingDefaults&&state.pendingDefaults[pIdx]!==undefined)return state.pendingDefaults[pIdx];const rd=state.players[pIdx].rounds[state.round-1];return rd?!!rd.isDefault:false;}
+function onDefaultToggle(pIdx){const cb=document.getElementById('default_'+pIdx),el=document.getElementById('score_'+pIdx);if(!el||!cb)return;el.disabled=cb.checked;if(cb.checked){el.value='';el.style.borderColor='';}}
+function submitTable(tableIdx){const table=state.pairing[tableIdx],roundNum=state.round,scores={},defaults={};let ok=true;table.idx.forEach(pIdx=>{const dEl=document.getElementById('default_'+pIdx),isDefault=!!(dEl&&dEl.checked);defaults[pIdx]=isDefault;if(isDefault){scores[pIdx]=0;return;}const el=document.getElementById('score_'+pIdx),v=el?parseFloat(el.value):NaN;if(isNaN(v)){ok=false;if(el)el.style.borderColor='var(--danger)';}else{scores[pIdx]=v;if(el)el.style.borderColor='';}});if(!ok){alert('Enter a numeric score for every player at this table (or mark them Default).');return;}const withScores=table.idx.map(pIdx=>({pIdx,score:scores[pIdx]})),sorted=[...withScores].sort((a,b)=>b.score-a.score),ranks={};let lastScore=null,lastRank=0;sorted.forEach((row,i)=>{if(row.score!==lastScore){lastRank=i+1;lastScore=row.score;}ranks[row.pIdx]=lastRank;});const topScore=Math.max(...withScores.map(w=>w.score));withScores.forEach(({pIdx,score})=>{const diff=Math.round((score-topScore)*100)/100,rank=ranks[pIdx],isDefault=defaults[pIdx],swissPts=isDefault?0:swissPointsForRank(rank),prev=state.players[pIdx].rounds[roundNum-2],prevCum=prev?prev.cumPts:0,prevDefaults=prev?(prev.cumDefaults||0):0,prevDiff=prev?prev.cumDiff:0,prevRaw=prev?prev.cumRaw:0;state.players[pIdx].rounds[roundNum-1]={tableId:table.tableId,room:table.room||'',points:score,rank,isDefault,diff,swissPts,cumPts:prevCum+swissPts,cumDefaults:prevDefaults+(isDefault?1:0),cumDiff:Math.round((prevDiff+diff)*100)/100,cumRaw:Math.round((prevRaw+score)*100)/100,placement:null};});table.submitted=true;table.editing=false;table.status='complete';saveLocal();if(state.pairing.every(t=>t.submitted))finalizeRound(roundNum);else render();}
+function finalizeRound(roundNum){const ordered=computePlacements(roundNum);ordered.forEach(row=>state.players[row.idx].rounds[roundNum-1].placement=row.placement);state.completed=roundNum;if(roundNum<TOTAL_ROUNDS){pairRound(roundNum+1,ordered.map(r=>r.idx));activeTab='r'+(roundNum+1);}else{state.finished=true;state.pendingScores={};state.pendingDefaults={};activeTab='standings';}saveLocal();render();}
+function startEditTable(tableIdx){if(VIEW_ONLY)return;state.pairing[tableIdx].editing=true;render();}
+function cancelEditTable(tableIdx){if(VIEW_ONLY)return;state.pairing[tableIdx].editing=false;render();}
+function editRound(r){if(!state||r>state.completed)return;const laterRounds=state.completed-r;const msg=laterRounds>0?`Editing Round ${r} will clear the recorded results for Round${laterRounds>1?'s':''} ${r+1}${state.completed>r+1?'–'+state.completed:''}, since those tables were paired from Round ${r}'s standings. You'll need to re-submit them. Continue?`:`Edit Round ${r}'s scores?`;if(!confirm(msg))return;const groups={},rooms={};state.players.forEach((p,pIdx)=>{const rd=p.rounds[r-1];if(!groups[rd.tableId])groups[rd.tableId]=[];groups[rd.tableId].push(pIdx);rooms[rd.tableId]=rd.room||'';});const tableIds=Object.keys(groups).sort((a,b)=>parseInt(a.split('T')[1],10)-parseInt(b.split('T')[1],10)),pendingScores={},pendingDefaults={};state.players.forEach((p,pIdx)=>{pendingScores[pIdx]=p.rounds[r-1].points;pendingDefaults[pIdx]=!!p.rounds[r-1].isDefault;});state.pairing=tableIds.map(tid=>({tableId:tid,idx:groups[tid],room:rooms[tid],status:'waiting',submitted:false,editing:false}));state.pendingScores=pendingScores;state.pendingDefaults=pendingDefaults;state.players.forEach(p=>{p.rounds.length=r-1;});state.completed=r-1;state.finished=false;state.round=r;activeTab='r'+r;saveLocal();render();}
+function resetTournament(){if(!confirm('Reset the tournament? All rounds and scores will be lost.'))return;state=null;try{localStorage.removeItem('swissTableState');}catch(e){}activeTab='r1';render();}
+function render(){const setupCard=document.getElementById('setupCard'),resumeCard=document.getElementById('resumeCard'),lobbyCard=document.getElementById('lobbyCard'),area=document.getElementById('tournamentArea'),badge=document.getElementById('roundBadge'),syncBar=document.getElementById('syncBar'),adminButtons=document.getElementById('adminButtons'),tvScreen=document.getElementById('tvScreen'),wrap=document.querySelector('.wrap'),tvModeBtn=document.getElementById('tvModeBtn');if(VIEW_ONLY&&TV_MODE&&state){wrap.style.display='none';tvScreen.style.display='flex';if(tvModeBtn)tvModeBtn.style.display='none';ensureTVIntervals();renderTVMode();return;}tvScreen.style.display='none';wrap.style.display='';if(VIEW_ONLY){if(tvModeBtn)tvModeBtn.style.display=(state&&state.started)?'block':'none';setupCard.style.display='none';if(resumeCard)resumeCard.style.display='none';lobbyCard.style.display='none';if(syncBar)syncBar.style.display='none';area.style.display='block';if(adminButtons)adminButtons.style.display='none';if(!sb){badge.textContent='Viewer — not configured';document.getElementById('tabs').innerHTML='';document.getElementById('tabContent').innerHTML=`<div class="card"><p class="empty">Live sync isn't set up on this page yet. The organizer needs to add their Supabase keys.</p></div>`;return;}if(!state){badge.textContent='Viewer — waiting';document.getElementById('tabs').innerHTML='';document.getElementById('tabContent').innerHTML=`<div class="card"><p class="empty">Waiting for the organizer to set up the tournament…</p></div>`;return;}if(!state.started){badge.textContent='Lobby — starting soon';document.getElementById('tabs').innerHTML='';document.getElementById('tabContent').innerHTML=renderLobbyHype();return;}badge.textContent=(state.finished?'Final standings':('Round '+state.round+' of '+TOTAL_ROUNDS))+' · live viewer';renderTabs();renderTabContent();return;}if(tvModeBtn)tvModeBtn.style.display='none';if(!state){setupCard.style.display='block';if(resumeCard)resumeCard.style.display='block';lobbyCard.style.display='none';area.style.display='none';badge.textContent='Setup';if(syncBar)syncBar.style.display='none';return;}setupCard.style.display='none';if(resumeCard)resumeCard.style.display='none';if(!state.started){lobbyCard.style.display='block';area.style.display='none';badge.textContent='Lobby';if(syncBar){syncBar.style.display='flex';updateSyncBar();}renderLobby();return;}lobbyCard.style.display='none';area.style.display='block';if(adminButtons)adminButtons.style.display='flex';badge.textContent=state.finished?'Final standings':('Round '+state.round+' of '+TOTAL_ROUNDS);if(syncBar){syncBar.style.display='flex';updateSyncBar();}renderTabs();renderTabContent();}
+function renderTabs(){const tabsEl=document.getElementById('tabs');let html='';for(let r=1;r<=TOTAL_ROUNDS;r++){const done=r<=state.completed,locked=r>state.completed+1,cls=['tab'];if(activeTab==='r'+r)cls.push('active');if(done)cls.push('done');if(locked)cls.push('locked');html+=`<div class="${cls.join(' ')}" onclick="${locked?'':`switchTab('r${r}')`}"><span class="dot"></span>Round ${r}</div>`;}const schedCls=['tab'];if(activeTab==='schedule')schedCls.push('active');html+=`<div class="${schedCls.join(' ')}" onclick="switchTab('schedule')"><span class="dot" style="background:#8a8474"></span>Schedule</div>`;const stCls=['tab'];if(activeTab==='standings')stCls.push('active');html+=`<div class="${stCls.join(' ')}" onclick="switchTab('standings')"><span class="dot" style="background:${state.completed>0?'#4F7A5F':'#B08D57'}"></span>Standings</div>`;tabsEl.innerHTML=html;}
+function switchTab(tab){activeTab=tab;render();}
+function renderTabContent(){const el=document.getElementById('tabContent');if(activeTab==='standings'){el.innerHTML=renderStandings();return;}if(activeTab==='schedule'){el.innerHTML=renderSchedule();return;}const r=parseInt(activeTab.slice(1),10);if(r<=state.completed)el.innerHTML=renderPastRound(r);else if(r===state.round)el.innerHTML=renderCurrentRound(r);else el.innerHTML='<div class="card"><p class="empty">Round '+r+' isn\'t open yet.</p></div>';}
+function medalClass(rank){if(rank===1)return'r1';if(rank===2)return'r2';if(rank===3)return'r3';return'';}
+function lcClass(tableIndex){return'lc-'+(tableIndex%6);}
+function renderCurrentRound(r){if(VIEW_ONLY)return `<div class="card"><h2>Round ${r} <span class="pill">in progress</span></h2><p class="hint">Tables report in as they finish. Rooms below are set live by the organizer.</p>${renderScheduleCurrent(r,true)}</div>`;const submittedCount=state.pairing.filter(t=>t.submitted).length;const cards=state.pairing.map((table,t)=>{if(table.submitted&&!table.editing){const rows=table.idx.map(pIdx=>{const p=state.players[pIdx],rd=p.rounds[r-1],medal=rd.isDefault?'':medalClass(rd.rank),scoreLabel=rd.isDefault?'🪑 sat out':rd.points+' pts',rankLabel=rd.isDefault?'🪑':'#'+rd.rank;return `<div class="prow ${medal}${rd.isDefault?' is-default':''}"><div class="pname">${escapeHtml(p.name)}</div><div style="text-align:right;font-family:'IBM Plex Mono',monospace;${rd.isDefault?'color:var(--danger);':''}">${scoreLabel}</div><div class="rankbadge">${rankLabel}</div></div>`;}).join('');return `<div class="tent"><div class="tent-head"><span class="tid lc-badge ${lcClass(t)}">${table.tableId}</span><span class="tcount status-complete" style="padding:2px 9px;border-radius:20px;font-family:'IBM Plex Mono',monospace;">Complete</span></div><div class="tent-body">${rows}</div><div class="btn-row" style="padding:0 14px 14px;"><button class="btn-ghost" onclick="startEditTable(${t})">Edit this table</button></div></div>`;}const wasSubmitted=table.submitted;const rows=table.idx.map(pIdx=>{const p=state.players[pIdx],prefill=tableInputPrefill(pIdx),isDef=tableDefaultPrefill(pIdx);return `<div class="prow"><div class="pname">${escapeHtml(p.name)}</div><input id="score_${pIdx}" type="number" step="any" placeholder="score" value="${prefill}" ${isDef?'disabled':''}><label class="default-check" title="Mark as Default — player skipped this game (0 Swiss points)"><input type="checkbox" id="default_${pIdx}" ${isDef?'checked':''} onchange="onDefaultToggle(${pIdx})"> 🪑</label></div>`;}).join('');const cancelBtn=wasSubmitted?`<button class="btn-ghost" onclick="cancelEditTable(${t})">Cancel</button>`:'';return `<div class="tent"><div class="tent-head"><span class="tid lc-badge ${lcClass(t)}">${table.tableId}</span><span class="tcount">${table.idx.length} players</span></div><div class="tent-body">${rows}</div><div class="btn-row" style="padding:0 14px 14px;"><button class="btn-primary" onclick="submitTable(${t})">${wasSubmitted?'Save':'Submit'} this table</button>${cancelBtn}</div></div>`;}).join('');const warnBanner=state.pairingWarning?`<div class="banner" style="background:rgba(155,59,52,0.08);border-color:rgba(155,59,52,0.3);color:var(--danger);">Some tables this round fall outside your configured ${state.minPerTable}–${state.maxPerTable} player range — there weren't enough players to keep every table in range.</div>`:'';return `<div class="card"><h2>Round ${r} <span class="pill">${submittedCount} of ${state.pairing.length} tables in</span></h2><p class="hint">Submit each table's score as soon as that game finishes — no need to wait for the others. Round ${r} finalizes automatically once every table is in. Check 🪑 for a player who skipped the game — they score 0 Swiss points and it counts against them in tiebreaks. Assign rooms on the Schedule tab.</p>${warnBanner}<div class="table-grid">${cards}</div></div>`;}
+function renderPastRound(r){const groups={};state.players.forEach((p,pIdx)=>{const rd=p.rounds[r-1];if(!rd)return;if(!groups[rd.tableId])groups[rd.tableId]=[];groups[rd.tableId].push({pIdx,...rd});});const tableIds=Object.keys(groups).sort((a,b)=>parseInt(a.split('T')[1],10)-parseInt(b.split('T')[1],10));const cards=tableIds.map((tid,t)=>{const rows=groups[tid].sort((a,b)=>a.rank-b.rank).map(row=>{const p=state.players[row.pIdx],medal=row.isDefault?'':medalClass(row.rank),scoreLabel=row.isDefault?'🪑 sat out':row.points+' pts',rankLabel=row.isDefault?'🪑':'#'+row.rank;return `<div class="prow ${medal}${row.isDefault?' is-default':''}"><div class="pname">${escapeHtml(p.name)}</div><div style="text-align:right;font-family:'IBM Plex Mono',monospace;${row.isDefault?'color:var(--danger);':''}">${scoreLabel}</div><div class="rankbadge">${rankLabel}</div></div>`;}).join('');return `<div class="tent"><div class="tent-head"><span class="tid lc-badge ${lcClass(t)}">${tid}</span><span class="tcount">${groups[tid].length} players</span></div><div class="tent-body">${rows}</div></div>`;}).join('');const laterRounds=state.completed-r,cascadeNote=laterRounds>0?`Editing will clear the recorded results for Round${laterRounds>1?'s':''} ${r+1}${state.completed>r+1?'–'+state.completed:''}, since they were paired using Round ${r}'s standings.`:`No later rounds are recorded yet, so editing is safe.`;const editControls=VIEW_ONLY?'':`<div class="btn-row"><button class="btn-ghost" onclick="editRound(${r})">Edit Round ${r} scores</button></div><p class="hint" style="margin:10px 0 0;">${cascadeNote}</p>`;return `<div class="card"><h2>Round ${r} results <span class="pill">closed</span></h2><p class="hint">Table rank and score for round ${r}. Swiss points and running totals are on the Standings tab.</p><div class="table-grid">${cards}</div>${editControls}</div>`;}
+function renderSchedule(){const blocks=[];for(let r=1;r<=TOTAL_ROUNDS;r++){if(r<=state.completed)blocks.push(renderScheduleCompleted(r));else if(r===state.round&&!state.finished)blocks.push(renderScheduleCurrent(r,false));else blocks.push(renderSchedulePlaceholder(r));}return `<div class="card"><h2>Schedule</h2><p class="hint">Table assignments and rooms for every round.${VIEW_ONLY?'':' Assign a room to each table below — it saves and syncs automatically.'}</p>${blocks.join('')}</div>`;}
+function renderScheduleCurrent(r,viewOnlyOverride){const readOnly=VIEW_ONLY||!!viewOnlyOverride,warn=state.pairingWarning?`<div class="banner" style="background:rgba(155,59,52,0.08);border-color:rgba(155,59,52,0.3);color:var(--danger);margin-bottom:10px;">Some tables fall outside your configured ${state.minPerTable}–${state.maxPerTable} player range this round.</div>`:'';const rows=state.pairing.map((table,t)=>{const names=table.idx.map(pIdx=>escapeHtml(state.players[pIdx].name)).join(', '),statusClass=table.submitted?'status-complete':(table.status==='in_progress'?'status-progress':'status-waiting'),statusLabel=table.submitted?'Complete':(table.status==='in_progress'?'In progress':'Waiting for players'),roomField=readOnly?`<span class="room-value">${table.room?escapeHtml(table.room):'— room TBD —'}</span>`:`<input type="text" class="room-input" value="${escapeHtml(table.room||'')}" placeholder="Room / table #" onchange="updateRoom(${t}, this.value)">`,statusBtn=(readOnly||table.submitted)?'':`<button class="btn-ghost sched-toggle" onclick="cycleStatus(${t})">Mark ${table.status==='in_progress'?'waiting':'in progress'}</button>`;return `<div class="sched-row"><div class="sched-main"><span class="tid lc-badge ${lcClass(t)}">${table.tableId}</span><span class="sched-status ${statusClass}">${statusLabel}</span></div><div class="sched-players">${names}</div><div class="sched-room-row">${roomField}${statusBtn}</div></div>`;}).join('');return `<div class="sched-round"><h3 class="sched-round-title">Round ${r} <span class="pill">open</span></h3>${warn}${rows}</div>`;}
+function renderScheduleCompleted(r){const groups={};state.players.forEach(p=>{const rd=p.rounds[r-1];if(!rd)return;if(!groups[rd.tableId])groups[rd.tableId]={room:rd.room,players:[]};groups[rd.tableId].players.push(p.name);});const tableIds=Object.keys(groups).sort((a,b)=>parseInt(a.split('T')[1],10)-parseInt(b.split('T')[1],10));const rows=tableIds.map((tid,t)=>{const g=groups[tid];return `<div class="sched-row"><div class="sched-main"><span class="tid lc-badge ${lcClass(t)}">${tid}</span><span class="sched-status status-complete">Complete</span></div><div class="sched-players">${g.players.map(n=>escapeHtml(n)).join(', ')}</div><div class="sched-room-row"><span class="room-value">${g.room?escapeHtml(g.room):'— no room recorded —'}</span></div></div>`;}).join('');return `<div class="sched-round"><h3 class="sched-round-title">Round ${r} <span class="pill" style="background:var(--felt);">complete</span></h3>${rows}</div>`;}
+function renderSchedulePlaceholder(r){return `<div class="sched-round sched-placeholder"><h3 class="sched-round-title">Round ${r} <span class="pill" style="background:#8a8474;">TBA</span></h3><p class="hint" style="margin:0;">Tables and rooms are TBA until everyone finishes Round ${r-1} — pairing happens automatically.</p></div>`;}
+function updateRoom(tableIdx,value){if(VIEW_ONLY||!state)return;state.pairing[tableIdx].room=value;saveLocal();}
+function cycleStatus(tableIdx){if(VIEW_ONLY||!state)return;const t=state.pairing[tableIdx];t.status=t.status==='in_progress'?'waiting':'in_progress';saveLocal();render();}
+function ensureTVIntervals(){if(tvIntervalStarted)return;tvIntervalStarted=true;setInterval(()=>{tvPanelIndex=(tvPanelIndex+1)%2;if(TV_MODE)renderTVBody();},12000);setInterval(()=>{if(TV_MODE)updateTVClock();},1000);}
+function enterTVMode(){TV_MODE=true;tvPanelIndex=0;render();ensureTVIntervals();try{document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}catch(e){}}
+function exitTVMode(){TV_MODE=false;if(document.fullscreenElement){try{document.exitFullscreen();}catch(e){}}render();}
+function updateTVClock(){const el=document.getElementById('tvClock');if(!el)return;el.textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
+function renderTVMode(){document.getElementById('tvTitle').textContent=state.name||'Tournament';const qrBox=document.getElementById('tvQRBox');if(qrBox&&state.code){qrBox.style.display='block';renderQRInto('tvQR',buildShareLink(),220);}if(!state.started){document.getElementById('tvRound').textContent='Starting soon';updateTVClock();document.getElementById('tvBody').innerHTML=tvLobbyPanel();renderTVLobbyTicker();return;}document.getElementById('tvRound').textContent=state.finished?'Final Standings':('Round '+state.round+' of '+TOTAL_ROUNDS);updateTVClock();renderTVBody();renderTVTicker();}
+function tvLobbyPanel(){const names=state.players.map((p,i)=>`<div class="tv-table-card" style="text-align:center;"><div class="tv-tid lc-badge ${lcClass(i)}" style="display:inline-block;">${i+1}</div><div class="tv-players" style="margin-top:8px;font-size:clamp(16px,1.8vw,26px);font-weight:600;">${escapeHtml(p.name)}</div></div>`).join('');return `<div class="tv-panel"><p style="font-family:'Fraunces',serif;font-size:clamp(24px,2.6vw,38px);margin:0 0 2vh;">🎉 ${state.players.length} players registered — starting soon</p><div class="tv-tables-grid">${names||''}</div></div>`;}
+function renderTVLobbyTicker(){const track=document.getElementById('tvTickerTrack');if(!track)return;const items=[`${state.name} — registration open`,...state.players.map(p=>p.name)],html=items.map(t=>`<span>${escapeHtml(t)}</span>`).join('');track.innerHTML=html+html;track.style.animationDuration=Math.max(20,items.length*4)+'s';}
+function renderTVBody(){const body=document.getElementById('tvBody');if(!body)return;body.innerHTML=(tvPanelIndex%2===0)?tvStandingsPanel():tvPlayingPanel();}
+function tvStandingsPanel(){if(state.completed===0)return `<div class="tv-panel empty">Standings will appear once Round 1 finishes.</div>`;const through=state.completed,ordered=computePlacements(through),showN=Math.min(ordered.length,12);const rows=ordered.slice(0,showN).map(row=>{const p=state.players[row.idx],rd=p.rounds[through-1],placeClass=row.placement===1?'gold':row.placement===2?'silver':row.placement===3?'bronze':'';return `<tr><td class="tv-place ${placeClass}">${ordinal(row.placement)}</td><td class="tv-name">${escapeHtml(p.name)}</td><td>${rd.cumPts}</td><td class="tv-diff ${rd.cumDiff>0?'pos':rd.cumDiff<0?'neg':''}">${rd.cumDiff>0?'+':''}${rd.cumDiff}</td><td>${rd.cumRaw}</td></tr>`;}).join('');const more=ordered.length>showN?`<div class="tv-more-note">+ ${ordered.length-showN} more players</div>`:'';return `<div class="tv-panel tv-standings"><table><thead><tr><th>Place</th><th>Player</th><th>Pts</th><th>Diff</th><th>Raw</th></tr></thead><tbody>${rows}</tbody></table>${more}</div>`;}
+function tvPlayingPanel(){if(state.finished){const ordered=computePlacements(TOTAL_ROUNDS),top3=ordered.slice(0,3).map((row,i)=>{const p=state.players[row.idx],rd=p.rounds[TOTAL_ROUNDS-1],medal=['gold','silver','bronze'][i];return `<div class="tv-table-card" style="text-align:center;"><div class="tv-place ${medal}" style="font-size:clamp(22px,2.4vw,36px);">${ordinal(row.placement)}</div><div class="tv-name" style="font-size:clamp(20px,2vw,30px);margin:0.6vh 0;">${escapeHtml(p.name)}</div><div style="opacity:0.7;font-family:'IBM Plex Mono',monospace;">${rd.cumPts} pts · ${rd.cumDiff>0?'+':''}${rd.cumDiff} diff</div></div>`;}).join('');return `<div class="tv-panel"><p style="font-family:'Fraunces',serif;font-size:clamp(22px,2.4vw,34px);margin:0 0 2vh;">🏆 Tournament Complete</p><div class="tv-tables-grid" style="grid-template-columns:repeat(3,1fr);">${top3}</div></div>`;}if(!state.pairing||!state.pairing.length)return `<div class="tv-panel empty">No round currently open.</div>`;const cards=state.pairing.map((table,t)=>{const names=table.idx.map(pIdx=>escapeHtml(state.players[pIdx].name)).join(', '),statusClass=table.submitted?'status-complete':(table.status==='in_progress'?'status-progress':'status-waiting'),statusLabel=table.submitted?'Complete':(table.status==='in_progress'?'In progress':'Waiting');return `<div class="tv-table-card"><span class="tv-status-chip ${statusClass}">${statusLabel}</span><div class="tv-tid lc-badge ${lcClass(t)}" style="display:inline-block;">${table.tableId}</div><div class="tv-room">${table.room?escapeHtml(table.room):'Room TBD'}</div><div class="tv-players">${names}</div></div>`;}).join('');return `<div class="tv-panel"><div class="tv-tables-grid">${cards}</div></div>`;}
+function renderTVTicker(){const track=document.getElementById('tvTickerTrack');if(!track)return;const items=[];if(state.finished){items.push(`🏆 ${state.name} — Final Results`);computePlacements(TOTAL_ROUNDS).slice(0,5).forEach(row=>items.push(`${ordinal(row.placement)} ${state.players[row.idx].name}`));}else{items.push(`${state.name} — Round ${state.round} of ${TOTAL_ROUNDS}`);(state.pairing||[]).forEach(table=>{const names=table.idx.map(pIdx=>state.players[pIdx].name).join(', '),status=table.submitted?'COMPLETE':(table.status==='in_progress'?'IN PROGRESS':'WAITING');items.push(`${table.tableId}${table.room?' · '+table.room:''} — ${names} [${status}]`);});if(state.round<TOTAL_ROUNDS)items.push(`Round ${state.round+1} pairs once this round finishes`);}const html=items.map(t=>`<span>${escapeHtml(t)}</span>`).join('');track.innerHTML=html+html;track.style.animationDuration=Math.max(20,items.length*4)+'s';}
+function renderStandings(){if(state.completed===0)return `<div class="card"><p class="empty">Standings appear once Round 1 is submitted.</p></div>${VIEW_ONLY?'':renderNameEditor()}`;const through=state.completed,ordered=computePlacements(through),finishNote=state.finished?`<div class="banner">🏆 Tournament complete. Final Rank is Swiss Pts first; ties are broken by fewest Defaults, then cumulative Diff vs table leader, then cumulative raw points.</div>`:`<div class="banner">Standings after Round ${through}. Ranked by Swiss Pts; ties broken by fewest Defaults, then cumulative Diff vs table leader, then cumulative raw points. This order sets Round ${through+1}'s table groupings.</div>`;const headlineRows=ordered.map(row=>{const p=state.players[row.idx],rd=p.rounds[through-1],medal=row.placement===1?'medal-1':row.placement===2?'medal-2':row.placement===3?'medal-3':'',placementTrail=[],tableTrail=[];for(let r=1;r<=through;r++){const rr=p.rounds[r-1];placementTrail.push(rr.placement);tableTrail.push(rr.isDefault?'<span class="journey-x">X</span>':ordinal(rr.rank));}const first=placementTrail[0],last=placementTrail[placementTrail.length-1],trendArrow=through<2?'':(last<first?'<span class="trend up">▲</span>':last>first?'<span class="trend down">▼</span>':'<span class="trend flat">—</span>'),overallLine=placementTrail.map((v,i)=>i===placementTrail.length-1?`<b>${v}</b>`:v).join('<span class="arrow">→</span>'),tableLine=tableTrail.join(' · ');return `<tr><td class="place-cell ${medal}"><span class="place-badge">${ordinal(row.placement)}</span></td><td class="name-cell">${escapeHtml(p.name)}</td><td class="stat-cell stat-pts">${rd.cumPts}</td><td class="stat-cell stat-defaults ${rd.cumDefaults>0?'has-defaults':''}">${rd.cumDefaults||0}</td><td class="stat-cell stat-diff ${rd.cumDiff>0?'pos':rd.cumDiff<0?'neg':''}">${rd.cumDiff>0?'+':''}${rd.cumDiff}</td><td class="stat-cell stat-raw">${rd.cumRaw}</td><td class="journey-cell"><div class="journey-overall">${overallLine}${trendArrow}</div><div class="journey-table">table: ${tableLine}</div></td></tr>`;}).join('');const roundBlocks=[];for(let r=1;r<=through;r++){const groups={};state.players.forEach((p,pIdx)=>{const rd=p.rounds[r-1];if(!groups[rd.tableId])groups[rd.tableId]=[];groups[rd.tableId].push({pIdx,...rd});});const tableIds=Object.keys(groups).sort((a,b)=>parseInt(a.split('T')[1],10)-parseInt(b.split('T')[1],10));const rowsHtml=tableIds.map(tid=>groups[tid].sort((a,b)=>a.rank-b.rank).map(row=>{const p=state.players[row.pIdx];return `<tr><td>${tid}</td><td>${escapeHtml(p.name)}</td><td>${row.points}</td><td>#${row.rank}</td><td>${row.diff>0?'+':''}${row.diff}</td><td>${row.swissPts}</td></tr>`;}).join('')).join('');roundBlocks.push(`<details class="round-detail"><summary>Round ${r} — table-by-table detail</summary><div class="table-scroll"><table class="detail-table"><thead><tr><th>Table</th><th>Player</th><th>G${r} Pts</th><th>G${r} Rank</th><th>G${r} Diff</th><th>G${r} Swiss</th></tr></thead><tbody>${rowsHtml}</tbody></table></div></details>`);}return `<div class="card"><h2>Standings ${state.finished?'— Final':''}</h2>${finishNote}<div class="table-scroll"><table class="standings headline"><thead><tr><th class="place-col">Place</th><th>Player</th><th>Swiss Pts</th><th>🪑 Defaults <small>tiebreak 1</small></th><th>Diff <small>tiebreak 2 · vs table leader</small></th><th>Raw Total <small>tiebreak 3</small></th><th>Journey <small>overall place · table rank</small></th></tr></thead><tbody>${headlineRows}</tbody></table></div><div class="legend"><span><i style="background:var(--gold)"></i>1st place</span><span><i style="background:var(--silver)"></i>2nd place</span><span><i style="background:var(--bronze)"></i>3rd place</span></div></div><div class="card detail-card"><h2 class="detail-heading">Round-by-round detail</h2><p class="hint">Table assignments, raw scores and per-round Swiss points. Expand a round to see it.</p>${roundBlocks.join('')}</div>${VIEW_ONLY?'':renderNameEditor()}`;}
+function renderNameEditor(){const rows=state.players.map((p,i)=>`<div class="lobby-row"><span class="lobby-seat lc-badge ${lcClass(i)}">${i+1}</span><input type="text" class="lobby-name-input" value="${escapeHtml(p.name)}" onchange="renamePlayerMidTourney(${i}, this.value)"></div>`).join('');return `<details class="round-detail"><summary>✎ Fix a player's name</summary><div style="padding:14px;"><p class="hint" style="margin:0 0 10px;">Renaming updates everywhere instantly — past rounds, standings, the schedule, CSV export. This only relabels a player; it doesn't remove or add anyone once Round 1 has started.</p>${rows}</div></details>`;}
+function renamePlayerMidTourney(i,value){const name=value.trim();if(!state.players[i]||!name){render();return;}state.players[i].name=name;saveLocal();render();}
+function ordinal(n){const s=['th','st','nd','rd'],v=n%100;return n+(s[(v-20)%10]||s[v]||s[0]);}
+function escapeHtml(str){return String(str).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function exportCSV(){if(!state||state.completed===0){alert('Submit at least one round first.');return;}const through=state.completed,ordered=computePlacements(through),header=['Placement','Player','Swiss Pts','Cum Defaults (tiebreak 1)','Cum Diff (tiebreak 2)','Cum Raw Total (tiebreak 3)'];for(let r=1;r<=through;r++)header.push(`G${r} T-ID`,`G${r} Room`,`G${r} Points`,`G${r} Rank`,`G${r} Default`,`G${r} Diff`,`G${r} Swiss Pts`,`Pts After R${r}`,`Defaults After R${r}`,`Diff After R${r}`,`Raw After R${r}`,`R${r} Placement`);if(state.finished)header.push('Final Rank');const lines=[header.join(',')];ordered.forEach(row=>{const p=state.players[row.idx],latest=p.rounds[through-1],cells=[row.placement,csvSafe(p.name),latest.cumPts,latest.cumDefaults||0,latest.cumDiff,latest.cumRaw];for(let r=1;r<=through;r++){const rd=p.rounds[r-1];cells.push(rd.tableId,csvSafe(rd.room||''),rd.points,rd.rank,rd.isDefault?'Y':'',rd.diff,rd.swissPts,rd.cumPts,rd.cumDefaults||0,rd.cumDiff,rd.cumRaw,rd.placement);}if(state.finished)cells.push(row.placement);lines.push(cells.join(','));});const blob=new Blob([lines.join('\n')],{type:'text/csv'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=(state.name||'tournament').replace(/[^a-z0-9]+/gi,'_')+'_standings.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);}
+function csvSafe(v){const s=String(v);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;}
+(function init(){initSupabase();const params=new URLSearchParams(location.search),urlCode=params.get('code'),wantsView=params.get('view')==='1',wantsTV=params.get('tv')==='1';if(wantsView&&urlCode){VIEW_ONLY=true;TV_MODE=wantsTV;activeTab='schedule';render();if(sb)startViewer(urlCode.toUpperCase());return;}const saved=loadLocal();if(saved&&saved.players){state=saved;if(!state.code)state.code=randomCode();activeTab=state.finished?'standings':('r'+state.round);}render();const tcodeEl=document.getElementById('tcode');if(tcodeEl&&!tcodeEl.value)tcodeEl.value=randomCode();const syncNote=document.getElementById('setupSyncNote');if(syncNote)syncNote.textContent=sb?'Live sync is configured — a shareable viewer link will appear once you create the tournament.':'Live sync isn\'t configured on this page yet — it\'ll run locally only until Supabase keys are added.';const resumeHint=document.getElementById('resumeHint');if(resumeHint)resumeHint.textContent=sb?'Set this tournament up on another device (or your home PC)? Enter its code below to pick it up here — same live sync, same data.':"Live sync isn't configured on this page yet, so there's nothing to resume from a different device until Supabase keys are added.";})();
 </script>
 </body>
 </html>
